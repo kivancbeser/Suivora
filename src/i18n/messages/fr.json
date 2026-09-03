@@ -1,0 +1,18 @@
+{
+  "Metadata": {
+    "title": "Suivora",
+    "description": "Le suivi pédagogique partagé, clair et simple."
+  },
+  "Foundation": {
+    "productName": "Suivora",
+    "tagline": "Le suivi pédagogique, simplement.",
+    "status": "Fondation du projet en cours",
+    "milestoneLabel": "Première étape prévue",
+    "milestoneName": "Cœur de classe partagé"
+  },
+  "Common": {
+    "loading": "Chargement…",
+    "error": "Une erreur est survenue.",
+    "notFound": "Page introuvable"
+  }
+}
