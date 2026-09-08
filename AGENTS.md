@@ -45,9 +45,9 @@ Read this file and the relevant documents under `docs/` before changing the repo
 
 ## Localization and testing
 
-- French is the only active locale. User-facing strings must use semantic keys in `src/i18n/messages/fr.json`; domain identifiers and enums remain language-independent.
+- French and Turkish are the only active locales, with French remaining the default. User-facing strings must use matching semantic keys in `src/i18n/messages/fr.json` and `src/i18n/messages/tr.json`; domain identifiers and enums remain language-independent.
 - `src/i18n/routing.ts` is the single locale contract. New application routes live beneath `[locale]`, validate untrusted locale parameters, and must not silently fall back from unsupported locales.
-- Do not activate a locale until its complete catalog, routing entry, metadata, and tests are ready. Turkish and English remain inactive.
+- Do not activate a locale until its complete catalog, routing entry, metadata, and tests are ready. English remains inactive.
 - Use server translations by default. Introduce client translation consumption only at the smallest necessary boundary; do not turn the application tree into client components.
 - Do not store translated domain values or translate database fields, route identifiers, analytics names, or internal error codes.
 - Put deterministic grading and alert calculations in pure functions with unit tests.

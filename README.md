@@ -6,7 +6,7 @@ Suivora is a French-first shared classroom management web application for clear,
 
 ## Current status
 
-Task 09D-PRE deployment preparation is complete. The reviewed application is pushed to the dedicated `kivancbeser/Suivora` GitHub repository and deployed from `main` to the dedicated Vercel `suivora` project at `https://suivora.vercel.app`. Production environment-variable names are configured in Vercel without storing values in Git. The Suivora development Auth Site URL and redirect allow-list are configured for the stable deployment and localhost; the first real invitation remains separately gated.
+Task 09C2 adds complete French/Turkish localization and a global route-preserving language switcher locally. French remains the default, English remains unsupported, and authentication and authorization retain the selected locale. The completed GitHub/Vercel and Supabase Auth URL setup is unchanged; no invitation or remote change was made by Task 09C2.
 
 ## Users and central concept
 
@@ -107,15 +107,16 @@ The local seed file is intentionally empty. The repository is linked only throug
 
 Before implementation, read `AGENTS.md` and the relevant feature documents. Work in the dependency order in the development plan, keep business rules pure and tested, add schema changes through documented migrations, and update the source-of-truth documents when a decision changes.
 
-The application always starts in explicit French:
+The application is French-first with complete Turkish support:
 
-- Visit `http://localhost:3000/fr` for the canonical route.
+- Visit `http://localhost:3000/fr` for French or `http://localhost:3000/tr` for Turkish.
 - Visiting `/` redirects to `/fr`.
-- Locale detection, locale cookies, language preference persistence, and a language switcher are intentionally absent.
+- Browser-language detection, locale cookies, and database-backed language preferences remain absent.
+- The global `FR | TR` switcher preserves the current safe route while discarding all query parameters, including authentication-sensitive values.
 
-Add or change user-facing copy in `src/i18n/messages/fr.json`, use semantic namespaces, and access it with next-intl's server APIs by default. To add a future locale, create and test a complete equivalent catalog before adding its code to the immutable locale tuple in `src/i18n/routing.ts`.
+Add or change user-facing copy in both `src/i18n/messages/fr.json` and `src/i18n/messages/tr.json`, preserve exact key/ICU parity, use semantic namespaces, and access translations with next-intl's server APIs by default. English is intentionally unsupported.
 
-Authentication routes are `/fr/connexion` and `/fr/app`. Public registration is intentionally absent and public signup is disabled in the development project. `/fr/app/[module]` provides one shared localized unavailable-module placeholder for recognized role-appropriate navigation destinations. Role-aware link visibility is presentation only: the dynamic module route independently checks the server-resolved role and rejects manually entered role-inappropriate paths.
+Authentication routes retain the selected locale (`/fr/connexion`, `/tr/connexion`, `/fr/app`, and `/tr/app`). Public registration is intentionally absent and public signup is disabled in the development project. The shared localized module placeholder remains role-aware in both languages. Role-aware link visibility is presentation only: the dynamic module route independently checks the server-resolved role and rejects manually entered role-inappropriate paths.
 
 The next recommended task is **TASK 09D — Controlled Remote Teacher Invitation and Activation Verification**. It must review remote Auth URLs/templates/SMTP boundaries and exercise one controlled invitation only after explicit approval.
 

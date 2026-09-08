@@ -14,7 +14,11 @@ import { createServerSupabaseClient } from "@/lib/supabase/server";
 import { resolveApplicationContext } from "@/server/application-context";
 
 const idSchema = z.string().uuid();
-const calendarPath = "/fr/app/annees-scolaires";
+const calendarPaths = ["/fr/app/annees-scolaires", "/tr/app/annees-scolaires"] as const;
+
+function revalidateCalendarPaths(): void {
+  calendarPaths.forEach((path) => revalidatePath(path));
+}
 
 async function getAdminMutationContext(): Promise<
   | Readonly<{ ok: true; schoolId: string; supabase: Awaited<ReturnType<typeof createServerSupabaseClient>> }>
@@ -79,7 +83,7 @@ export async function createSchoolYearAction(
       end_date: parsed.data.endDate,
     });
     if (error) return safeFailure(error, { "23505": "duplicateYear", "23514": "dateOrder" });
-    revalidatePath(calendarPath);
+    revalidateCalendarPaths();
     return { status: "success", message: "yearCreated" };
   } catch {
     return { status: "error", message: "unexpected" };
@@ -106,7 +110,7 @@ export async function updateSchoolYearAction(
       .maybeSingle();
     if (error) return safeFailure(error, { "23505": "duplicateYear", "23514": "yearContainsTerms" });
     if (!data) return { status: "error", message: "notFound" };
-    revalidatePath(calendarPath);
+    revalidateCalendarPaths();
     return { status: "success", message: "yearUpdated" };
   } catch {
     return { status: "error", message: "unexpected" };
@@ -138,7 +142,7 @@ export async function createSemesterAction(
       end_date: parsed.data.endDate,
     });
     if (error) return safeFailure(error, { "23505": "duplicateSemester", "23514": "semesterChronology" });
-    revalidatePath(calendarPath);
+    revalidateCalendarPaths();
     return { status: "success", message: "semesterCreated" };
   } catch {
     return { status: "error", message: "unexpected" };
@@ -180,7 +184,7 @@ export async function updateSemesterAction(
       .maybeSingle();
     if (error) return safeFailure(error, { "23505": "duplicateSemester", "23514": "semesterChronology" });
     if (!data) return { status: "error", message: "notFound" };
-    revalidatePath(calendarPath);
+    revalidateCalendarPaths();
     return { status: "success", message: "semesterUpdated" };
   } catch {
     return { status: "error", message: "unexpected" };

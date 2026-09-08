@@ -4,17 +4,19 @@ import { useActionState, useEffect, useId, useRef } from "react";
 import { useFormStatus } from "react-dom";
 import { createTeacherPasswordAction } from "./actions";
 import { initialTeacherActionState, type TeacherResultCode } from "./teacher-management";
+import type { Locale } from "@/i18n/routing";
 
 function PasswordSubmit({ label, pendingLabel }: Readonly<{ label: string; pendingLabel: string }>) {
   const { pending } = useFormStatus();
   return <button className="auth-form__submit" disabled={pending} type="submit">{pending ? pendingLabel : label}</button>;
 }
 
-export function PasswordCreationForm({ messages }: Readonly<{ messages: Readonly<{
+export function PasswordCreationForm({ locale, messages }: Readonly<{ locale: Locale; messages: Readonly<{
   password: string; confirmation: string; submit: string; submitting: string;
   errors: Partial<Record<TeacherResultCode, string>>;
 }> }>) {
-  const [state, action] = useActionState(createTeacherPasswordAction, initialTeacherActionState);
+  const localizedAction = createTeacherPasswordAction.bind(null, locale);
+  const [state, action] = useActionState(localizedAction, initialTeacherActionState);
   const form = useRef<HTMLFormElement>(null);
   const id = useId();
   useEffect(() => {

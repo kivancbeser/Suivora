@@ -28,6 +28,7 @@ describe("teacher server actions", () => {
     expect(await inviteTeacherAction(initialTeacherActionState, form({ displayName: " Marie ", email: " M@EXAMPLE.TEST " }))).toEqual({ status: "success", message: "invitationSent" });
     expect(mocks.inviteAndProvisionTeacher).toHaveBeenCalledWith({ adminUserId: "admin", displayName: "Marie", email: "m@example.test", schoolId: "trusted-school", supabase: normalClient });
     expect(mocks.revalidatePath).toHaveBeenCalledWith("/fr/app/enseignants");
+    expect(mocks.revalidatePath).toHaveBeenCalledWith("/tr/app/enseignants");
   });
   it("updates only the target, validated name and active state through the RPC", async () => {
     const rpc = vi.fn().mockResolvedValue({ error: null });
@@ -46,16 +47,16 @@ describe("teacher server actions", () => {
     const auth = { getUser: vi.fn().mockResolvedValue({ data: { user: { id: "teacher" } }, error: null }), updateUser: vi.fn().mockResolvedValue({ error: null }) };
     mocks.createServerSupabaseClient.mockResolvedValue({ auth });
     mocks.resolveApplicationContext.mockResolvedValue({ ...admin, context: { ...admin.context, role: "TEACHER" } });
-    await createTeacherPasswordAction(initialTeacherActionState, form({ password: "secure-pass-1", confirmation: "secure-pass-1" }));
+    await createTeacherPasswordAction("fr", initialTeacherActionState, form({ password: "secure-pass-1", confirmation: "secure-pass-1" }));
     expect(auth.updateUser).toHaveBeenCalledWith({ password: "secure-pass-1" });
     expect(mocks.redirect).toHaveBeenCalledWith("/fr/app");
   });
   it("rejects unauthenticated and ADMIN activation before password update", async () => {
     const auth = { getUser: vi.fn().mockResolvedValue({ data: { user: null }, error: null }), updateUser: vi.fn() };
     mocks.createServerSupabaseClient.mockResolvedValue({ auth });
-    expect((await createTeacherPasswordAction(initialTeacherActionState, form({ password: "secure-pass-1", confirmation: "secure-pass-1" }))).message).toBe("accessDenied");
+    expect((await createTeacherPasswordAction("fr", initialTeacherActionState, form({ password: "secure-pass-1", confirmation: "secure-pass-1" }))).message).toBe("accessDenied");
     auth.getUser.mockResolvedValue({ data: { user: { id: "admin" } }, error: null });
-    expect((await createTeacherPasswordAction(initialTeacherActionState, form({ password: "secure-pass-1", confirmation: "secure-pass-1" }))).message).toBe("accessDenied");
+    expect((await createTeacherPasswordAction("fr", initialTeacherActionState, form({ password: "secure-pass-1", confirmation: "secure-pass-1" }))).message).toBe("accessDenied");
     expect(auth.updateUser).not.toHaveBeenCalled();
   });
 });

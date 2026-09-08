@@ -7,6 +7,7 @@ import {
   type SignInState,
 } from "./authentication";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
+import { isLocale } from "@/i18n/routing";
 
 export async function signInAction(
   _previousState: SignInState,
@@ -28,10 +29,12 @@ export async function signInAction(
   redirect(result.redirectTo);
 }
 
-export async function signOutAction(): Promise<never> {
+export async function signOutAction(formData: FormData): Promise<never> {
   const supabase = await createServerSupabaseClient();
 
   await endLocalSession(supabase.auth);
 
-  redirect("/fr/connexion");
+  const localeCandidate = formData.get("locale");
+  const locale = isLocale(localeCandidate) ? localeCandidate : "fr";
+  redirect(`/${locale}/connexion`);
 }

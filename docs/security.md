@@ -17,6 +17,7 @@
 - Protected rendering and authentication-page redirects call Supabase `getUser()` on the server; unverified `getSession()` data is never an authorization source.
 - Authentication failures are mapped to generic localized codes. Credentials, tokens, account existence, and raw provider errors are neither logged nor returned.
 - Return paths are restricted to the active locale's internal `/app` subtree; absolute, protocol-relative, cross-locale, backslash, and newline inputs fall back safely.
+- Locale switching accepts only the typed `fr`/`tr` contract, replaces only the leading locale segment, and discards all query parameters. It never forwards Auth tokens, email/password values, arbitrary `next` destinations, or provider errors; `/auth/confirm` remains outside the localized route tree.
 
 ## Threat-focused controls
 

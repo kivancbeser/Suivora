@@ -1,8 +1,18 @@
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { isLocale } from "@/i18n/routing";
+import type { Metadata } from "next";
 
-export default async function InvalidInvitationPage({ params }: Readonly<{ params: Promise<{ locale: string }> }>) {
+type InvalidInvitationPageProps = Readonly<{ params: Promise<{ locale: string }> }>;
+
+export async function generateMetadata({ params }: InvalidInvitationPageProps): Promise<Metadata> {
+  const { locale } = await params;
+  if (!isLocale(locale)) return {};
+  const t = await getTranslations({ locale, namespace: "Activation" });
+  return { title: t("invalid.title"), description: t("invalid.description") };
+}
+
+export default async function InvalidInvitationPage({ params }: InvalidInvitationPageProps) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const t = await getTranslations({ locale, namespace: "Activation" });

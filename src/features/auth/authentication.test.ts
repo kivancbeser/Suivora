@@ -46,6 +46,7 @@ describe("signInSchema", () => {
 describe("authentication route boundary", () => {
   it("redirects a signed-out visitor away from protected content", () => {
     expect(getAuthRedirect("protected", false, "fr")).toBe("/fr/connexion");
+    expect(getAuthRedirect("protected", false, "tr")).toBe("/tr/connexion");
   });
 
   it("allows an authenticated visitor to render protected content", () => {
@@ -54,6 +55,7 @@ describe("authentication route boundary", () => {
 
   it("redirects an authenticated visitor away from sign-in", () => {
     expect(getAuthRedirect("signIn", true, "fr")).toBe("/fr/app");
+    expect(getAuthRedirect("signIn", true, "tr")).toBe("/tr/app");
   });
 });
 
@@ -75,6 +77,11 @@ describe("getSafeReturnPath", () => {
   it.each(["/fr/app", "/fr/app/classe", "/fr/app?vue=jour"])(
     "accepts internal application path %s",
     (path) => expect(getSafeReturnPath(path, "fr")).toBe(path),
+  );
+
+  it.each(["/tr/app", "/tr/app/enseignants"])(
+    "accepts Turkish application path %s",
+    (path) => expect(getSafeReturnPath(path, "tr")).toBe(path),
   );
 
   it.each([

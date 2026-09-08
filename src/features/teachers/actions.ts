@@ -13,8 +13,13 @@ import {
   teacherUpdateSchema,
   type TeacherActionState,
 } from "./teacher-management";
+import type { Locale } from "@/i18n/routing";
 
-const teachersPath = "/fr/app/enseignants";
+const teacherPaths = ["/fr/app/enseignants", "/tr/app/enseignants"] as const;
+
+function revalidateTeacherPaths(): void {
+  teacherPaths.forEach((path) => revalidatePath(path));
+}
 
 export async function inviteTeacherAction(
   _previous: TeacherActionState,
@@ -35,7 +40,7 @@ export async function inviteTeacherAction(
       schoolId: access.context.school.id,
       supabase,
     });
-    if (message === "invitationSent") revalidatePath(teachersPath);
+    if (message === "invitationSent") revalidateTeacherPaths();
     return { status: message === "invitationSent" ? "success" : "error", message };
   } catch {
     return { status: "error", message: "unexpected" };
@@ -60,7 +65,7 @@ export async function updateTeacherAction(
       teacher_is_active: parsed.data.active,
     });
     if (result.error) return { status: "error", message: "notFound" };
-    revalidatePath(teachersPath);
+    revalidateTeacherPaths();
     return { status: "success", message: "profileUpdated" };
   } catch {
     return { status: "error", message: "unexpected" };
@@ -68,6 +73,7 @@ export async function updateTeacherAction(
 }
 
 export async function createTeacherPasswordAction(
+  locale: Locale,
   _previous: TeacherActionState,
   formData: FormData,
 ): Promise<TeacherActionState> {
@@ -82,7 +88,7 @@ export async function createTeacherPasswordAction(
   if (!parsed.ok) return parsed.state;
   const result = await supabase.auth.updateUser({ password: parsed.data.password });
   if (result.error) return { status: "error", message: "unexpected" };
-  redirect("/fr/app");
+  redirect(`/${locale}/app`);
 }
 
 export { initialTeacherActionState };

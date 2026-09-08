@@ -2,6 +2,14 @@
 
 Significant product, domain, architecture, security, and delivery-document changes belong here. This is not a substitute for decision records or version control.
 
+## 2026-09-09 — Task 09C2 French/Turkish localization completed locally
+
+- Activated exactly `fr` and `tr` while preserving French as the deterministic `/` default and keeping English unsupported.
+- Added a complete Turkish catalog with structural/ICU parity, localized metadata, authentication states, ADMIN/TEACHER navigation, teacher management, activation, errors, semesters, and locale-aware dates.
+- Added one global accessible `FR | TR` switcher that preserves safe nested paths, retains sessions, and discards every query parameter to prevent sensitive Auth data forwarding.
+- Extended session refresh and authentication/sign-out/password redirects to both locales without duplicating authorization or database access.
+- Added focused catalog, route, switcher, authentication, and date-format tests. No migration, remote data, invitation, Supabase/Vercel configuration, commit, or push was performed.
+
 ## 2026-09-09 — Task 09D-PRE dedicated deployment completed
 
 - Reviewed and committed 95 Suivora files after full application/database validation and credential, identity, token, private-key, project-reference, generated-output, and Numeon separation scans.

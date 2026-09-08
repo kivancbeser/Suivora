@@ -42,10 +42,10 @@ The implemented next-intl 4.14 integration uses Next.js 16.3's `next/root-params
 ```text
 / → application redirect → /fr
 /fr → [locale] validation → request config → fr.json → server translations
-unknown locale → [locale] validation → catalog-backed French 404
+unknown locale → [locale] validation → 404
 ```
 
-`src/i18n/routing.ts` owns the immutable locale tuple, `Locale` type, default locale, validation helper, and typed navigation configuration. `src/i18n/request.ts` validates the root locale parameter and loads its server-side catalog. The next-intl plugin connects that request configuration to Next.js. The locale layout provides the smallest shared client-provider boundary while pages and metadata use server translations by default. Root and localized not-found boundaries source visible copy from the same French catalog.
+`src/i18n/routing.ts` owns the immutable `fr`/`tr` locale tuple, `Locale` type, French default, validation helper, and typed navigation configuration. `src/i18n/request.ts` validates the root locale parameter and loads its server-side catalog. The next-intl plugin connects that request configuration to Next.js. One client-side switcher at the localized root changes only the leading locale segment and drops query data; pages, metadata, authorization, and business navigation remain shared and server-first. Localized not-found boundaries use the active catalog.
 
 `src/proxy.ts` now uses the Next.js 16 proxy convention only for `/fr/connexion` and `/fr/app/:path*`. It refreshes Supabase Auth cookies and excludes static/internal assets by using this narrow allow-list; it performs no locale negotiation, role lookup, school lookup, or application-table query. The root redirect and unsupported-locale 404 behavior remain application-owned.
 

@@ -1,6 +1,7 @@
 import { createSchoolYearAction, createSemesterAction, updateSchoolYearAction, updateSemesterAction } from "./actions";
 import { SchoolYearForm, SemesterForm, type CalendarFormMessages } from "./calendar-form";
 import type { SchoolYear, SemesterNumber } from "./calendar";
+import type { Locale } from "@/i18n/routing";
 
 export type CalendarPageMessages = Readonly<{
   eyebrow: string;
@@ -19,11 +20,12 @@ export type CalendarPageMessages = Readonly<{
   form: CalendarFormMessages;
 }>;
 
-function formatDate(value: string): string {
-  return new Intl.DateTimeFormat("fr-FR", { dateStyle: "long", timeZone: "UTC" }).format(new Date(`${value}T00:00:00Z`));
+export function formatCalendarDate(value: string, locale: Locale): string {
+  return new Intl.DateTimeFormat(locale === "fr" ? "fr-FR" : "tr-TR", { dateStyle: "long", timeZone: "UTC" }).format(new Date(`${value}T00:00:00Z`));
 }
 
-function SemesterBlock({ messages, semester }: Readonly<{
+function SemesterBlock({ locale, messages, semester }: Readonly<{
+  locale: Locale;
   messages: CalendarPageMessages;
   semester: SchoolYear["semesters"][number];
 }>) {
@@ -32,7 +34,7 @@ function SemesterBlock({ messages, semester }: Readonly<{
     <article className="calendar-semester">
       <div>
         <h4>{messages.semesters[String(semester.semesterNumber) as "1" | "2"]}</h4>
-        <p>{formatDate(semester.startDate)} — {formatDate(semester.endDate)}</p>
+        <p>{formatCalendarDate(semester.startDate, locale)} — {formatCalendarDate(semester.endDate, locale)}</p>
       </div>
       <details className="calendar-disclosure">
         <summary>{messages.editSemester}</summary>
@@ -56,13 +58,13 @@ function MissingSemester({ messages, semesterNumber, yearId }: Readonly<{
   );
 }
 
-function SchoolYearCard({ messages, year }: Readonly<{ messages: CalendarPageMessages; year: SchoolYear }>) {
+function SchoolYearCard({ locale, messages, year }: Readonly<{ locale: Locale; messages: CalendarPageMessages; year: SchoolYear }>) {
   const updateAction = updateSchoolYearAction.bind(null, year.id);
   const present = new Set(year.semesters.map((semester) => semester.semesterNumber));
   return (
     <article className="calendar-year-card">
       <header className="calendar-year-card__header">
-        <div><h2>{year.label}</h2><p>{formatDate(year.startDate)} — {formatDate(year.endDate)}</p></div>
+        <div><h2>{year.label}</h2><p>{formatCalendarDate(year.startDate, locale)} — {formatCalendarDate(year.endDate, locale)}</p></div>
         <span className="calendar-completion">{messages.completion}: {year.semesters.length}/2</span>
       </header>
       <details className="calendar-disclosure">
@@ -70,14 +72,15 @@ function SchoolYearCard({ messages, year }: Readonly<{ messages: CalendarPageMes
         <SchoolYearForm action={updateAction} initial={{ label: year.label, startDate: year.startDate, endDate: year.endDate }} messages={messages.form} />
       </details>
       <div className="calendar-semesters">
-        {year.semesters.map((semester) => <SemesterBlock key={semester.id} messages={messages} semester={semester} />)}
+        {year.semesters.map((semester) => <SemesterBlock key={semester.id} locale={locale} messages={messages} semester={semester} />)}
         {([1, 2] as const).filter((semester) => !present.has(semester)).map((semester) => <MissingSemester key={semester} messages={messages} semesterNumber={semester} yearId={year.id} />)}
       </div>
     </article>
   );
 }
 
-export function CalendarPage({ messages, readError, years }: Readonly<{
+export function CalendarPage({ locale, messages, readError, years }: Readonly<{
+  locale: Locale;
   messages: CalendarPageMessages;
   readError?: boolean;
   years: readonly SchoolYear[];
@@ -96,7 +99,7 @@ export function CalendarPage({ messages, readError, years }: Readonly<{
       ) : years.length === 0 ? (
         <div className="calendar-empty"><h2>{messages.emptyTitle}</h2><p>{messages.emptyDescription}</p></div>
       ) : (
-        <div className="calendar-year-list">{years.map((year) => <SchoolYearCard key={year.id} messages={messages} year={year} />)}</div>
+        <div className="calendar-year-list">{years.map((year) => <SchoolYearCard key={year.id} locale={locale} messages={messages} year={year} />)}</div>
       )}
     </section>
   );

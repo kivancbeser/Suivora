@@ -25,6 +25,7 @@
    - Local provisioning and lifecycle foundation — completed in Task 09A
    - Reviewed remote provisioning migration — completed in Task 09B
    - Server-only invitation infrastructure and ADMIN UI — completed locally in Task 09C
+   - Complete Turkish localization and global FR/TR switcher — completed locally in Task 09C2
    - Dedicated GitHub/Vercel development deployment and Auth URL configuration — completed in Task 09D-PRE
    - Controlled remote invitation and activation verification — next as Task 09D after deployment configuration
 10. Class management

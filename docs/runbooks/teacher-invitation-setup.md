@@ -28,6 +28,6 @@ The isolated privileged client disables persisted sessions, URL session detectio
 
 An active ADMIN supplies an email and display name. The server re-authenticates and authorizes the request, validates both values, loads privileged configuration lazily, sends the Auth invitation, and passes only the returned Auth user ID plus normalized name to `admin_provision_teacher_profile` through the ADMIN's normal client. Supabase Auth owns email and password; `user_profiles` owns school, role, display name, and active state.
 
-The email link reaches `/auth/confirm`, which accepts only `type=invite`, a bounded token hash, and exact `next=/fr/activation`. Successful OTP verification establishes SSR cookies and redirects without the token. The authenticated active TEACHER chooses a matching password of at least 12 characters on `/fr/activation`; ADMIN and unauthenticated access are rejected.
+The email link reaches `/auth/confirm`, which accepts only `type=invite`, a bounded token hash, and exact `next=/fr/activation`. Successful OTP verification establishes SSR cookies and redirects without the token. The authenticated active TEACHER may remain on `/fr/activation` or safely switch to `/tr/activation`; the switch never copies token/query data. ADMIN and unauthenticated access are rejected.
 
 TASK 09D is required before pilot use to review the remote template/URL/SMTP configuration and exercise exactly one controlled invitation and activation without exposing identifiers or credentials.

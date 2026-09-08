@@ -23,15 +23,17 @@ Tests follow risk and ownership boundaries. Deterministic business rules receive
 - Localization resources cover user-facing copy and formatting
 - Responsive/accessibility checks for core workflows
 
-## Localization foundation scenarios
+## Localization scenarios
 
-- `/fr` renders the product name and French tagline from `fr.json`.
-- `fr` is accepted, an unknown locale is rejected, and the default is `fr`.
+- `/fr` and `/tr` render from their complete catalogs.
+- Exactly `fr` and `tr` are accepted, an unknown locale is rejected, and the default remains `fr`.
 - The supported-locale tuple remains immutable and is the source of the `Locale` type.
 - The application-owned root redirect target is `/fr`.
 - Unsupported locale segments reach a 404 without falling back to French.
 - Metadata and visible placeholder copy use catalog keys rather than duplicated component strings.
-- New locale activation requires a complete catalog and representative routing/render tests.
+- Catalog key structures and ICU placeholders are identical and values are non-empty.
+- The global switcher preserves nested pathnames, drops sensitive/arbitrary query data, exposes a label/focusable links, and marks the current locale without relying only on color.
+- Authentication redirects, role authorization, semester labels, and date presentation work identically in both locales while stored values remain unchanged.
 
 Tests target application-owned decisions instead of mocking fragile Next.js redirect or not-found internals. Production builds validate the framework integration.
 
@@ -62,9 +64,9 @@ Tests target application-owned decisions instead of mocking fragile Next.js redi
 ## Authentication foundation scenarios
 
 - Zod accepts normalized valid credentials and rejects malformed email, missing password, and unsupported locale input.
-- Provider failures collapse to generic French messages and never expose raw Supabase errors or account existence.
-- Signed-out protected access redirects to `/fr/connexion`; authenticated protected access renders, and authenticated sign-in access redirects to `/fr/app`.
-- Sign-out uses a server mutation with local-session scope and returns to `/fr/connexion`.
+- Provider failures collapse to generic localized messages and never expose raw Supabase errors or account existence.
+- Signed-out protected access and authenticated sign-in redirects retain `fr` or `tr`.
+- Sign-out uses a server mutation with local-session scope and returns to the selected locale's sign-in route.
 - Return paths accept only the active locale's `/app` subtree and reject external, protocol-relative, cross-locale, malformed, and adjacent-prefix attempts.
 - Component tests assert French labels, password/email semantics, autocomplete values, and an accessible submit control.
 

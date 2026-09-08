@@ -6,7 +6,7 @@ vi.mock("./actions", () => ({
   createSchoolYearAction: vi.fn(), createSemesterAction: vi.fn(), updateSchoolYearAction: vi.fn(), updateSemesterAction: vi.fn(),
 }));
 
-import { CalendarPage, type CalendarPageMessages } from "./calendar-page";
+import { CalendarPage, formatCalendarDate, type CalendarPageMessages } from "./calendar-page";
 
 const messages: CalendarPageMessages = {
   eyebrow: "Administration", title: "Années scolaires", description: "Définissez le calendrier.", addYear: "Ajouter une année scolaire",
@@ -29,15 +29,19 @@ const messages: CalendarPageMessages = {
 afterEach(cleanup);
 
 describe("calendar admin page", () => {
+  it("formats stored ISO dates for the active locale without changing the value", () => {
+    expect(formatCalendarDate("2026-09-01", "fr")).toBe("1 septembre 2026");
+    expect(formatCalendarDate("2026-09-01", "tr")).toBe("1 Eylül 2026");
+  });
   it("renders the localized empty state without creating data", () => {
-    render(<CalendarPage messages={messages} years={[]} />);
+    render(<CalendarPage locale="fr" messages={messages} years={[]} />);
     expect(screen.getByRole("heading", { level: 1, name: "Années scolaires" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Aucune année scolaire" })).toBeInTheDocument();
     expect(screen.getByText("Ajouter une année scolaire")).toBeInTheDocument();
   });
 
   it("renders newest-first input, fixed semester labels and completion without identifiers", () => {
-    const { container } = render(<CalendarPage messages={messages} years={[
+    const { container } = render(<CalendarPage locale="fr" messages={messages} years={[
       { id: "00000000-0000-4000-8000-000000000002", label: "2027–2028", startDate: "2027-09-01", endDate: "2028-06-30", semesters: [
         { id: "00000000-0000-4000-8000-000000000012", semesterNumber: 1, startDate: "2027-09-01", endDate: "2028-01-31" },
         { id: "00000000-0000-4000-8000-000000000013", semesterNumber: 2, startDate: "2028-01-31", endDate: "2028-06-30" },
@@ -57,13 +61,13 @@ describe("calendar admin page", () => {
 
   it("provides associated form labels and a safe announced read failure", async () => {
     const user = userEvent.setup();
-    const { rerender } = render(<CalendarPage messages={messages} years={[]} />);
+    const { rerender } = render(<CalendarPage locale="fr" messages={messages} years={[]} />);
     await user.click(screen.getByText("Ajouter une année scolaire"));
     expect(screen.getByRole("textbox", { name: "Nom de l’année scolaire" })).toBeInTheDocument();
     expect(screen.getByLabelText("Date de début")).toHaveAttribute("type", "date");
     expect(screen.getByLabelText("Date de fin")).toHaveAttribute("type", "date");
     expect(screen.getByRole("button", { name: "Enregistrer" })).toBeInTheDocument();
-    rerender(<CalendarPage messages={messages} readError years={[]} />);
+    rerender(<CalendarPage locale="fr" messages={messages} readError years={[]} />);
     expect(screen.getByRole("alert")).toHaveTextContent("Calendrier indisponible");
   });
 });

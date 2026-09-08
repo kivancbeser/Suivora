@@ -193,6 +193,7 @@
     }
   },
   "Common": {
+    "languageSwitcher": "Choisir la langue",
     "loading": "Chargement…",
     "error": "Une erreur est survenue.",
     "notFound": "Page introuvable"

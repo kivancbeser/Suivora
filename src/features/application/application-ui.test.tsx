@@ -55,6 +55,7 @@ describe("application interface", () => {
         }}
         messages={messages}
         navigationItems={navigation}
+        locale="fr"
       >
         <p>Contenu</p>
       </ApplicationShell>,
@@ -71,6 +72,7 @@ describe("application interface", () => {
   it("keeps sign-out available in the safe access-unavailable state", () => {
     render(
       <AccessUnavailable
+        locale="fr"
         messages={{
           brand: "Suivora",
           title: "Accès indisponible",

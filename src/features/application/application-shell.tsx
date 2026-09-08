@@ -2,11 +2,13 @@ import type { ReactNode } from "react";
 import type { AppContext } from "./application-context";
 import { RoleNavigation, type LocalizedNavigationItem } from "./role-navigation";
 import { SignOutButton } from "@/features/auth/sign-out-button";
+import type { Locale } from "@/i18n/routing";
 
 type ApplicationShellProps = Readonly<{
   children: ReactNode;
   context: AppContext;
   navigationItems: readonly LocalizedNavigationItem[];
+  locale: Locale;
   messages: Readonly<{
     brand: string;
     navigationLabel: string;
@@ -36,6 +38,7 @@ export function ApplicationShell({
   context,
   navigationItems,
   messages,
+  locale,
 }: ApplicationShellProps) {
   const navigation = (
     <RoleNavigation ariaLabel={messages.navigationLabel} items={navigationItems} />
@@ -51,6 +54,7 @@ export function ApplicationShell({
           className="app-sign-out"
           label={messages.signOut}
           pendingLabel={messages.signingOut}
+          locale={locale}
         />
       </aside>
 
@@ -67,6 +71,7 @@ export function ApplicationShell({
               className="app-sign-out"
               label={messages.signOut}
               pendingLabel={messages.signingOut}
+              locale={locale}
             />
           </div>
         </details>

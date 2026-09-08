@@ -1,3 +1,5 @@
+import type { Locale } from "@/i18n/routing";
+
 export const applicationRoles = ["ADMIN", "TEACHER"] as const;
 
 export type ApplicationRole = (typeof applicationRoles)[number];
@@ -53,7 +55,7 @@ export function isApplicationRole(value: string): value is ApplicationRole {
 
 export function getUnauthenticatedApplicationRedirect(
   result: ApplicationAccessResult,
-  locale: "fr",
+  locale: Locale,
 ): string | null {
   return result.status === "unauthenticated" ? `/${locale}/connexion` : null;
 }

@@ -8,11 +8,19 @@ import {
 } from "@/features/auth/authentication";
 import { isLocale } from "@/i18n/routing";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
+import type { Metadata } from "next";
 
 type SignInPageProps = Readonly<{
   params: Promise<{ locale: string }>;
   searchParams: Promise<{ retour?: string | string[] }>;
 }>;
+
+export async function generateMetadata({ params }: Pick<SignInPageProps, "params">): Promise<Metadata> {
+  const { locale } = await params;
+  if (!isLocale(locale)) return {};
+  const t = await getTranslations({ locale, namespace: "Auth" });
+  return { title: t("title"), description: t("intro") };
+}
 
 export default async function SignInPage({ params, searchParams }: SignInPageProps) {
   const { locale } = await params;

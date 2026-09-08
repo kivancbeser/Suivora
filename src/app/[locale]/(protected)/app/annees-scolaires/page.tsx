@@ -40,5 +40,5 @@ export default async function SchoolYearsPage({ params }: SchoolYearsPageProps) 
     },
   };
 
-  return <CalendarPage messages={messages} readError={result.status === "error"} years={result.status === "ready" ? result.years : []} />;
+  return <CalendarPage locale={locale} messages={messages} readError={result.status === "error"} years={result.status === "ready" ? result.years : []} />;
 }

@@ -1,0 +1,201 @@
+{
+  "Metadata": {
+    "title": "Suivora",
+    "description": "Paylaşımlı pedagojik takip, açık ve kolay."
+  },
+  "Foundation": {
+    "productName": "Suivora",
+    "tagline": "Pedagojik takip, kolayca.",
+    "status": "Proje altyapısı hazırlanıyor",
+    "milestoneLabel": "Planlanan ilk aşama",
+    "milestoneName": "Paylaşımlı sınıf merkezi"
+  },
+  "Auth": {
+    "productName": "Suivora",
+    "title": "Giriş",
+    "intro": "Paylaşımlı eğitim alanınıza erişin.",
+    "emailLabel": "E-posta adresi",
+    "passwordLabel": "Şifre",
+    "submit": "Giriş Yap",
+    "submitting": "Giriş yapılıyor…",
+    "signOut": "Çıkış Yap",
+    "signingOut": "Çıkış yapılıyor…",
+    "authenticatedTitle": "Kimliği doğrulanmış alan",
+    "authenticatedDescription": "Oturumunuz aktif. Yönetici ve öğretmen alanları sonraki aşamalarda eklenecek.",
+    "errors": {
+      "emailRequired": "E-posta adresinizi girin.",
+      "emailInvalid": "Geçerli bir e-posta adresi girin.",
+      "passwordRequired": "Şifrenizi girin.",
+      "credentialsInvalid": "Giriş yapılamadı. Bilgilerinizi kontrol edip yeniden deneyin.",
+      "unexpected": "Şu anda giriş yapılamıyor. Daha sonra yeniden deneyin."
+    }
+  },
+  "Application": {
+    "brand": "Suivora",
+    "navigationLabel": "Ana navigasyon",
+    "mobileMenuLabel": "Navigasyonu Aç",
+    "schoolLabel": "Okul",
+    "roleLabel": "Rol",
+    "roles": {
+      "ADMIN": "Yönetici",
+      "TEACHER": "Öğretmen"
+    },
+    "signOut": "Çıkış Yap",
+    "signingOut": "Çıkış yapılıyor…",
+    "navigation": {
+      "home": "Ana Sayfa",
+      "schoolYears": "Eğitim Yılları",
+      "teachers": "Öğretmenler",
+      "classes": "Sınıflar",
+      "students": "Öğrenciler",
+      "subjects": "Dersler",
+      "settings": "Ayarlar",
+      "today": "Bugün",
+      "myClasses": "Sınıflarım",
+      "quizzesAndGrades": "Quizler ve Notlar",
+      "homework": "Ödevler",
+      "progression": "İlerleme",
+      "studentFollowUp": "Öğrenci Takibi",
+      "reports": "Raporlar"
+    },
+    "home": {
+      "eyebrow": "Çalışma Alanı",
+      "title": "Suivora'ya Hoş Geldiniz",
+      "description": "Güvenli alanınız hazır. Eğitim modülleri, örnek veri kullanılmadan aşamalı olarak eklenecek."
+    },
+    "moduleUnavailable": {
+      "eyebrow": "Yakında Gelecek Modül",
+      "description": "Bu modül henüz kullanıma hazır değil. Sonraki bir aşamada etkinleştirilecek."
+    },
+    "accessUnavailable": {
+      "title": "Erişim Kullanılamıyor",
+      "description": "Uygulama erişiminiz şu anda doğrulanamıyor. Okul yöneticinizle iletişime geçin veya daha sonra yeniden deneyin."
+    }
+  },
+  "Calendar": {
+    "eyebrow": "Yönetim",
+    "title": "Eğitim Yılları",
+    "description": "Eğitim yıllarını ve iki döneme ait tarihleri belirleyin.",
+    "addYear": "Eğitim Yılı Ekle",
+    "editYear": "Eğitim Yılını Düzenle",
+    "completion": "Yapılandırılan dönemler",
+    "addSemester": "Ekle",
+    "editSemester": "Tarihleri Düzenle",
+    "empty": {
+      "title": "Eğitim yılı bulunmuyor",
+      "description": "Dönemlerini yapılandırmak için ilk eğitim yılını oluşturun."
+    },
+    "readError": {
+      "title": "Takvim kullanılamıyor",
+      "description": "Eğitim yılları şu anda yüklenemiyor. Daha sonra yeniden deneyin."
+    },
+    "semesters": {
+      "1": "1. Dönem",
+      "2": "2. Dönem"
+    },
+    "form": {
+      "label": "Eğitim yılı adı",
+      "startDate": "Başlangıç tarihi",
+      "endDate": "Bitiş tarihi",
+      "save": "Kaydet",
+      "saving": "Kaydediliyor…",
+      "cancel": "İptal"
+    },
+    "success": {
+      "yearCreated": "Eğitim yılı oluşturuldu.",
+      "yearUpdated": "Eğitim yılı güncellendi.",
+      "semesterCreated": "Dönem oluşturuldu.",
+      "semesterUpdated": "Dönem güncellendi."
+    },
+    "errors": {
+      "accessDenied": "Bu işlem için yetkiniz yok.",
+      "dateInvalid": "Geçerli bir tarih girin.",
+      "dateOrder": "Bitiş tarihi başlangıç tarihinden sonra olmalıdır.",
+      "duplicateSemester": "Bu eğitim yılı için bu dönem zaten mevcut.",
+      "duplicateYear": "Bu ada sahip bir eğitim yılı zaten mevcut.",
+      "labelRequired": "Eğitim yılı adını girin.",
+      "labelTooLong": "Eğitim yılı adı 120 karakteri aşmamalıdır.",
+      "notFound": "İstenen öğe bulunamadı veya erişilemiyor.",
+      "outsideYear": "Dönem tarihleri eğitim yılı içinde kalmalıdır.",
+      "semesterChronology": "Dönemler çakışamaz veya ters sırada olamaz.",
+      "semesterInvalid": "1. Dönem veya 2. Dönem seçin.",
+      "unexpected": "İşlem şu anda gerçekleştirilemiyor. Daha sonra yeniden deneyin.",
+      "unexpectedFields": "Form beklenmeyen veriler içeriyor. Sayfayı yenileyip yeniden deneyin.",
+      "yearContainsTerms": "Bu tarihler mevcut bir dönemi dışarıda bırakır. Önce dönem tarihlerini değiştirin."
+    }
+  },
+  "Teachers": {
+    "eyebrow": "Yönetim",
+    "title": "Öğretmenler",
+    "description": "Öğretmenleri davet edin ve okula erişimlerini yönetin.",
+    "invitation": { "title": "Öğretmen Davet Et" },
+    "listTitle": "Öğretmen Ekibi",
+    "loading": "Öğretmenler yükleniyor…",
+    "empty": { "title": "Öğretmen bulunmuyor", "description": "Ekibi oluşturmak için ilk öğretmeni davet edin." },
+    "readError": { "title": "Öğretmenler kullanılamıyor", "description": "Liste şu anda yüklenemiyor. Daha sonra yeniden deneyin." },
+    "status": { "active": "Aktif", "inactive": "Pasif" },
+    "form": {
+      "displayName": "Görünen ad",
+      "email": "E-posta adresi",
+      "invite": "Daveti Gönder",
+      "inviting": "Gönderiliyor…",
+      "save": "Kaydet",
+      "saving": "Kaydediliyor…",
+      "edit": "Düzenle veya Devre Dışı Bırak",
+      "cancel": "İptal",
+      "deactivate": "Erişimi Devre Dışı Bırak",
+      "reactivate": "Erişimi Yeniden Etkinleştir",
+      "deactivationWarning": "Devre dışı bırakıldığında bu öğretmen uygulamaya erişemez. Hesabı ve geçmişi korunur.",
+      "confirmDeactivation": "Bu erişimi devre dışı bırakmayı onaylıyorum"
+    },
+    "results": {
+      "accessDenied": "Bu işlem için yetkiniz yok.",
+      "configurationUnavailable": "Davetler henüz yapılandırılmadı. Uygulama sorumlusuyla iletişime geçin.",
+      "displayNameInvalid": "Ad, izin verilmeyen karakterler içeriyor.",
+      "displayNameRequired": "Öğretmenin adını girin.",
+      "displayNameTooLong": "Ad 120 karakteri aşmamalıdır.",
+      "emailInvalid": "Geçerli bir e-posta adresi girin.",
+      "emailRequired": "Öğretmenin e-posta adresini girin.",
+      "emailTooLong": "E-posta adresi çok uzun.",
+      "invitationFailed": "Davet gönderilemedi. Bilgileri kontrol edin veya daha sonra yeniden deneyin.",
+      "invitationSent": "Davet gönderildi ve öğretmen profili oluşturuldu.",
+      "manualIntervention": "Yeniden denemeden önce davetin elle kontrol edilmesi gerekiyor.",
+      "notFound": "Öğretmen bulunamadı veya erişilemiyor.",
+      "profileUpdated": "Öğretmen profili güncellendi.",
+      "retryableFailure": "Davet tamamlanamadı. Yeniden deneyebilirsiniz.",
+      "unexpectedFields": "Form beklenmeyen veriler içeriyor. Sayfayı yenileyip yeniden deneyin.",
+      "unexpected": "İşlem şu anda gerçekleştirilemiyor. Daha sonra yeniden deneyin.",
+      "confirmationRequired": "Devam etmeden önce devre dışı bırakmayı onaylayın.",
+      "passwordMismatch": "Şifreler eşleşmiyor.",
+      "passwordTooLong": "Şifre çok uzun.",
+      "passwordTooShort": "Şifre en az 12 karakter olmalıdır."
+    }
+  },
+  "Activation": {
+    "brand": "Suivora",
+    "title": "Şifrenizi Oluşturun",
+    "description": "Öğretmen erişiminizin aktivasyonunu tamamlamak için şifrenizi belirleyin.",
+    "password": "Şifre",
+    "confirmation": "Şifreyi doğrulayın",
+    "submit": "Erişimimi Etkinleştir",
+    "submitting": "Etkinleştiriliyor…",
+    "errors": {
+      "accessDenied": "Bu aktivasyon sayfası bu hesap için kullanılamıyor.",
+      "passwordTooShort": "Şifre en az 12 karakter olmalıdır.",
+      "passwordTooLong": "Şifre çok uzun.",
+      "passwordMismatch": "Şifreler eşleşmiyor.",
+      "unexpectedFields": "Form beklenmeyen veriler içeriyor.",
+      "unexpected": "Aktivasyon şu anda tamamlanamıyor. Daha sonra yeniden deneyin."
+    },
+    "invalid": {
+      "title": "Davet geçersiz veya süresi dolmuş",
+      "description": "Bu davet bağlantısı kullanılamıyor. Okul yöneticinizden yeni bir davet isteyin."
+    }
+  },
+  "Common": {
+    "languageSwitcher": "Dil seçin",
+    "loading": "Yükleniyor…",
+    "error": "Bir hata oluştu.",
+    "notFound": "Sayfa bulunamadı"
+  }
+}

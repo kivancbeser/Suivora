@@ -32,6 +32,7 @@ export default async function ProtectedLayout({ children, params }: ProtectedLay
   if (result.status === "access-unavailable") {
     return (
       <AccessUnavailable
+        locale={locale}
         messages={{
           brand: t("brand"),
           title: t("accessUnavailable.title"),
@@ -55,6 +56,7 @@ export default async function ProtectedLayout({ children, params }: ProtectedLay
   return (
     <ApplicationShell
       context={result.context}
+      locale={locale}
       messages={{
         brand: t("brand"),
         navigationLabel: t("navigationLabel"),
