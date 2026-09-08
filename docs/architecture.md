@@ -110,3 +110,7 @@ Invitation and profile creation cannot be one cross-system transaction. The futu
 Task 09C implements the ADMIN-only `/fr/app/enseignants` module. Same-school TEACHER profiles are listed through RLS, every Server Action re-resolves the active ADMIN context, and profile mutations call only the protected RPCs. The secret-backed client is isolated in `src/lib/supabase/privileged.ts`, has no cookies or persistent session, and is imported only by the teacher provisioning server module.
 
 Invitation success followed by an RPC error is reconciled through the normal authenticated database boundary. Only an Auth identity returned by that exact request can be deleted once as compensation. `/auth/confirm` verifies invitation OTPs with the cookie-aware SSR client and allows only `/fr/activation`; activation accepts only active TEACHER profiles and stores passwords only through Supabase Auth.
+
+## Development deployment boundary
+
+The dedicated public GitHub repository `kivancbeser/Suivora` drives the dedicated Vercel project `suivora` from `main`. Its stable production alias is `https://suivora.vercel.app`; branch-specific deployment URLs are never invitation origins. Vercel Production owns the four named environment variables, with `SUPABASE_SECRET_KEY` stored as sensitive. Local development retains `http://localhost:3000` in ignored local configuration. Numeon repositories, projects, domains, and variables are not shared.

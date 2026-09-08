@@ -120,6 +120,8 @@ These cases become executable only after the relevant-average, precision, resolu
 
 Task 09C uses mocked Auth Admin and request-scoped Supabase gateways: no test sends email or mutates the remote project. Coverage includes lazy secret/origin validation, privileged-client options/import isolation, same-school teacher queries, action reauthorization and strict fields, invitation compensation, confirmation redirect safety, password validation/update, French empty/error states, hidden identifiers, accessible controls, and explicit deactivation confirmation. Database reset and the existing pgTAP suite remain unchanged because no migration or seed is added.
 
+Task 09D-PRE repeated the full 136-test application suite, coverage, production build, zero-vulnerability dependency audit, clean local database reset, all 201 pgTAP assertions, database lint, and whitespace checks before push. Production smoke tests cover the French root redirect/page, sign-in, unauthenticated protected and activation redirects, safe invalid-confirm redirect, unsupported-locale 404, HTTPS/assets, 390 px no-overflow layout, and browser-output secret absence.
+
 ## Quality gates
 
 Repository bootstrap should define commands for formatting/checks, linting, strict type checking, unit/component tests, build, and E2E. CI should run the proportional subset on changes and the full security/shared-class scenario suite before pilot release. Exact commands are intentionally not invented before `package.json` exists.

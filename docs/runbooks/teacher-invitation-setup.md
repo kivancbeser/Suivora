@@ -1,18 +1,20 @@
 # Teacher invitation setup runbook
 
-TASK 09C implements the code path but deliberately sends no invitation and changes no remote Auth setting. Complete these reviewed steps only in TASK 09D, separately for development and production.
+TASK 09C implements the code path, and TASK 09D-PRE deploys it to the dedicated Vercel project at `https://suivora.vercel.app`. No invitation or remote Auth setting changes occur before the explicit TASK 09D-PRE/09D gates. Keep development and future production configuration separate.
 
 ## Server-only environment
 
 Configure `SUPABASE_SECRET_KEY` with a current Supabase `sb_secret_…` key and `APP_URL` with the application origin. `APP_URL` must be one absolute HTTP(S) origin: no credentials, path, query, fragment, or trailing-path redirect. Never use `NEXT_PUBLIC_`, a publishable-key fallback, logs, screenshots, documentation, or client-side hosting variables for the secret.
+
+Local development uses `http://localhost:3000`; the deployed Vercel Production environment uses the stable `https://suivora.vercel.app` alias. Never use a branch-specific preview deployment as an invitation origin.
 
 The isolated privileged client disables persisted sessions, URL session detection, and token refresh. It is used only for `auth.admin.inviteUserByEmail` and exact-user compensation. Normal database reads and both profile RPCs continue through the authenticated cookie-aware client and RLS.
 
 ## Supabase Auth configuration
 
 - Keep public signup disabled.
-- Configure development and production Site URLs separately; never reuse a development origin in production.
-- Allow the application `/auth/confirm` callback and `/fr/activation` destination for the appropriate environment.
+- Set the current Suivora development Site URL to `https://suivora.vercel.app` only after explicit approval, and retain `http://localhost:3000/**` in the redirect allow-list for local work.
+- Allow `https://suivora.vercel.app/**` so the controlled `/auth/confirm` callback can establish the session before `/fr/activation`.
 - Configure the invite email template to direct the token hash and invitation type to this exact shape:
 
 ```text

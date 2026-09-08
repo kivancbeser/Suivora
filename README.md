@@ -6,7 +6,7 @@ Suivora is a French-first shared classroom management web application for clear,
 
 ## Current status
 
-Task 09C teacher management is implemented locally. ADMINs can list and manage same-school TEACHER profiles, while the server-only invitation, confirmation, activation, and bounded-compensation foundations are covered with mocks. No real invitation or remote Auth/data change was made.
+Task 09D-PRE deployment preparation is active. The reviewed application is pushed to the dedicated `kivancbeser/Suivora` GitHub repository and deployed from `main` to the dedicated Vercel `suivora` project at `https://suivora.vercel.app`. Production environment-variable names are configured in Vercel without storing values in Git. Supabase Auth URL changes and the first real invitation remain pending separate approval.
 
 ## Users and central concept
 
@@ -55,7 +55,7 @@ npm install
 npm run dev
 ```
 
-The development server is available at `http://localhost:3000` by default. Validate changes with:
+The development server is available at `http://localhost:3000` by default. The stable development deployment is `https://suivora.vercel.app`. Validate changes with:
 
 ```bash
 npm run lint
