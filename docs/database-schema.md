@@ -1,6 +1,6 @@
 # Database schema proposal
 
-The Task 04A foundation is implemented by `20260903070959_initial_school_foundation.sql` and Task 04B applied it exactly once to the dedicated Suivora development project. Task 06A added `20260905090000_authorization_rls_foundation.sql`; Task 06B reviewed and applied it exactly once. Task 08B applied `20260907190000_calendar_integrity.sql` exactly once to the same confirmed development target. Local and remote migration histories match through all three migrations. Later sections remain logical proposals until their own migrations are implemented.
+The foundation migrations through `20260909013000_class_course_foundation.sql` have each been reviewed and applied exactly once to the dedicated Suivora development project. Local and remote histories match through five migrations. Later sections remain logical proposals until their own migrations are implemented.
 
 ## Implemented local foundation
 
@@ -11,7 +11,7 @@ The Task 04A foundation is implemented by `20260903070959_initial_school_foundat
 - `school_years` belongs to a school, requires a nonblank label and `start_date < end_date`, and is unique by school and label.
 - `terms` carries `school_id`, references a same-school `school_year` through a composite foreign key, allows semester 1 or 2 only, requires ordered dates, and is unique by school year and semester.
 - School, profile, year, and term updates receive `updated_at` from one trigger function. All timestamps use `timestamptz`.
-- All four application tables have RLS enabled. The local schema has eight explicit authenticated policies: one school SELECT, one profile SELECT, and SELECT/INSERT/UPDATE policies for both school years and terms. No DELETE policy exists.
+- All seven application tables have RLS enabled. The schema has seventeen explicit authenticated policies: the original eight plus ADMIN-only SELECT/INSERT/UPDATE policies for classes, courses, and ClassCourses. No DELETE policy exists.
 - `anon` retains zero table/helper access. `authenticated` receives table SELECT plus column-limited year/term INSERT and UPDATE grants; grants do not bypass RLS.
 - Task 06C provisioned the remote development tenant through an untracked atomic transaction. Its stable post-bootstrap state is one school, one active ADMIN profile linked to the sole Auth user, zero school years and zero terms; temporary RLS verification records were removed.
 
@@ -41,14 +41,16 @@ The generated local schema contract is `src/types/database.generated.ts` and mus
 
 | Table | Essential fields / constraints |
 |---|---|
-| `classes` | `id`, `school_id`, name, active |
-| `subjects` | `id`, `school_id`, name/code, active |
+| `classes` | `id`, `school_id`, `school_year_id`, trimmed name, `is_active`, timestamps; same-school-year FK and case-insensitive year-scoped name uniqueness |
+| `courses` | `id`, `school_id`, trimmed name/optional code, `is_active`, timestamps; case-insensitive school-scoped name/code uniqueness |
 | `students` | `id`, `school_id`, school identifier/display fields, active |
-| `class_courses` | `id`, `school_id`, `school_year_id`, `class_id`, `subject_id`; unique combination |
+| `class_courses` | `id`, `school_id`, `school_year_id`, `class_id`, `course_id`, `weekly_periods`, `is_active`, timestamps; composite tenancy FKs and unique class/course/year |
 | `teacher_assignments` | `id`, `school_id`, `class_course_id`, `teacher_id`, active/from/to; prevent duplicate active assignment |
 | `student_enrollments` | `id`, `school_id`, `class_course_id`, `student_id`, active/from/to; uniqueness rules to finalize |
 
 Every foreign-key path must remain within one `school_id`, enforced through composite constraints, triggers, or an equally reliable design in addition to application validation.
+
+`20260909013000_class_course_foundation.sql` implements these three tables. Composite parent keys make same-school and same-school-year relationships declarative; case-insensitive unique indexes provide concurrency-safe business uniqueness. `weekly_periods` is a 1–40 lesson-period count, not clock-hour duration. RLS is enabled at creation, only active same-school ADMIN policies exist, mutation grants are column-limited, and DELETE is neither granted nor covered by policy. All three tables start empty.
 
 ## Assessment
 
@@ -129,4 +131,4 @@ Progression supports an academic year of 37 weeks but calendar/configuration beh
 
 Both functions are postgres-owned, explicitly volatile `SECURITY DEFINER` functions with empty search paths and schema-qualified access. Only `authenticated` receives execute; `PUBLIC` and `anon` do not. No direct `user_profiles` INSERT, UPDATE, or DELETE privilege or new policy is added. The primary key is the final concurrency boundary for duplicate provisioning.
 
-Task 09B applied this migration exactly once to the confirmed Suivora development project on 2026-09-08. Remote inspection confirmed the nullable text column, constraint, approved function bodies/signatures, standard postgres ownership, hardened configuration, two intended authenticated EXECUTE grants, unchanged eight policies and no direct profile mutation grant. Local and remote histories now match through all four migrations.
+Task 09B applied this migration exactly once to the confirmed Suivora development project on 2026-09-08. Remote inspection confirmed the nullable text column, constraint, approved function bodies/signatures, standard postgres ownership, hardened configuration, two intended authenticated EXECUTE grants, unchanged eight policies and no direct profile mutation grant. The later ClassCourse migration left these functions unchanged.

@@ -11,13 +11,13 @@
 
 Suivora is a French-first responsive web application for shared, clear, and actionable academic tracking. Working positioning: “Shared, clear and actionable academic tracking.” French tagline: “Le suivi pédagogique, simplement.”
 
-The first pilot is approximately one school, four teachers, fifty students, multiple classes and subjects, with administrator and teacher roles.
+The first pilot is approximately one school, four teachers, fifty students, multiple classes and courses, with administrator and teacher roles.
 
 ## Confirmed product model
 
-`ClassCourse` binds a class and subject for a school year. One or more teachers may be assigned. All assigned teachers work on the same authorized academic records: enrolled students, quizzes and grades, learning outcomes, homework, alert/contact history, and shared progression data according to the eventual ownership decision. Relevant changes are auditable. Authorization is enforced beyond the client.
+`ClassCourse` binds a class and course for a school year. One or more teachers may be assigned. All assigned teachers work on the same authorized academic records: enrolled students, quizzes and grades, learning outcomes, homework, alert/contact history, and shared progression data according to the eventual ownership decision. Relevant changes are auditable. Authorization is enforced beyond the client.
 
-Administrators manage teachers, years/terms, classes, subjects, students, and teacher assignments. Teachers see assigned class courses, may add students to an authorized class, and manage its academic workflow.
+Administrators manage teachers, years/terms, classes, courses, students, and teacher assignments. Teachers see assigned class courses, may add students to an authorized class, and manage its academic workflow.
 
 Student detail eventually combines C1-C8 grades, semester and annual averages, suggested and final oral grades, evolution, outcome analysis, homework history, alerts, contact history, and mandatory-study history.
 
@@ -74,6 +74,10 @@ Learning outcomes, planning, homework alerts, mandatory study, events/reminders,
 ## Implemented ADMIN calendar workflow
 
 Task 08C lets administrators list, create, and edit real school years and their two fixed semester periods. School identity is derived from the authenticated application context, semester labels are localized presentation values, and deletion remains deferred.
+
+## Implemented shared classroom structure
+
+`ClassCourse` is the central teaching aggregate: one class plus one school-owned course in the class's school year. Classes are unique by case-insensitive name within a year; courses are unique by case-insensitive name and optional code within a school. `weekly_periods` records lesson periods per week (1–40), not clock hours. All three structures use active/inactive lifecycle state and no hard-delete access. Initially only active same-school administrators can access them; teacher access requires the later assignment model.
 
 ## Confirmed teacher account lifecycle
 

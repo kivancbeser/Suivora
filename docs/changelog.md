@@ -2,6 +2,15 @@
 
 Significant product, domain, architecture, security, and delivery-document changes belong here. This is not a substitute for decision records or version control.
 
+## 2026-09-09 — ClassCourse database foundation
+
+- Added one forward-only migration for school-year classes, school-owned courses, and the central ClassCourse aggregate without seed or business data.
+- Enforced trimmed bounded names/codes, case-insensitive scoped uniqueness, composite school/year integrity, weekly lesson periods from 1–40, restricted parent deletion, and timestamp triggers.
+- Enabled immediate RLS with active same-school ADMIN-only SELECT/INSERT/UPDATE policies, narrow grants, and no DELETE access; teacher access remains deferred to assignments.
+- Added a dedicated pgTAP package covering schema, constraints, tenancy, lifecycle protection, authorization roles, and failed-write atomicity, and regenerated strict database types.
+- Passed two independent clean resets with 270/270 pgTAP assertions, database lint, the 144-test application suite, coverage, strict typecheck, build, audit, and whitespace checks.
+- Applied the single reviewed migration once to the verified Suivora development project; histories are synchronized, all new tables are empty, and remote catalog/RLS/grant checks passed.
+
 ## 2026-09-09 — Task 09C2 French/Turkish localization completed locally
 
 - Activated exactly `fr` and `tr` while preserving French as the deterministic `/` default and keeping English unsupported.

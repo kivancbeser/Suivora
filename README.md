@@ -10,13 +10,13 @@ Task 09C2 adds complete French/Turkish localization and a global route-preservin
 
 ## Users and central concept
 
-The pilot targets one school, roughly four teachers and fifty students. Administrators configure school structures and assignments. Teachers work only within assigned classes and subjects. Student and parent accounts are not part of the MVP.
+The pilot targets one school, roughly four teachers and fifty students. Administrators configure school structures and assignments. Teachers work only within assigned ClassCourses. Student and parent accounts are not part of the MVP.
 
-The central aggregate is `ClassCourse`: one class, one subject, and one school year with one or more teacher assignments. Assigned teachers work on the same quizzes, grades, outcomes, homework, contact history, and shared academic information. Server authorization and database policies—not UI visibility—protect access.
+The central aggregate is `ClassCourse`: one class, one course, and one school year with one or more teacher assignments. Assigned teachers work on the same quizzes, grades, outcomes, homework, contact history, and shared academic information. Server authorization and database policies—not UI visibility—protect access.
 
 ## MVP modules
 
-- Administration: school years, terms, teachers, classes, subjects, students, enrollments, and assignments
+- Administration: school years, terms, teachers, classes, courses, students, enrollments, and assignments
 - Shared classroom and student progress
 - Fixed C1-C8 quizzes, grade entry, averages, and oral-grade suggestions
 - Quick-total and detailed learning-outcome assessment
@@ -118,7 +118,9 @@ Add or change user-facing copy in both `src/i18n/messages/fr.json` and `src/i18n
 
 Authentication routes retain the selected locale (`/fr/connexion`, `/tr/connexion`, `/fr/app`, and `/tr/app`). Public registration is intentionally absent and public signup is disabled in the development project. The shared localized module placeholder remains role-aware in both languages. Role-aware link visibility is presentation only: the dynamic module route independently checks the server-resolved role and rejects manually entered role-inappropriate paths.
 
-The next recommended task is **TASK 09D — Controlled Remote Teacher Invitation and Activation Verification**. It must review remote Auth URLs/templates/SMTP boundaries and exercise one controlled invitation only after explicit approval.
+The database now models `classes`, school-owned `courses`, and the school-year-specific `class_courses` aggregate. These records use `is_active`; only an active same-school ADMIN may currently access them, and hard deletion is unavailable. Teacher access remains closed until active assignments are implemented.
+
+The next recommended task is **TASK 10C — ADMIN Class, Course and ClassCourse Management UI**.
 
 ## Important open decisions
 

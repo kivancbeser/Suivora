@@ -27,9 +27,9 @@
    - Server-only invitation infrastructure and ADMIN UI — completed locally in Task 09C
    - Complete Turkish localization and global FR/TR switcher — completed locally in Task 09C2
    - Dedicated GitHub/Vercel development deployment and Auth URL configuration — completed in Task 09D-PRE
-   - Controlled remote invitation and activation verification — next as Task 09D after deployment configuration
-10. Class management
-11. Subject management
+   - Controlled remote invitation and activation verification — deferred until separately requested; no invitation was sent during the ClassCourse foundation
+10. Class, course, and ClassCourse management
+11. Teacher assignments
 12. Student management
 13. Student enrollment
 14. ClassCourse
@@ -104,4 +104,4 @@ Each implementation task should state scope, decisions used, data/security effec
 
 ## Next task
 
-**TASK 09D — Controlled Remote Teacher Invitation and Activation Verification** is next. It may run one controlled invitation only after its own explicit gate. Classroom access remains deferred until teacher assignments exist.
+**TASK 10C — ADMIN Class, Course and ClassCourse Management UI** is next. It should use the implemented typed schema and existing ADMIN-only RLS boundary without adding teacher access or real seed data. Teacher access remains deferred until assignments exist.

@@ -87,8 +87,13 @@ Task 09C adds a privileged client only for invitation and exact newly-created-us
 | `user_profiles` | Own active profile; own-school admins: school profiles | Denied | Denied | Denied |
 | `school_years` | Active users: own school | Own-school admin | Own-school admin, with matching `WITH CHECK` | Denied |
 | `terms` | Active users: own school | Own-school admin | Own-school admin, with matching `WITH CHECK` | Denied |
+| `classes` | Own-school active ADMIN | Own-school active ADMIN | Own-school active ADMIN, with matching `WITH CHECK` | Denied |
+| `courses` | Own-school active ADMIN | Own-school active ADMIN | Own-school active ADMIN, with matching `WITH CHECK` | Denied |
+| `class_courses` | Own-school active ADMIN | Own-school active ADMIN | Own-school active ADMIN, with matching `WITH CHECK` | Denied |
 
-PostgreSQL grants permit an operation to reach RLS; policies then decide which rows are visible or writable. `anon` has no table privileges. `authenticated` has SELECT on all four tables, narrowly column-scoped INSERT/UPDATE grants for year and term fields, and no DELETE, school mutation, or profile mutation privilege. RLS remains mandatory even where a grant exists.
+PostgreSQL grants permit an operation to reach RLS; policies then decide which rows are visible or writable. `anon` has no application-table privileges. `authenticated` has required SELECT grants plus narrowly column-scoped structural mutations and no DELETE, school mutation, or direct profile mutation privilege. RLS remains mandatory even where a grant exists.
+
+For the three classroom-structure tables, active TEACHER, inactive/missing profile, anonymous, and other-school actors receive no rows or writes. Teacher access is deliberately deferred until active `ClassCourse` assignments can be checked at the database boundary.
 
 ## Revocation and history
 

@@ -66,6 +66,7 @@ Audit logs must not become a secret/PII dumping ground. Contact notes need caref
 - Task 09B applied only the reviewed provisioning migration after positive target, count, Auth-setting, schema, history, and dry-run gates. Remote verification found no RLS/policy/grant weakening, overload, profile data mutation, invitation, Auth change, teacher creation, or new application secret.
 - Task 09C isolates `SUPABASE_SECRET_KEY` from client code, validates `APP_URL` as an origin, disables privileged-client session persistence, constrains invitation redirects, maps Auth failures to safe codes, and performs bounded exact-ID compensation. The implementation was validated without a real invitation or remote mutation.
 - Task 09D-PRE pushed only the reviewed Suivora repository to its dedicated Vercel project. Production variables are project-scoped, the secret is marked sensitive, and the stable HTTPS deployment exposes no secret value/name in inspected HTML, JavaScript, source-map references, or route responses. The development Auth Site URL and exact production/localhost redirect allow-list were configured after explicit approval; public signup remained disabled, email authentication remained enabled, and no invitation was sent.
+- The ClassCourse foundation uses composite foreign keys for tenant/year integrity, case-insensitive unique indexes for concurrent writes, immediate RLS, ADMIN-only policies, column-limited authenticated grants, and no DELETE surface. Teacher reads remain denied until assignments exist.
 
 ## Open security decisions
 

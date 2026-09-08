@@ -129,3 +129,7 @@ Task 09D-PRE repeated the full 136-test application suite, coverage, production 
 Repository bootstrap should define commands for formatting/checks, linting, strict type checking, unit/component tests, build, and E2E. CI should run the proportional subset on changes and the full security/shared-class scenario suite before pilot release. Exact commands are intentionally not invented before `package.json` exists.
 
 Do not overuse snapshots for domain behavior; assert meaningful outcomes and denial conditions. Every production bug in core logic or authorization should gain a regression test.
+
+## ClassCourse foundation tests
+
+The dedicated pgTAP suite checks schema shape, keys, composite tenancy relationships, triggers, RLS/grants, name/code normalization and scoped uniqueness, weekly-period boundaries, restricted parent deletion, the complete initial actor matrix, and rollback-safe failed mutations. Generated local types must be byte-identical across two generations, and two clean reset/test/lint cycles are required before a reviewed remote application.

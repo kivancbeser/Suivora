@@ -4,7 +4,7 @@
 
 - ADMIN and TEACHER authentication and role-aware access
 - School-year and semester configuration
-- Teachers, classes, subjects, students, enrollments, `ClassCourse`, and multi-teacher assignments
+- Teachers, classes, courses, students, enrollments, `ClassCourse`, and multi-teacher assignments
 - Shared class/student views
 - Fixed C1-C8 quizzes, grades out of 100, averages, suggestions, final oral grades, and evolution/bands
 - `QUICK_TOTAL` and `OUTCOME_DETAILED` assessment entry
@@ -21,7 +21,7 @@
 - ClassCourse-scoped student observations, flash/bulk and detailed entry, history, deterministic evolution/alerts/summaries, class indicators, and PDF/Excel reporting
 - Teacher and administrator dashboards
 - Requested PDF/Excel exports
-- Responsive, accessible web UI; French locale through a localization layer
+- Responsive, accessible web UI; complete French and Turkish locales through one localization layer
 - Auditability and school/assignment-scoped authorization
 
 ## Out of scope for the MVP
@@ -40,3 +40,7 @@ All application code, UI, dependency installation, framework initialization, Sup
 ## Scope control
 
 An item being described here does not mean it is implemented. New business rules require an explicit decision, documentation update, and appropriately scoped task.
+
+## Implemented structural foundation
+
+The database foundation for school-year classes, school-owned courses, and their `ClassCourse` join is implemented without seed or business rows. ADMIN management UI, students, enrollments, and teacher assignments remain separate tasks.

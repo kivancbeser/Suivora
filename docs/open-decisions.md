@@ -74,3 +74,8 @@ This is the canonical unresolved-question list. No item below authorizes an impl
 45. Which editable summary templates, editing history and approval semantics apply to student and class summaries?
 46. What exact fields, layouts, periods and authorization/audit rules apply to observation PDF and Excel reports?
 47. How do student enrollment changes, archival and ClassCourse closure affect future access to historical observations?
+
+## ClassCourse lifecycle
+
+48. May an inactive class or course coexist with active ClassCourses, and should deactivation cascade logically or be blocked?
+49. When teacher assignments are introduced, what effective-date and inactive-ClassCourse rules govern continued historical read access?

@@ -114,3 +114,7 @@ Invitation success followed by an RPC error is reconciled through the normal aut
 ## Development deployment boundary
 
 The dedicated public GitHub repository `kivancbeser/Suivora` drives the dedicated Vercel project `suivora` from `main`. Its stable production alias is `https://suivora.vercel.app`; branch-specific deployment URLs are never invitation origins. Vercel Production owns the four named environment variables, with `SUPABASE_SECRET_KEY` stored as sensitive. Local development retains `http://localhost:3000` in ignored local configuration. Numeon repositories, projects, domains, and variables are not shared.
+
+## ClassCourse persistence boundary
+
+The relational dependency order is School → SchoolYear → Class → ClassCourse, with Course joining at the ClassCourse boundary. Composite foreign keys enforce school and year ownership independently of application code. Declarative checks and unique indexes enforce normalized names, codes, weekly-period bounds, and concurrency-safe business uniqueness. The tables are typed infrastructure only; feature reads and writes will remain server-side and request-scoped.

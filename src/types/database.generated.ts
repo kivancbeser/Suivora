@@ -9,6 +9,147 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      class_courses: {
+        Row: {
+          class_id: string
+          course_id: string
+          created_at: string
+          id: string
+          is_active: boolean
+          school_id: string
+          school_year_id: string
+          updated_at: string
+          weekly_periods: number
+        }
+        Insert: {
+          class_id: string
+          course_id: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          school_id: string
+          school_year_id: string
+          updated_at?: string
+          weekly_periods: number
+        }
+        Update: {
+          class_id?: string
+          course_id?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          school_id?: string
+          school_year_id?: string
+          updated_at?: string
+          weekly_periods?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "class_courses_class_school_year_fk"
+            columns: ["class_id", "school_id", "school_year_id"]
+            isOneToOne: false
+            referencedRelation: "classes"
+            referencedColumns: ["id", "school_id", "school_year_id"]
+          },
+          {
+            foreignKeyName: "class_courses_course_school_fk"
+            columns: ["course_id", "school_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id", "school_id"]
+          },
+          {
+            foreignKeyName: "class_courses_school_id_fkey"
+            columns: ["school_id"]
+            isOneToOne: false
+            referencedRelation: "schools"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      classes: {
+        Row: {
+          created_at: string
+          id: string
+          is_active: boolean
+          name: string
+          school_id: string
+          school_year_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name: string
+          school_id: string
+          school_year_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          school_id?: string
+          school_year_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "classes_school_id_fkey"
+            columns: ["school_id"]
+            isOneToOne: false
+            referencedRelation: "schools"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "classes_school_year_school_fk"
+            columns: ["school_year_id", "school_id"]
+            isOneToOne: false
+            referencedRelation: "school_years"
+            referencedColumns: ["id", "school_id"]
+          },
+        ]
+      }
+      courses: {
+        Row: {
+          code: string | null
+          created_at: string
+          id: string
+          is_active: boolean
+          name: string
+          school_id: string
+          updated_at: string
+        }
+        Insert: {
+          code?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name: string
+          school_id: string
+          updated_at?: string
+        }
+        Update: {
+          code?: string | null
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          school_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "courses_school_id_fkey"
+            columns: ["school_id"]
+            isOneToOne: false
+            referencedRelation: "schools"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       school_years: {
         Row: {
           active: boolean
