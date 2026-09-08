@@ -1,6 +1,6 @@
 # Teacher invitation setup runbook
 
-TASK 09C implements the code path, and TASK 09D-PRE deploys it to the dedicated Vercel project at `https://suivora.vercel.app`. No invitation or remote Auth setting changes occur before the explicit TASK 09D-PRE/09D gates. Keep development and future production configuration separate.
+TASK 09C implements the code path, and TASK 09D-PRE deploys it to the dedicated Vercel project at `https://suivora.vercel.app`. The development Auth URLs were configured after the explicit TASK 09D-PRE gate; no invitation has been sent. Keep development and future production configuration separate.
 
 ## Server-only environment
 
@@ -13,8 +13,8 @@ The isolated privileged client disables persisted sessions, URL session detectio
 ## Supabase Auth configuration
 
 - Keep public signup disabled.
-- Set the current Suivora development Site URL to `https://suivora.vercel.app` only after explicit approval, and retain `http://localhost:3000/**` in the redirect allow-list for local work.
-- Allow `https://suivora.vercel.app/**` so the controlled `/auth/confirm` callback can establish the session before `/fr/activation`.
+- The current Suivora development Site URL is `https://suivora.vercel.app`, configured after explicit approval.
+- The redirect allow-list contains `https://suivora.vercel.app/**` for the controlled `/auth/confirm` callback and `http://localhost:3000/**` for local work.
 - Configure the invite email template to direct the token hash and invitation type to this exact shape:
 
 ```text

@@ -6,7 +6,7 @@ Suivora is a French-first shared classroom management web application for clear,
 
 ## Current status
 
-Task 09D-PRE deployment preparation is active. The reviewed application is pushed to the dedicated `kivancbeser/Suivora` GitHub repository and deployed from `main` to the dedicated Vercel `suivora` project at `https://suivora.vercel.app`. Production environment-variable names are configured in Vercel without storing values in Git. Supabase Auth URL changes and the first real invitation remain pending separate approval.
+Task 09D-PRE deployment preparation is complete. The reviewed application is pushed to the dedicated `kivancbeser/Suivora` GitHub repository and deployed from `main` to the dedicated Vercel `suivora` project at `https://suivora.vercel.app`. Production environment-variable names are configured in Vercel without storing values in Git. The Suivora development Auth Site URL and redirect allow-list are configured for the stable deployment and localhost; the first real invitation remains separately gated.
 
 ## Users and central concept
 

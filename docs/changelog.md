@@ -2,12 +2,13 @@
 
 Significant product, domain, architecture, security, and delivery-document changes belong here. This is not a substitute for decision records or version control.
 
-## 2026-09-08 — Task 09D-PRE dedicated deployment prepared
+## 2026-09-09 — Task 09D-PRE dedicated deployment completed
 
 - Reviewed and committed 95 Suivora files after full application/database validation and credential, identity, token, private-key, project-reference, generated-output, and Numeon separation scans.
 - Pushed the authenticated application foundation only to `kivancbeser/Suivora` `main`; GitHub triggered the dedicated Vercel `suivora` project automatically.
 - Added the four required Production environment-variable names to Vercel, stored the privileged key as sensitive, set the deployment-only application origin to `https://suivora.vercel.app`, and successfully redeployed the same reviewed commit.
-- Verified HTTPS, French routes, safe redirects/404, assets, 390 px layout, and absence of the privileged secret from inspected browser output. No invitation was sent and Supabase Auth URL settings remain pending explicit approval.
+- Verified HTTPS, French routes, safe redirects/404, assets, 390 px layout, and absence of the privileged secret from inspected browser output.
+- After explicit approval, configured the Suivora development Auth Site URL for the stable Vercel alias and allowed only that deployment wildcard plus localhost development. Verified public signup stayed disabled and email authentication stayed enabled. No invitation was sent and SMTP was untouched.
 
 ## 2026-09-08 — Task 09C local teacher management completed
 

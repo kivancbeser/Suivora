@@ -25,7 +25,7 @@
    - Local provisioning and lifecycle foundation — completed in Task 09A
    - Reviewed remote provisioning migration — completed in Task 09B
    - Server-only invitation infrastructure and ADMIN UI — completed locally in Task 09C
-   - Dedicated GitHub/Vercel development deployment — awaiting Supabase Auth URL approval in Task 09D-PRE
+   - Dedicated GitHub/Vercel development deployment and Auth URL configuration — completed in Task 09D-PRE
    - Controlled remote invitation and activation verification — next as Task 09D after deployment configuration
 10. Class management
 11. Subject management
@@ -103,4 +103,4 @@ Each implementation task should state scope, decisions used, data/security effec
 
 ## Next task
 
-Complete **TASK 09D-PRE** by approving and verifying the Suivora development project's Auth Site URL and redirect allow-list for `https://suivora.vercel.app`, while retaining localhost development. Then **TASK 09D — Controlled Remote Teacher Invitation and Activation Verification** may run one controlled invitation after its own explicit gate. Classroom access remains deferred until teacher assignments exist.
+**TASK 09D — Controlled Remote Teacher Invitation and Activation Verification** is next. It may run one controlled invitation only after its own explicit gate. Classroom access remains deferred until teacher assignments exist.
