@@ -10,6 +10,188 @@
     "milestoneLabel": "Première étape prévue",
     "milestoneName": "Cœur de classe partagé"
   },
+  "Auth": {
+    "productName": "Suivora",
+    "title": "Connexion",
+    "intro": "Accédez à votre espace pédagogique partagé.",
+    "emailLabel": "Adresse e-mail",
+    "passwordLabel": "Mot de passe",
+    "submit": "Se connecter",
+    "submitting": "Connexion en cours…",
+    "signOut": "Se déconnecter",
+    "signingOut": "Déconnexion en cours…",
+    "authenticatedTitle": "Espace authentifié",
+    "authenticatedDescription": "Votre session est active. Les espaces administrateur et enseignant seront ajoutés lors des prochaines étapes.",
+    "errors": {
+      "emailRequired": "Saisissez votre adresse e-mail.",
+      "emailInvalid": "Saisissez une adresse e-mail valide.",
+      "passwordRequired": "Saisissez votre mot de passe.",
+      "credentialsInvalid": "Connexion impossible. Vérifiez vos identifiants et réessayez.",
+      "unexpected": "Connexion impossible pour le moment. Réessayez plus tard."
+    }
+  },
+  "Application": {
+    "brand": "Suivora",
+    "navigationLabel": "Navigation principale",
+    "mobileMenuLabel": "Ouvrir la navigation",
+    "schoolLabel": "Établissement",
+    "roleLabel": "Rôle",
+    "roles": {
+      "ADMIN": "Administrateur",
+      "TEACHER": "Enseignant"
+    },
+    "signOut": "Se déconnecter",
+    "signingOut": "Déconnexion en cours…",
+    "navigation": {
+      "home": "Accueil",
+      "schoolYears": "Années scolaires",
+      "teachers": "Enseignants",
+      "classes": "Classes",
+      "students": "Élèves",
+      "subjects": "Matières",
+      "settings": "Paramètres",
+      "today": "Aujourd’hui",
+      "myClasses": "Mes classes",
+      "quizzesAndGrades": "Quiz et notes",
+      "homework": "Devoirs",
+      "progression": "Progression",
+      "studentFollowUp": "Suivi des élèves",
+      "reports": "Rapports"
+    },
+    "home": {
+      "eyebrow": "Espace de travail",
+      "title": "Bienvenue dans Suivora",
+      "description": "Votre espace sécurisé est prêt. Les modules pédagogiques seront ajoutés progressivement, sans données fictives."
+    },
+    "moduleUnavailable": {
+      "eyebrow": "Module à venir",
+      "description": "Ce module n’est pas encore disponible. Il sera activé lors d’une prochaine étape."
+    },
+    "accessUnavailable": {
+      "title": "Accès indisponible",
+      "description": "Votre accès à l’application ne peut pas être confirmé pour le moment. Contactez l’administrateur de votre établissement ou réessayez plus tard."
+    }
+  },
+  "Calendar": {
+    "eyebrow": "Administration",
+    "title": "Années scolaires",
+    "description": "Définissez les années scolaires et les dates de leurs deux semestres.",
+    "addYear": "Ajouter une année scolaire",
+    "editYear": "Modifier l’année scolaire",
+    "completion": "Semestres configurés",
+    "addSemester": "Ajouter",
+    "editSemester": "Modifier les dates",
+    "empty": {
+      "title": "Aucune année scolaire",
+      "description": "Créez la première année scolaire pour pouvoir configurer ses semestres."
+    },
+    "readError": {
+      "title": "Calendrier indisponible",
+      "description": "Les années scolaires ne peuvent pas être chargées pour le moment. Réessayez plus tard."
+    },
+    "semesters": {
+      "1": "Semestre 1",
+      "2": "Semestre 2"
+    },
+    "form": {
+      "label": "Nom de l’année scolaire",
+      "startDate": "Date de début",
+      "endDate": "Date de fin",
+      "save": "Enregistrer",
+      "saving": "Enregistrement en cours…",
+      "cancel": "Annuler"
+    },
+    "success": {
+      "yearCreated": "L’année scolaire a été créée.",
+      "yearUpdated": "L’année scolaire a été mise à jour.",
+      "semesterCreated": "Le semestre a été créé.",
+      "semesterUpdated": "Le semestre a été mis à jour."
+    },
+    "errors": {
+      "accessDenied": "Cette opération n’est pas autorisée.",
+      "dateInvalid": "Saisissez une date valide.",
+      "dateOrder": "La date de fin doit être postérieure à la date de début.",
+      "duplicateSemester": "Ce semestre existe déjà pour cette année scolaire.",
+      "duplicateYear": "Une année scolaire portant ce nom existe déjà.",
+      "labelRequired": "Saisissez le nom de l’année scolaire.",
+      "labelTooLong": "Le nom de l’année scolaire ne doit pas dépasser 120 caractères.",
+      "notFound": "L’élément demandé est introuvable ou inaccessible.",
+      "outsideYear": "Les dates du semestre doivent rester dans l’année scolaire.",
+      "semesterChronology": "Les semestres ne peuvent pas se chevaucher ni apparaître dans l’ordre inverse.",
+      "semesterInvalid": "Sélectionnez le Semestre 1 ou le Semestre 2.",
+      "unexpected": "L’opération est impossible pour le moment. Réessayez plus tard.",
+      "unexpectedFields": "Le formulaire contient des données inattendues. Actualisez la page et réessayez.",
+      "yearContainsTerms": "Ces dates excluraient un semestre existant. Modifiez d’abord les dates du semestre."
+    }
+  },
+  "Teachers": {
+    "eyebrow": "Administration",
+    "title": "Enseignants",
+    "description": "Invitez les enseignants et gérez leur accès à l’établissement.",
+    "invitation": { "title": "Inviter un enseignant" },
+    "listTitle": "Équipe enseignante",
+    "loading": "Chargement des enseignants…",
+    "empty": { "title": "Aucun enseignant", "description": "Invitez le premier enseignant pour constituer l’équipe." },
+    "readError": { "title": "Enseignants indisponibles", "description": "La liste ne peut pas être chargée pour le moment. Réessayez plus tard." },
+    "status": { "active": "Accès actif", "inactive": "Accès inactif" },
+    "form": {
+      "displayName": "Nom affiché",
+      "email": "Adresse e-mail",
+      "invite": "Envoyer l’invitation",
+      "inviting": "Envoi en cours…",
+      "save": "Enregistrer",
+      "saving": "Enregistrement en cours…",
+      "edit": "Modifier ou désactiver",
+      "cancel": "Annuler",
+      "deactivate": "Désactiver l’accès",
+      "reactivate": "Réactiver l’accès",
+      "deactivationWarning": "La désactivation rendra l’application indisponible pour cet enseignant. Son compte et son historique seront conservés.",
+      "confirmDeactivation": "Je confirme la désactivation de cet accès"
+    },
+    "results": {
+      "accessDenied": "Cette opération n’est pas autorisée.",
+      "configurationUnavailable": "Les invitations ne sont pas encore configurées. Contactez la personne responsable de l’application.",
+      "displayNameInvalid": "Le nom contient des caractères non autorisés.",
+      "displayNameRequired": "Saisissez le nom de l’enseignant.",
+      "displayNameTooLong": "Le nom ne doit pas dépasser 120 caractères.",
+      "emailInvalid": "Saisissez une adresse e-mail valide.",
+      "emailRequired": "Saisissez l’adresse e-mail de l’enseignant.",
+      "emailTooLong": "L’adresse e-mail est trop longue.",
+      "invitationFailed": "L’invitation n’a pas pu être envoyée. Vérifiez les informations ou réessayez plus tard.",
+      "invitationSent": "L’invitation a été envoyée et le profil enseignant a été créé.",
+      "manualIntervention": "L’invitation nécessite une vérification manuelle avant toute nouvelle tentative.",
+      "notFound": "L’enseignant est introuvable ou inaccessible.",
+      "profileUpdated": "Le profil enseignant a été mis à jour.",
+      "retryableFailure": "L’invitation n’a pas été finalisée. Vous pouvez réessayer.",
+      "unexpectedFields": "Le formulaire contient des données inattendues. Actualisez la page et réessayez.",
+      "unexpected": "L’opération est impossible pour le moment. Réessayez plus tard.",
+      "confirmationRequired": "Confirmez la désactivation avant de continuer.",
+      "passwordMismatch": "Les mots de passe ne correspondent pas.",
+      "passwordTooLong": "Le mot de passe est trop long.",
+      "passwordTooShort": "Le mot de passe doit contenir au moins 12 caractères."
+    }
+  },
+  "Activation": {
+    "brand": "Suivora",
+    "title": "Créer votre mot de passe",
+    "description": "Choisissez votre mot de passe pour terminer l’activation de votre accès enseignant.",
+    "password": "Mot de passe",
+    "confirmation": "Confirmer le mot de passe",
+    "submit": "Activer mon accès",
+    "submitting": "Activation en cours…",
+    "errors": {
+      "accessDenied": "Cette page d’activation n’est pas disponible pour ce compte.",
+      "passwordTooShort": "Le mot de passe doit contenir au moins 12 caractères.",
+      "passwordTooLong": "Le mot de passe est trop long.",
+      "passwordMismatch": "Les mots de passe ne correspondent pas.",
+      "unexpectedFields": "Le formulaire contient des données inattendues.",
+      "unexpected": "L’activation est impossible pour le moment. Réessayez plus tard."
+    },
+    "invalid": {
+      "title": "Invitation invalide ou expirée",
+      "description": "Ce lien d’invitation ne peut pas être utilisé. Demandez une nouvelle invitation à l’administrateur de votre établissement."
+    }
+  },
   "Common": {
     "loading": "Chargement…",
     "error": "Une erreur est survenue.",

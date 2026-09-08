@@ -38,27 +38,39 @@ This is the canonical unresolved-question list. No item below authorizes an impl
 20. What are archival/deletion policies for students, classes, class courses, quizzes, and assignments?
 21. What audit representation, immutability, retention, access, redaction, and correction policies are required?
 22. When an assignment or user is deactivated, how quickly must existing sessions lose access?
+23. Beyond Task 09C's bounded exact-new-user compensation and manual runbook, should a later persistent reconciliation queue support operator-approved profile retry?
+24. How are already-existing Auth emails, expired invitations, resend limits, and email-address changes handled without leaking account existence or duplicating profiles?
 
 ## Exports and operations
 
-23. Which PDF/Excel reports and exact fields/layouts are required, who may export them, and are watermarks/audit events needed?
-24. What upload retention and malware/content validation apply to Excel files?
-25. What backup, recovery, data residency, retention, and pilot support requirements apply?
+25. Which PDF/Excel reports and exact fields/layouts are required, who may export them, and are watermarks/audit events needed?
+26. What upload retention and malware/content validation apply to Excel files?
+27. What backup, recovery, data residency, retention, and pilot support requirements apply?
 ## Mandatory study
 
-26. Does the confirmed initial 55% threshold use the latest quiz, the current semester average, or the annual C1-C8 average?
-27. Does completing a study session close the requirement immediately?
-28. Must the student also later achieve a score of at least 55% before the requirement is fully resolved?
-29. Who may mark a study session completed: any assigned teacher, the responsible teacher, or an administrator?
-30. May an administrator configure the initially confirmed 55% threshold later, or is it permanently fixed?
-31. Which class-course/student/time boundary defines one unresolved condition for duplicate prevention, and how do later grade corrections affect it?
+28. Does the confirmed initial 55% threshold use the latest quiz, the current semester average, or the annual C1-C8 average?
+29. Does completing a study session close the requirement immediately?
+30. Must the student also later achieve a score of at least 55% before the requirement is fully resolved?
+31. Who may mark a study session completed: any assigned teacher, the responsible teacher, or an administrator?
+32. May an administrator configure the initially confirmed 55% threshold later, or is it permanently fixed?
+33. Which class-course/student/time boundary defines one unresolved condition for duplicate prevention, and how do later grade corrections affect it?
 
 ## Academic events and action center
 
-32. Does “coordinator” become a distinct role, an administrator capability, or a scoped permission for creating shared events?
-33. What exact audience types and explicit-sharing lifecycle apply to shared events, and may teachers ever create them?
-34. Which timezone, all-day behavior, recurrence rules, and event edits govern the 7/3/1-day reminder projection?
-35. Are reminder rows materialized or derived, and what read/dismissal behavior is required for in-app reminders?
-36. What statuses and postponement/rescheduling history apply to personal tasks?
-37. What deterministic criteria and tie-breakers assign `URGENT`, `TODAY`, `THIS_WEEK`, and `UPCOMING` to every automatic and personal action?
-38. For each automatic source, what exact condition makes an item appear or disappear, especially declining performance and incomplete grade entry when grades may be missing?
+34. Does “coordinator” become a distinct role, an administrator capability, or a scoped permission for creating shared events?
+35. What exact audience types and explicit-sharing lifecycle apply to shared events, and may teachers ever create them?
+36. Which timezone, all-day behavior, recurrence rules, and event edits govern the 7/3/1-day reminder projection?
+37. Are reminder rows materialized or derived, and what read/dismissal behavior is required for in-app reminders?
+38. What statuses and postponement/rescheduling history apply to personal tasks?
+39. What deterministic criteria and tie-breakers assign `URGENT`, `TODAY`, `THIS_WEEK`, and `UPCOMING` to every automatic and personal action?
+40. For each automatic source, what exact condition makes an item appear or disappear, especially declining performance and incomplete grade entry when grades may be missing?
+
+## Student observations
+
+41. What are the exact ordered meanings and stable identifiers for each proposed five-level criterion?
+42. Which normalized criterion combinations determine positive, neutral or negative classification, and how are rule versions preserved historically?
+43. Which teacher-override values and reasons are allowed, and may an override later be amended without overwriting its audit history?
+44. What deterministic thresholds, periods, minimum evidence and resolution rules create observation alerts and per-criterion evolution?
+45. Which editable summary templates, editing history and approval semantics apply to student and class summaries?
+46. What exact fields, layouts, periods and authorization/audit rules apply to observation PDF and Excel reports?
+47. How do student enrollment changes, archival and ClassCourse closure affect future access to historical observations?

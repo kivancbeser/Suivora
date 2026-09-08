@@ -4,7 +4,16 @@
 
 Authentication answers who the user is; authorization answers which school records and actions they may access. Client-side hiding is never authorization.
 
-The current Supabase connection foundation implements neither authentication nor authorization. A valid project URL and publishable key identify the application only; no session validation, profile/role check, assignment check, or RLS policy exists yet.
+The application authenticates email/password sessions and serves a role-aware shell at `/fr/app`. Its server-only resolver validates identity with `getUser()`, selects only the caller's active profile through RLS, validates the runtime role, then selects that profile's school through RLS. It never uses browser state, `getSession()`, JWT metadata or a service-role client as an authorization boundary. Missing/inactive profiles and missing/inaccessible schools receive the same safe access-unavailable surface and no application data.
+
+The typed shell navigation matrix is:
+
+- `ADMIN`: Accueil, Années scolaires, Enseignants, Classes, Élèves, Matières, Paramètres.
+- `TEACHER`: Aujourd’hui, Mes classes, Élèves, Quiz et notes, Devoirs, Progression, Suivi des élèves, Rapports.
+
+The shared `/fr/app/[module]` placeholder validates that its slug exists and that the server-resolved role owns that navigation destination. A TEACHER manually entering an ADMIN-only placeholder receives a 404. Future real modules must add their own server authorization and, for teachers, active `ClassCourse` assignment checks; this shell grants none of those permissions.
+
+Three `SECURITY DEFINER` helpers avoid recursive `user_profiles` RLS evaluation: `current_school_id()` returns only the active caller's school, `current_app_role()` returns only the active caller's application role, and `is_school_admin(uuid)` answers whether the active caller is an administrator for exactly the supplied school. They use an empty `search_path`, schema-qualified objects, and execution grants only for `authenticated`; `PUBLIC` and `anon` cannot execute them. JWT metadata is not consulted.
 
 - Every school-owned record is constrained to the authenticated profile's `schoolId`.
 - Cross-school reads and writes must fail.
@@ -17,10 +26,11 @@ The current Supabase connection foundation implements neither authentication nor
 - Shared academic events are limited to their intended school-scoped audiences. Administrators/coordinators may create shared events; teachers may create owner-private personal events/reminders.
 - Personal reminders and tasks are visible only to their owner unless a later explicit sharing rule is adopted.
 - Action-center projections apply all source-module permissions and must never reveal another teacher's private reminder, an unassigned class/student, or another school's information.
+- Observation access derives from an active assignment to the observation's `ClassCourse`; school membership alone is insufficient for teachers. Bulk roster/entry, history, alerts, summaries and exports must apply the same source-level assignment boundary. Author attribution and override audit metadata cannot be caller-forged.
 
 ## Proposed enforcement path
 
-1. Supabase Auth establishes identity in a future authentication task.
+1. Supabase Auth establishes identity through the implemented server-side sign-in and session boundary.
 2. Server code loads the active school profile and role.
 3. Validated commands resolve their target entity and `schoolId`.
 4. Role and, for teachers, active `ClassCourse` assignment are checked.
@@ -58,6 +68,27 @@ The administrator's direct academic-edit permissions are not fully specified; im
 - Tests cover same-school authorized access, same-school unauthorized access, cross-school denial, inactive assignments, and crafted identifiers.
 - Audience joins for shared events cannot expand beyond the event's school, and owner predicates protect personal reminders/tasks.
 - Each action-center source query independently enforces its underlying assignment, audience, and owner rules; aggregation never grants access.
+
+## Implemented policy matrix
+
+Task 08A added only database-integrity triggers, and Task 08B verified the same boundary remotely after applying the migration once. Their `VOLATILE SECURITY DEFINER` functions use an empty `search_path`, have no `PUBLIC`, `anon`, or `authenticated` execution privilege, and are reachable only as triggers on already RLS-protected writes. They add no policy, grant, role capability, or authorization bypass; the remote project retains exactly the original eight policies.
+
+Task 08C restricts the calendar route, reads, and every mutation to active `ADMIN` profiles. Each Server Action resolves fresh request context, ignores client-supplied tenant identity, and scopes identifiers to the trusted school. Missing and foreign-school records share the same safe not-found response so tenant existence is not disclosed; RLS remains independently active.
+
+Task 09A adds no profile mutation policy or table grant. `admin_provision_teacher_profile(uuid,text)` and `admin_update_teacher_profile(uuid,text,boolean)` are the only administrative profile-mutation boundary: both independently resolve `auth.uid()`, require an active ADMIN, derive the caller's school, and never accept school or role. Provisioning always creates an active `TEACHER`; updates match only a same-school `TEACHER` and can change only display name and active state. Missing, duplicate, ADMIN-target, and cross-school cases return stable non-sensitive database failures.
+
+Task 09B verified this boundary remotely without invoking either function. `authenticated` has the two intended EXECUTE grants; `PUBLIC` and `anon` have none. Supabase's standard owner/platform service-role privileges remain platform administration capabilities and are not application grants. The application still has no service-role client.
+
+Task 09C adds a privileged client only for invitation and exact newly-created-user compensation. It never performs profile/database writes. Teacher listing and both profile RPC calls use the authenticated request-scoped client; every action rechecks active ADMIN context. `/fr/activation` requires an authenticated active TEACHER and rejects ADMIN use.
+
+| Table | SELECT | INSERT | UPDATE | DELETE |
+|---|---|---|---|---|
+| `schools` | Active users: own school | Denied | Denied | Denied |
+| `user_profiles` | Own active profile; own-school admins: school profiles | Denied | Denied | Denied |
+| `school_years` | Active users: own school | Own-school admin | Own-school admin, with matching `WITH CHECK` | Denied |
+| `terms` | Active users: own school | Own-school admin | Own-school admin, with matching `WITH CHECK` | Denied |
+
+PostgreSQL grants permit an operation to reach RLS; policies then decide which rows are visible or writable. `anon` has no table privileges. `authenticated` has SELECT on all four tables, narrowly column-scoped INSERT/UPDATE grants for year and term fields, and no DELETE, school mutation, or profile mutation privilege. RLS remains mandatory even where a grant exists.
 
 ## Revocation and history
 

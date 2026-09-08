@@ -1,0 +1,1 @@
+-- Intentionally empty. Task 04A introduces no seed identities or school data.

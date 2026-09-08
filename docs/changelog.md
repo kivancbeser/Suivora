@@ -2,6 +2,154 @@
 
 Significant product, domain, architecture, security, and delivery-document changes belong here. This is not a substitute for decision records or version control.
 
+## 2026-09-08 — Task 09C local teacher management completed
+
+- Added the French ADMIN teacher list, invitation form, display-name and active-state management UI.
+- Added lazy server-only secret/origin validation, an isolated Auth Admin client, safe invitation/profile compensation, invite confirmation, and TEACHER password activation.
+- Added mocked security, validation, UI, route, and compensation tests plus invitation setup/reconciliation runbooks.
+- Added no migration or seed and made no remote Auth, email, user, or application-data change.
+
+## 2026-09-08 — Task 09B reviewed remote teacher provisioning foundation completed
+
+- Positively matched the ignored public URL, CLI link, and single healthy Suivora development project; confirmed synchronized history through calendar integrity, expected counts, enabled email/password, disabled signup, and no pre-existing teacher column/functions.
+- The dry-run contained only `20260908113000_teacher_provisioning_foundation.sql`, with empty seed and role lists. Applied it exactly once through migration history without invoking either RPC or creating Auth/application data.
+- Remote schema verification confirmed nullable `display_name`, the teacher-required normalized 1–120 constraint, two postgres-owned `void` functions with the approved signatures/bodies and hardened security, intended authenticated execution, no anon/PUBLIC execution, and no unexpected overload.
+- Preserved four RLS-enabled tables, exactly eight policies, no anonymous table access, no direct profile INSERT/UPDATE/DELETE grant, and no DELETE policy. Final counts remain one Auth user, one school, one active ADMIN, zero teachers, one school year, and two terms.
+- Local/remote migration histories now match through four migrations and final dry-run is up to date. Remote/local public types are semantically equivalent; only PostgREST metadata and generator formatting differ, so the tracked file was not overwritten.
+- All 85 application tests and 201 pgTAP assertions pass with clean build, lint, typecheck, coverage, database lint and audit. No invitation, teacher, secret, Auth setting, Numeon/production change, commit, or push was created.
+
+## 2026-09-08 — Task 09A local teacher provisioning foundation completed
+
+- Added forward-only local migration `20260908113000_teacher_provisioning_foundation.sql` with a nullable legacy-ADMIN/mandatory normalized-TEACHER display-name contract.
+- Added postgres-owned, explicitly volatile, empty-search-path `SECURITY DEFINER` provisioning and update functions. They derive the active ADMIN's school, fix new profiles to active TEACHER, constrain updates to same-school teacher name/active state, and expose stable safe failures.
+- Preserved all eight policies and zero direct profile INSERT/UPDATE/DELETE grants; `PUBLIC` and `anon` cannot execute the new functions, while `authenticated` receives only their intended execute access.
+- Added 63 transactional pgTAP assertions. Two independent clean resets each passed all 201 database assertions and schema lint; generated local types were byte-identical across repeated generations and include the column and RPC signatures.
+- Documented the invitation-only lifecycle, Auth-owned email/password boundary, future isolated privileged Auth client, partial-failure recovery questions, and assignment-gated future class access. No UI, secret, privileged client, remote migration/data/Auth change, real teacher, commit, or push was created.
+
+## 2026-09-08 — Task 08D controlled remote school year verified
+
+- Reconfirmed the single healthy Suivora development target, matching public URL/CLI link, synchronized three-migration history, enabled email/password provider, and disabled public signup before writing.
+- Used only the authenticated ADMIN UI and Server Actions to create `2026–2027` (2026-09-14 to 2027-06-25), Semester 1 (2026-09-14 to 2027-01-22), and Semester 2 (2027-02-08 to 2027-06-25), following the supplied official MEB calendar values.
+- Verified `0/2` → `1/2` → `2/2`, French date rendering, exact persisted ISO values, refresh persistence, ADMIN edit controls, no delete action, and a 390 px layout without horizontal overflow.
+- Final safe counts are one Auth user, one school, one active ADMIN profile, one school year, and two terms. Four RLS-enabled tables, eight policies, no anonymous/DELETE grant or policy, protected calendar functions and both triggers remain intact; no term label column exists.
+- No sensitive identifier was recorded. No migration, schema, Auth setting, code, dependency, unrelated business data, Numeon/production resource, commit, or push was changed.
+
+## 2026-09-08 — Task 08C ADMIN calendar UI completed
+
+- Added the localized ADMIN school-year and semester page with real request-scoped reads and create/edit Server Actions.
+- Added strict parsing, safe errors, trusted tenant scoping, accessible feedback, responsive calendar cards, and fixed Semester 1/2 labels.
+- Added domain, data, action, route, and component tests plus real-browser empty-state and 390 px verification. No migration, seed, dependency, remote mutation, commit, or push was performed.
+
+## 2026-09-07 — Task 08B reviewed remote calendar integrity completed
+
+- Positively matched `.env.local`, the CLI link and the authenticated account's single healthy Suivora project in the documented European development region; the target is not Numeon or production.
+- Preflight confirmed exactly the two earlier remote migrations, only `20260907190000_calendar_integrity.sql` pending, the expected schema/helpers, four RLS-enabled tables, eight policies, least-privilege grants, disabled public signup, enabled email/password authentication, and expected safe data counts.
+- The dry-run contained exactly the reviewed calendar migration with empty seed and role lists. Applied it exactly once through migration history without direct SQL, fixtures, data writes, Auth changes or reset.
+- Remote catalog verification confirmed strict `terms_date_order`, the two postgres-owned `VOLATILE SECURITY DEFINER` empty-search-path functions, the two enabled table triggers, no term label column, unchanged policies/RLS/grants and no direct application-role function execution.
+- Final counts remain one Auth user, one school, one active ADMIN profile, zero school years and zero terms. Local and remote histories now match through all three migrations, and final dry-run reports the database up to date.
+- Remote-generated public types are semantically equivalent to the tracked local contract; only PostgREST metadata and generator formatting differ, so the tracked file was not overwritten. Numeon and production were untouched; no commit or push was performed.
+
+## 2026-09-07 — Task 08A local calendar integrity completed
+
+- Resolved semester naming as fixed localized presentation labels derived from `semester_number`; no editable translated term field was added.
+- Added one forward migration with fail-fast data preflight, strict term date order, parent-year containment, Semester 1/2 chronology and non-overlap, and protection against school-year boundary updates that would invalidate terms.
+- Serialized concurrent term and school-year writes through narrowly scoped parent-row locks; term moves lock both affected parents in stable UUID order. Trigger functions use empty search paths and expose no direct application-role execution.
+- Added 53 transactional calendar pgTAP assertions. Two independent clean local resets each passed all 138 database assertions and schema lint; regenerated public types are unchanged.
+- Preserved same-school foreign keys, RLS, grants, helpers and the empty seed. Added no UI, Server Action, fixture, remote mutation, commit or push. Remote review is TASK 08B.
+
+## 2026-09-07 — Task 08 preflight blocked on calendar integrity
+
+- Inspected the applied calendar migration and generated types before implementing the ADMIN module.
+- Confirmed that the database does not enforce strict term date order, parent-year containment, semester non-overlap/chronology, or protection against school-year edits invalidating existing terms.
+- Confirmed that `terms` has no editable name field, requiring a product decision between fixed localized labels and stored administrator-defined names.
+- Stopped before UI, Server Actions, migrations, seed data or remote mutations as required by Task 08. Proposed a separately reviewed Task 08A calendar-integrity migration.
+
+## 2026-09-07 — Task 07 authenticated application shell completed
+
+- Added a server-only, request-cached application-context resolver using `auth.getUser()` and existing RLS-protected profile/school queries; no browser/JWT metadata, service role or raw provider error is trusted.
+- Replaced the generic protected page with a restrained responsive French ADMIN/TEACHER shell, safe school/role context, semantic desktop/mobile navigation, keyboard focus, active-link semantics and local sign-out.
+- Added a centralized typed role navigation matrix plus one shared localized `/fr/app/[module]` unavailable-module boundary. Recognized role-inappropriate manual paths fail with 404; link visibility is explicitly not an authorization boundary.
+- Added fail-closed French access handling for missing/inactive profiles, inaccessible schools, unsupported roles and infrastructure failures without revealing whether other tenant data exists.
+- Added fixture-only context, role navigation, route-authorization, accessibility, localization and identifier non-rendering tests. No migration, seed, remote database/Auth/configuration mutation, teacher account or business data was introduced.
+- Pinned the production validation script to Next.js 16's supported webpack compiler after repeatable Turbopack CSS-worker port failures in the managed environment; the webpack production build passes without adding a dependency.
+
+## 2026-09-07 — Task 06C completed and observation specification synced
+
+- Reconfirmed the healthy linked `Suivora` development target, synchronized migrations, eight policies, three helpers, four RLS-enabled empty application tables, zero Auth users, enabled email/password provider and still-enabled public signup without remote mutation.
+- Recorded confirmed future ClassCourse-scoped observation behavior, normalized-criteria proposal, hybrid deterministic/teacher-override classification, audit/history requirements, deterministic MVP summaries and deferred AI summaries.
+- Added the post–Shared Classroom Core observation roadmap without adding schema, enums, migrations, UI, runtime code or business records.
+- Added a parameterized first-admin bootstrap runbook covering manual signup disabling/Auth creation, atomic guarded school/profile creation, safe verification and recovery. No real email, UUID, password or populated SQL is tracked.
+- Disabled public signup while retaining email/password sign-in, manually created the sole confirmed Auth user, and atomically created one school plus one active ADMIN profile through the untracked Dashboard workflow.
+- Verified real application login, `/fr/app`, logout and signed-out redirects. The authenticated RLS matrix passed own school/profile reads, helper results, foreign-school hiding, forbidden school/profile mutations and deletion, forbidden profile creation, anonymous denial, same-school temporary year/term insert-read-update, and forged-school rejection.
+- Removed the temporary year and term through the guarded privileged cleanup. Final counts are one Auth user, one school, one active ADMIN profile, zero school years and zero terms. No real email, UUID, password, recovery token or populated bootstrap SQL is tracked.
+
+## 2026-09-05 — Task 06B reviewed remote authorization foundation
+
+- Positively matched the CLI link and ignored public environment URL to the authenticated account's single healthy `Suivora` project in the documented European region. The previously approved task context classifies it as development; the project name is unrelated to Numeon and Supabase exposes no reliable environment label.
+- Preflight confirmed exactly the four expected empty application tables, zero policies, no conflicting `anon`/`authenticated` object grants, no application or Auth data statements, the foundation migration exactly once, and only the authorization migration pending.
+- Re-reviewed the migration with no destructive statements, broad table grants, anonymous access, DELETE/profile mutation, seed, service-role-specific behavior, or unrelated changes. The dry-run listed only `20260905090000_authorization_rls_foundation.sql`, with no seed or role file.
+- Applied that migration exactly once to the confirmed Suivora development project. Local and remote histories now match with both foundation migrations present once.
+- Remote schema verification confirmed three `postgres`-owned, schema-qualified, empty-search-path `SECURITY DEFINER` helpers; protected execution resolves only to `authenticated` (plus standard owner/service-role privileges), with no `PUBLIC`/`anon` execution.
+- Confirmed exactly eight reviewed authenticated RLS policies, RLS enabled on all four tables, no DELETE policy/grant, no school/profile mutation grant, no `anon` object grant, and column-limited authenticated year/term mutations. PostgreSQL dump renders function `ALL` as its sole executable privilege; it is semantically EXECUTE only and grants no data access.
+- Public and Auth data dumps remain empty. No Auth user, school, profile, year, term, seed row, first administrator, or Auth configuration was created or changed.
+- Remote-generated and tracked local `public` schema type contracts are semantically equivalent. Differences are limited to remote PostgREST 14.5 metadata, generator parentheses, and trailing formatting; the tracked file was not overwritten.
+- Lint, strict type-check, all 32 tests, coverage, production build, production dependency audit, documentation-link validation, credential/private-key and raw-error/console scans, and diff checks pass.
+- Public signup remains enabled and must be disabled before the pilot. First-administrator provisioning and functional authenticated remote RLS testing remain deferred to Task 06C.
+- No production or Numeon resource was modified, and no commit or push was performed.
+
+## 2026-09-05 — Task 06A local authorization and RLS foundation
+
+- Added local-only migration `20260905090000_authorization_rls_foundation.sql` without rewriting the remotely applied foundation migration.
+- Added empty-search-path security-definer helpers for the active caller's school, application role, and own-school administrator check; execution is revoked from `PUBLIC`/`anon` and granted only to `authenticated` to avoid recursive profile RLS safely.
+- Added eight explicit policies for own-school reads, self/admin profile reads, and admin-only school-year/term inserts and updates with matching `WITH CHECK`; all deletes, school mutations, and profile provisioning/mutations remain denied.
+- Added minimum grants: no `anon` table privileges, authenticated SELECT on four foundation tables, and column-limited INSERT/UPDATE grants only for school years and terms.
+- Added 85 transactional pgTAP assertions using fictional local identities. They cover missing/inactive profiles, anonymous denial, cross-school isolation, teacher/admin boundaries, forged school IDs, privilege escalation, helper ACL/security, non-recursion, constraint preservation, and no partial mutations.
+- Two final clean resets and two final 85-test matrices pass; schema lint reports no errors and locally generated database types are byte-identical across resets.
+- Lint, strict type-check, all 32 application tests, coverage, production build, production dependency audit, documentation links, credential/private-key and raw-error/console scans, seed cleanliness, and diff checks pass. The final local database has eight policies, zero fixture rows, zero `anon` table grants, and zero `anon` helper grants.
+- The migration remains local-only. No remote migration, Auth setting, user, school, profile, data row, production resource, or Numeon resource was changed. No commit or push was performed.
+
+## 2026-09-03 — Task 05 authentication foundation
+
+- Added localized `/fr/connexion` email/password sign-in and `/fr/app` authenticated placeholder routes, with server-side redirects for signed-in and signed-out states.
+- Added Zod credential validation and normalization, `signInWithPassword`, local-scope server-side sign-out, duplicate-submission pending states, accessible form semantics, and generic localized failures that never expose provider details or account existence.
+- Added the Next.js 16 `proxy.ts` session-refresh boundary for only the French Auth/application routes, preserving refreshed request/response cookies and verifying identity through `getUser()` rather than trusting `getSession()`.
+- Restricted optional return paths to the active locale's `/app` subtree and added coverage for external, protocol-relative, cross-locale, malformed, and adjacent-prefix attempts.
+- Kept authentication separate from authorization: no profile, role, school, assignment, or application-table lookup was added, and the existing deny-by-default RLS/grant state is unchanged.
+- Read-only public Auth inspection confirmed email/password availability and public signup enabled. Public endpoint output did not expose site URL or redirect allow-list values, and the dashboard required a separate login, so those values remain a manual authenticated-dashboard check. Public signup must be disabled before pilot use.
+- Lint, strict type-check, all 32 tests, coverage, production dependency audit, documentation-link validation, credential/private-key and raw-error/console scans, diff checks, and the production build pass. Runtime checks confirm `/` → `/fr`, signed-out `/fr/connexion` rendering, signed-out `/fr/app` protection, unsupported-locale 404, and a generic French failed-sign-in message.
+- No remote Auth user, school, profile, database row, Auth setting, migration, production resource, or Numeon resource was created or modified. No commit or push was performed.
+
+## 2026-09-03 — Task 04B reviewed remote database foundation
+
+- Positively matched the configured and linked target to the authenticated account's healthy Suivora project in the documented European region; the task context identifies it as development, and the target name is not associated with Numeon.
+- Confirmed an empty remote migration history and public application schema, then completed a successful dry-run containing only `20260903070959_initial_school_foundation.sql`.
+- Applied that migration exactly once with no seed, role file, Auth setting, Storage, Realtime, Edge Function, user, or application-data change.
+- Remotely verified the enum, trigger function, four empty tables, primary/foreign keys, date/semester/uniqueness constraints, indexes, four update triggers, and RLS on every table.
+- Confirmed zero RLS policies, zero `anon`/`authenticated` table grants, zero rows, and synchronized local/remote migration histories.
+- Remote-generated and local-generated schema types are semantically identical. Byte-only output differences come from PostgREST version metadata and generator formatting, so the tracked local type file was not overwritten.
+- Lint, strict type-check, all 11 tests, dependency audit, documentation links, credential scan, temporary-output scan, and diff checks pass. The standard build remains blocked only by the managed host's known Turbopack worker port restriction (`Operation not permitted (os error 1)`).
+- No production or Numeon project was modified; no authentication flow, functional policy, business feature, commit, or push was created.
+
+## 2026-09-03 — Task 04A local database foundation
+
+- Added project-pinned Supabase CLI 2.116.0, standard local configuration, an intentionally empty seed boundary, and npm scripts for local start, stop, reset, and generated types.
+- Added the reviewable `20260903070959_initial_school_foundation.sql` migration with `app_role` (`ADMIN`, `TEACHER`), `set_updated_at`, `schools`, `user_profiles`, `school_years`, and `terms`.
+- Added UUID keys, `timestamptz` conventions, nonblank/date/semester/uniqueness constraints, deliberate `RESTRICT` deletion, and a composite foreign key preventing cross-school term/year linkage.
+- Enabled RLS on all four application tables with zero policies, disabled automatic new-table exposure, and revoked table access from `anon` and `authenticated`.
+- Completed local startup, two clean migration resets, schema lint with no errors, catalog verification, and TypeScript generation from the local schema; both Supabase factories now use the generated `Database` type.
+- Lint, strict type-check, all 11 tests, dependency audit, documentation-link validation, credential scan, and diff checks pass. The standard build remains blocked only by the managed host's known Turbopack worker port restriction (`Operation not permitted (os error 1)`).
+- Added no extension, identity, personal/seed data, authentication flow, repository, query, business table, or application feature.
+- No Supabase project link, remote migration, remote mutation, commit, or push was performed.
+
+## 2026-09-03 — Task 03B Supabase connection verification
+
+- Confirmed that the ignored local environment file exists, both required public variables pass the centralized validator, and neither value appears in tracked files.
+- Verified the configured project host and publishable key with a read-only Supabase Auth settings request that returned HTTP 200. An earlier REST root request returned HTTP 401 and was not treated as authoritative after the dedicated public Auth endpoint accepted the key.
+- Performed no remote mutation and persisted no response or credential. The remote project name is not exposed by this public endpoint and remains manually verified in the dashboard.
+- Lint, strict type-check, all 11 tests, dependency audit, and diff checks pass; runtime routes remain `/` → `/fr` (307), `/fr` (200), and unsupported locale (404).
+- The standard build remains blocked by the managed host's known Turbopack worker port restriction (`Operation not permitted (os error 1)`), independently of Supabase connectivity.
+- Task 03B is complete; no remote data or configuration, commit, or push was created.
+
 ## 2026-09-03 — Task 03 Supabase project configuration
 
 - Added `@supabase/supabase-js` 2.114.0, `@supabase/ssr` 0.12.5, and Zod 4.5.4; no deprecated auth-helper or unrelated package was added.

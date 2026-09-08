@@ -9,7 +9,13 @@
   "packageManager": "npm@10.9.2",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build --webpack",
+    "db:start": "supabase start",
+    "db:stop": "supabase stop",
+    "db:reset": "supabase db reset --local",
+    "db:lint": "supabase db lint --local --level warning",
+    "db:test": "supabase test db",
+    "db:types": "supabase gen types typescript --local --schema public > src/types/database.generated.ts",
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
@@ -38,6 +44,7 @@
     "eslint": "^9.39.5",
     "eslint-config-next": "^16.3.4",
     "jsdom": "^27.4.0",
+    "supabase": "^2.116.0",
     "tailwindcss": "^4.3.3",
     "typescript": "^5.9.3",
     "vitest": "^4.1.11"

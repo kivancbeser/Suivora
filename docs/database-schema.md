@@ -1,14 +1,39 @@
 # Database schema proposal
 
-The Supabase client and environment foundation exists, but no remote project connection, table, SQL, migration, or generated database type exists yet. Everything below remains a logical proposal for future migrations. Exact column types, constraints, deletion policy, and audit representation must be finalized in database tasks.
+The Task 04A foundation is implemented by `20260903070959_initial_school_foundation.sql` and Task 04B applied it exactly once to the dedicated Suivora development project. Task 06A added `20260905090000_authorization_rls_foundation.sql`; Task 06B reviewed and applied it exactly once. Task 08B applied `20260907190000_calendar_integrity.sql` exactly once to the same confirmed development target. Local and remote migration histories match through all three migrations. Later sections remain logical proposals until their own migrations are implemented.
+
+## Implemented local foundation
+
+- `app_role` contains only active MVP account roles: `ADMIN` and `TEACHER`.
+- `schools` is the tenant root with a nonblank name and UUID/timestamp conventions.
+- `user_profiles.id` references `auth.users.id`; each profile belongs to one school, has one role and active state, and both auth-user and school deletion are restricted.
+- Task 09A adds nullable `display_name`; null remains valid only for legacy ADMIN profiles, while stored names are trimmed and 1–120 characters and every TEACHER must have one.
+- `school_years` belongs to a school, requires a nonblank label and `start_date < end_date`, and is unique by school and label.
+- `terms` carries `school_id`, references a same-school `school_year` through a composite foreign key, allows semester 1 or 2 only, requires ordered dates, and is unique by school year and semester.
+- School, profile, year, and term updates receive `updated_at` from one trigger function. All timestamps use `timestamptz`.
+- All four application tables have RLS enabled. The local schema has eight explicit authenticated policies: one school SELECT, one profile SELECT, and SELECT/INSERT/UPDATE policies for both school years and terms. No DELETE policy exists.
+- `anon` retains zero table/helper access. `authenticated` receives table SELECT plus column-limited year/term INSERT and UPDATE grants; grants do not bypass RLS.
+- Task 06C provisioned the remote development tenant through an untracked atomic transaction. Its stable post-bootstrap state is one school, one active ADMIN profile linked to the sole Auth user, zero school years and zero terms; temporary RLS verification records were removed.
+
+### Task 08A/08B calendar integrity
+
+`20260907190000_calendar_integrity.sql` is the forward-only local migration for the reviewed calendar contract. It first rejects, rather than repairs, incompatible existing rows; tightens `terms_date_order` to `start_date < end_date`; and adds trigger enforcement for term containment, Semester 1-before-2 chronology, non-overlap, and school-year edits that would exclude a child term.
+
+Every term insert or relevant update locks its parent school-year row. Moving a term locks the old and new parents in UUID order. A school-year update already owns the same row lock, so direct and concurrent writes serialize at one narrow aggregate boundary before the cross-row checks. Existing same-school foreign keys, semester-number/uniqueness constraints, RLS policies and grants remain unchanged.
+
+Semester display names are fixed localized UI labels derived from the language-independent values 1 and 2. `terms` intentionally has no editable `name`, `title`, or `label` column. The migration passed two clean local resets and pgTAP validation, then TASK 08B applied it exactly once to the confirmed development project. Remote catalog inspection confirms the strict constraint, both functions and triggers, unchanged eight-policy/RLS/grant boundary, synchronized migration history, and unchanged data counts.
+- `current_school_id`, `current_app_role`, and `is_school_admin` read only active caller authorization facts through non-recursive, empty-search-path security-definer functions.
+- Task 08B remote verification confirms one school, one active ADMIN profile linked to the sole Auth user, zero school years and zero terms. No seed data was applied.
+- No extension was added: PostgreSQL 17 supplies `gen_random_uuid()` without a project-specific extension requirement.
+
+The generated local schema contract is `src/types/database.generated.ts` and must be regenerated, never hand-edited, after migration changes.
 
 ## Tenant and identity
 
 | Table | Essential fields / constraints |
 |---|---|
 | `schools` | `id`, name, timestamps |
-| `user_profiles` | `id` (auth identity), `school_id`, role, active, timestamps |
-| `teacher_profiles` | `id`, `school_id`, `user_profile_id`, display fields, active |
+| `user_profiles` | `id` (Auth identity), `school_id`, role, active, nullable legacy-ADMIN/required-TEACHER `display_name`, timestamps |
 | `school_years` | `id`, `school_id`, label, start/end dates, active |
 | `terms` | `id`, `school_id`, `school_year_id`, semester number, dates; unique year + semester |
 
@@ -47,6 +72,12 @@ Every foreign-key path must remain within one `school_id`, enforced through comp
 | `contact_records` | `id`, `school_id`, course/student/alert, contact date/type, optional note, recorder, `unsubmitted_count_at_contact`, created timestamp |
 
 Contact records are append-only. Resolution and contact creation should be atomic.
+
+## Proposed student-observation schema
+
+No observation table or enum exists yet. A later reviewed migration should model `student_observations` with `school_id`, `class_course_id`, `student_id`, author teacher/profile, observation timestamp, entry mode, optional comment, normalized criterion values and audit metadata. Multi-select material/behavior tags may use constrained child rows or arrays only after the criteria contract is finalized. Bulk submission must omit empty rows atomically.
+
+Deterministic classification and an explicit teacher override are distinct facts; store the calculated result/version separately from override value, actor, timestamp and reason/context. Alert state needs persistent active/resolved history, while evolution and summary projections must remain reproducible from authoritative observations and versioned deterministic rules. Student soft-deactivation must preserve observations. PDF/Excel reporting permissions follow the same school and active `ClassCourse` assignment boundary. These are proposals only; TASK 06C adds no observation schema, migration or enum.
 
 ## Mandatory study
 
@@ -88,3 +119,14 @@ Progression supports an academic year of 37 weeks but calendar/configuration beh
 - Apply RLS to all exposed school-owned tables and test it.
 - Prefer soft deactivation for referenced structural records; final deletion/retention policy is open.
 - Never store secrets in rows intended for client access.
+
+## Task 09A teacher provisioning foundation
+
+`20260908113000_teacher_provisioning_foundation.sql` is the forward-only teacher-provisioning migration, created and validated locally in Task 09A. It adds the display-name constraint and two `void` RPC functions:
+
+- `admin_provision_teacher_profile(uuid, text)` derives the active ADMIN caller's school, verifies the target Auth identity, rejects self/duplicate provisioning, normalizes the name, and inserts exactly one active TEACHER profile.
+- `admin_update_teacher_profile(uuid, text, boolean)` updates only a same-school TEACHER's normalized name and active state while preserving ID, school, and role.
+
+Both functions are postgres-owned, explicitly volatile `SECURITY DEFINER` functions with empty search paths and schema-qualified access. Only `authenticated` receives execute; `PUBLIC` and `anon` do not. No direct `user_profiles` INSERT, UPDATE, or DELETE privilege or new policy is added. The primary key is the final concurrency boundary for duplicate provisioning.
+
+Task 09B applied this migration exactly once to the confirmed Suivora development project on 2026-09-08. Remote inspection confirmed the nullable text column, constraint, approved function bodies/signatures, standard postgres ownership, hardened configuration, two intended authenticated EXECUTE grants, unchanged eight policies and no direct profile mutation grant. Local and remote histories now match through all four migrations.

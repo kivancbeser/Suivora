@@ -4,6 +4,7 @@ import { createServerClient } from "@supabase/ssr";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
 import { getSupabasePublicConfig } from "@/lib/env/public";
+import type { Database } from "@/types/database.generated";
 
 function isReadOnlyCookieStoreError(error: unknown): boolean {
   return (
@@ -12,29 +13,35 @@ function isReadOnlyCookieStoreError(error: unknown): boolean {
   );
 }
 
-export async function createServerSupabaseClient(): Promise<SupabaseClient> {
+export async function createServerSupabaseClient(): Promise<
+  SupabaseClient<Database>
+> {
   const configuration = getSupabasePublicConfig();
   const cookieStore = await cookies();
 
-  return createServerClient(configuration.url, configuration.publishableKey, {
-    cookies: {
-      getAll() {
-        return cookieStore.getAll();
-      },
-      setAll(cookiesToSet) {
-        try {
-          cookiesToSet.forEach(({ name, value, options }) => {
-            cookieStore.set(name, value, options);
-          });
-        } catch (error) {
-          if (!isReadOnlyCookieStoreError(error)) {
-            throw error;
-          }
+  return createServerClient<Database>(
+    configuration.url,
+    configuration.publishableKey,
+    {
+      cookies: {
+        getAll() {
+          return cookieStore.getAll();
+        },
+        setAll(cookiesToSet) {
+          try {
+            cookiesToSet.forEach(({ name, value, options }) => {
+              cookieStore.set(name, value, options);
+            });
+          } catch (error) {
+            if (!isReadOnlyCookieStoreError(error)) {
+              throw error;
+            }
 
-          // Server Components can read but cannot write cookies. A future auth
-          // proxy will refresh sessions and persist cookies before rendering.
-        }
+            // Server Components can read but cannot write cookies. A future
+            // auth proxy will refresh sessions before rendering.
+          }
+        },
       },
     },
-  });
+  );
 }

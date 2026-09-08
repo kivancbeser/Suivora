@@ -27,6 +27,9 @@ erDiagram
   ACADEMIC_EVENT ||--o{ EVENT_AUDIENCE : targets
   ACADEMIC_EVENT ||--o{ EVENT_REMINDER : projects
   USER_PROFILE ||--o{ PERSONAL_TASK : owns
+  CLASS_COURSE ||--o{ STUDENT_OBSERVATION : records
+  STUDENT ||--o{ STUDENT_OBSERVATION : receives
+  USER_PROFILE ||--o{ STUDENT_OBSERVATION : authors
 ```
 
 ## Core aggregates
@@ -39,9 +42,13 @@ erDiagram
 - **Mandatory study:** persistent study requirement, optional responsible teacher, scheduled study sessions, completion evidence, and status history.
 - **Calendar:** academic event, explicit event audience, and in-app reminder projections. Shared events and private personal reminders have different authorization semantics.
 - **Teacher planning:** persistent owner-private personal tasks and a derived `TeacherActionCenter` projection.
+- **Student follow-up:** ClassCourse-scoped observations with normalized criteria/tags, optional comments, deterministic classification, separately stored teacher override, author/time context, evolution and alert projections.
 - **Audit:** actor, time, action, entity identity, and sufficient change context.
 
 ## Invariants
+
+- A term has a strict non-empty date range wholly contained in its parent school year. Each year has at most one Semester 1 and one Semester 2; when both exist, Semester 1 ends on or before Semester 2 starts.
+- Semester identity is the language-independent number 1 or 2. French UI labels are fixed catalog values derived from that number and are not administrator-editable domain data.
 
 - `ClassCourse` membership and teacher authorization are scoped to the same school.
 - A teacher must have an active assignment to access a class course.
@@ -57,9 +64,22 @@ erDiagram
 - Default in-app event reminders are projected at 7, 3, and 1 day before the event. Past events leave the upcoming projection but remain historical records.
 - Automatic action-center items are derived from authoritative source records and disappear when their source condition resolves; personal tasks persist and support completion, postponement, and rescheduling.
 - `TeacherActionCenter` is a read/application projection, never an authoritative aggregate for its inputs.
+- Multiple observations may exist for one student on one day; optional daily entry is never represented by empty records. Observation history is auditable and student archival preserves it.
 
 ## Language-independent enums
 
 `ADMIN`, `TEACHER`; `QUICK_TOTAL`, `OUTCOME_DETAILED`; `C1`…`C8`; `PROGRESSION`, `DECLINE`, `STABLE`; `EXCELLENT`, `GOOD`, `AVERAGE`, `NEEDS_REINFORCEMENT`; `SUBMITTED_ON_TIME`, `SUBMITTED_LATE`, `NOT_SUBMITTED`; `UP_TO_DATE`, `TO_MONITOR`, `VIGILANCE`; `MANDATORY_STUDY_REQUIRED`; `TO_SCHEDULE`, `SCHEDULED`, `COMPLETED`, `CANCELLED`; `EXAM`, `QUIZ`, `MEETING`, `HOMEWORK`, `PROJECT`, `SCHOOL_EVENT`, `PERSONAL_REMINDER`; `URGENT`, `TODAY`, `THIS_WEEK`, `UPCOMING`; `NOT_STARTED`, `IN_PROGRESS`, `COMPLETED`.
 
 French labels are presentation data, not stored domain meaning.
+
+## Implemented calendar operations
+
+Task 08C exposes create and edit workflows for school years and their Semester 1/2 children. It does not define deletion, archival, or automatic activation behavior; those remain outside this task.
+
+## Teacher identity lifecycle
+
+Teacher accounts are invitation-only. Supabase Auth owns the email address and future password-establishment flow; `user_profiles` does not duplicate email. Every TEACHER profile belongs to exactly one school, has the immutable `TEACHER` role within the administrative provisioning boundary, and requires a normalized display name of 1–120 characters.
+
+An administrator may rename, deactivate, or reactivate a same-school teacher. Deactivation preserves the profile and future historical academic references; hard deletion is unavailable. The pre-existing ADMIN may retain a null display name because it predates this contract. A TEACHER role alone never grants class access: a later active `ClassCourse` assignment remains mandatory.
+
+Task 09C keeps Auth and profile responsibility separate: Auth owns invitation, email, session, and password; `user_profiles` owns display name, school, fixed TEACHER role, and active application access. An inactive profile may retain a valid Auth session but cannot resolve application context.

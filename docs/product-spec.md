@@ -49,6 +49,14 @@ User-facing priority groups are `URGENT`, `TODAY`, `THIS_WEEK`, and `UPCOMING`; 
 
 Automatic action items are deterministic projections and disappear when the underlying condition is resolved. They must not be duplicated into stale task rows when the source can be derived reliably. Personal tasks are persistent and can be completed, postponed, or rescheduled. A proposed `TeacherActionCenter` application service may aggregate these sources but never becomes authoritative for them. Priority and disappearance rules must be defined as deterministic, testable domain/application logic rather than dashboard-component behavior.
 
+## Student observations and follow-up
+
+The future observation module is scoped to `ClassCourse`, its authorized student roster, and the observing teacher. Observations are recorded when needed rather than daily; multiple observations for one student on the same day are allowed. Flash and detailed entry modes, bulk class submission, student history, period/criterion filters, criterion evolution, deterministic alerts with active/resolved history, class KPIs, student/class reports, PDF-first export and additional Excel export are required capabilities. Bulk save creates records only for students with entered values; empty rows never create records.
+
+Observations are historical and auditable and must not be silently deleted. Students are archived or soft-deactivated rather than physically deleted. Positive/negative classification is hybrid: normalized criteria produce a deterministic classification, while an explicit teacher override is stored separately with actor, time and audit context. Initial summaries use deterministic rules and editable templates. Generative-AI summaries are deferred until the rule-based MVP has been validated.
+
+The proposed normalized criteria contract, to be finalized in its own implementation task, covers material (`complete`, `partial`, `missing`); five levels each for participation, attitude, classroom work and organization; homework (`completed`, `partially completed`, `not completed`, `forgotten`, `submitted late`); punctuality (`on time`, `slightly late`, `late`, `frequently late`); attendance (`present`, `absent`, `justified absence`, `unjustified absence`); and multi-select missing-material and behavior tags. These are language-independent concepts, not implemented database enums.
+
 ## Experience direction
 
 Teacher dashboards should surface “À faire aujourd’hui,” active classes, followed students, grade-entry state, reinforcement needs, mandatory study, upcoming events, current/next progression, delayed units, homework alerts, and a fast grade-entry action. Administrator dashboards should surface class and semester averages, evolution, students below 50, progression by teacher/class and unit, and unresolved alerts.
@@ -62,3 +70,13 @@ Native mobile apps, student/parent accounts, full multi-school SaaS onboarding, 
 An administrator creates two teachers, one class, one subject, students, and assigns both teachers to one class course. Teacher A logs in, creates a quiz, and enters grades. Teacher B sees the same quiz and grades and modifies an authorized grade. Both see updated shared data; averages are calculated and audit metadata preserved.
 
 Learning outcomes, planning, homework alerts, mandatory study, events/reminders, the action center, and exports are explicitly excluded from Milestone A.
+
+## Implemented ADMIN calendar workflow
+
+Task 08C lets administrators list, create, and edit real school years and their two fixed semester periods. School identity is derived from the authenticated application context, semester labels are localized presentation values, and deletion remains deferred.
+
+## Confirmed teacher account lifecycle
+
+Teacher accounts are invitation-only and public signup stays disabled. Administrators provide an email address and mandatory display name but never choose or store a teacher password. Supabase Auth remains authoritative for email and password establishment; the application profile stores only school, fixed TEACHER role, active state, and display name.
+
+Each initial teacher belongs to exactly one school. Own-school administrators may rename, deactivate, or reactivate teachers without deleting their profiles or historical academic relationships. Classroom access will later require an active `ClassCourse` assignment in addition to an active TEACHER profile.

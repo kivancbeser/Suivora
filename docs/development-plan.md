@@ -6,11 +6,26 @@
 2. Repository bootstrap — completed in Task 01
 3. Localization foundation — completed in Task 02
 4. Supabase project configuration — completed in Task 03
+   - Read-only connection verification — completed in Task 03B
 5. Database foundation
-6. Authentication
+   - Local migration foundation — completed in Task 04A
+   - Reviewed remote application — completed in Task 04B
+6. Authentication — completed in Task 05
 7. Authorization and RLS
-8. School year and semester structure
+   - Local authorization foundation — completed in Task 06A
+   - Reviewed remote authorization foundation — completed in Task 06B
+   - Controlled first-administrator provisioning and functional remote RLS verification — completed in Task 06C
+   - Authenticated role-aware application shell — completed in Task 07
+8. School year and semester structure — local and remote calendar foundation completed
+   - Calendar integrity and fixed localized semester-label decision — completed locally in Task 08A
+   - Reviewed remote calendar migration — completed in Task 08B
+   - ADMIN school-year/semester module — completed in Task 08C
+   - Controlled remote school-year runtime verification — completed in Task 08D
 9. Teacher management
+   - Local provisioning and lifecycle foundation — completed in Task 09A
+   - Reviewed remote provisioning migration — completed in Task 09B
+   - Server-only invitation infrastructure and ADMIN UI — completed locally in Task 09C
+   - Controlled remote invitation and activation verification — next as Task 09D
 10. Class management
 11. Subject management
 12. Student management
@@ -48,6 +63,17 @@
 44. Action-center authorization and E2E tests
 45. Security review
 46. Pilot preparation
+47. Observation domain and schema
+48. Observation RLS and audit rules
+49. Flash class-entry screen
+50. Detailed observation panel
+51. Student observation history
+52. Evolution calculation engine
+53. Deterministic observation alerts
+54. Rule-based observation summaries
+55. Class observation dashboard indicators
+56. PDF/Excel observation reporting
+57. Optional AI observation summaries — only after MVP validation
 
 Order changes require documenting dependencies and security consequences. Cross-cutting testing, accessibility, localization, auditability, and documentation are continuous rather than postponed to their named hardening steps.
 
@@ -62,6 +88,8 @@ The dependency chain for the new capabilities is explicit:
 
 The action center must never be populated with fake dashboard data. Milestone A is unchanged and is not delayed by these later capabilities.
 
+The observation sequence starts only after authentication/authorization, school structure, teachers, classes/courses, students/enrollment, `ClassCourse`, teacher assignments, and Shared Classroom Core. Its domain/schema, RLS/audit, entry, history, calculations, alerts, summaries, indicators and reporting are separate tasks. Optional AI summaries follow validation of deterministic summaries and do not delay Shared Classroom Core.
+
 ## Milestone A — Shared Classroom Core
 
 Deliver through the shared grade workflow: an administrator creates two teachers, one class, one subject, students, and a shared class course; Teacher A creates a quiz and enters grades; Teacher B sees and may modify those grades; calculations update and audit metadata is preserved.
@@ -74,4 +102,4 @@ Each implementation task should state scope, decisions used, data/security effec
 
 ## Next task
 
-**TASK 04 — Database Foundation** should introduce the first reviewable PostgreSQL migrations, generated types, and tested tenant/RLS foundations without implementing authentication UI or business features prematurely.
+**TASK 09D — Controlled Remote Teacher Invitation and Activation Verification** is next. It must separately review remote Auth configuration and run one controlled end-to-end invitation only after explicit authorization. Classroom access remains deferred until teacher assignments exist.

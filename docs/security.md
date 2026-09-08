@@ -13,8 +13,15 @@
 - RLS policies are explicit, reviewed, and tested.
 - A publishable Supabase key identifies a public application component; it is not user authentication or data authorization.
 - Supabase server clients are request-scoped and never shared globally across requests.
+- Every application table enables RLS at creation and receives no broad policy or public-role grant by default.
+- Protected rendering and authentication-page redirects call Supabase `getUser()` on the server; unverified `getSession()` data is never an authorization source.
+- Authentication failures are mapped to generic localized codes. Credentials, tokens, account existence, and raw provider errors are neither logged nor returned.
+- Return paths are restricted to the active locale's internal `/app` subtree; absolute, protocol-relative, cross-locale, backslash, and newline inputs fall back safely.
 
 ## Threat-focused controls
+
+- Calendar cross-row checks serialize through a lock on the affected parent school-year row; a term move locks both parents in stable UUID order. This prevents concurrent direct writes from passing stale containment or semester-chronology checks while keeping the lock scope to the affected aggregate.
+- Calendar trigger functions are schema-qualified, `SECURITY DEFINER`, empty-search-path functions with direct execution revoked from application roles. RLS and column grants still decide whether the underlying write may occur.
 
 - Treat identifiers and role/school fields from the client as untrusted.
 - Validate and normalize all inputs at server boundaries; constrain values again in PostgreSQL.
@@ -26,6 +33,10 @@
 - Define rate limits for authentication and abuse-prone mutations during implementation.
 - Keep real public connection values in ignored `.env.local` files, never log environment values, and never place secret/service-role credentials in `NEXT_PUBLIC_*` variables or browser bundles.
 - Future server code must still authenticate and authorize each operation even when it uses the centralized Supabase client.
+- Keep public Auth signup disabled. The application exposes no registration path, and TASK 08B reconfirmed that the development project's email/password provider remains enabled while public signup remains disabled.
+- Local RLS authorization trusts only `auth.uid()` joined to an active `user_profiles` row. It never trusts caller-supplied school/role values or editable Auth metadata.
+- Security-definer authorization helpers exist only to prevent recursive profile-policy evaluation. Their objects are schema-qualified, their `search_path` is empty, and only `authenticated` may execute them.
+- PostgreSQL grants and RLS are independent gates: grants are operation-level and narrowly column-scoped for mutations; RLS applies tenant/admin predicates and `WITH CHECK` to writable rows.
 
 ## Audit requirements
 
@@ -43,6 +54,16 @@ Audit logs must not become a secret/PII dumping ground. Contact notes need caref
 - Review of contact-history exposure, audit access, export authorization, and uploaded Excel handling
 - Production configuration review for cookies, headers, origins, logging, and environment separation
 - GDPR/privacy review before real student data is stored; early development and seeds use fictional identities only, and logs exclude grades and contact notes
+- Clean local migration reset, schema lint, zero-policy/grant verification, and generated-type review before any separately authorized remote migration
+- Remote migration dry-run, target-identity verification, zero-row check, and deny-by-default schema verification completed for the initial development foundation; each future remote change repeats this gate
+- The authorization migration passed the same remote gate, and Task 06C completed controlled first-admin provisioning. Public signup is disabled; real authenticated, anonymous, same-school, cross-school, helper, mutation-denial, temporary calendar-write, cleanup, login, logout and protected-route behavior passed without weakening RLS.
+- Task 07 resolves application context only on the server with `getUser()` plus existing profile/school RLS. It fails closed on missing, inactive, unsupported or inaccessible context, returns no raw provider error, renders no email/UUID, introduces no privileged client, and independently rejects role-inappropriate placeholder routes. Navigation hiding is not treated as authorization.
+- Task 08B applied only the reviewed calendar migration to the confirmed development target. Post-application catalog inspection confirmed the strict date constraint, two hardened trigger functions, two enabled triggers, unchanged RLS/policies/grants and unchanged application/Auth counts; no remote fixtures were created.
+- Task 08C accepts only strict allow-listed calendar fields, validates bound UUID identifiers and ISO dates, derives tenant scope server-side, and returns catalog-backed safe error codes rather than provider/database text. It introduces no service-role use and relies on the reviewed database constraints as the final concurrency-safe integrity boundary.
+- Task 09A keeps direct profile INSERT/UPDATE/DELETE unavailable and exposes only two hardened authenticated RPCs. They verify `auth.uid()`, require an active ADMIN, derive school server-side, fix the provisioned role to TEACHER, constrain update columns, use stable safe failures, and rely on the profile primary key for duplicate concurrency safety.
+- A future invitation secret belongs only in a server-only privileged Auth module and never in `NEXT_PUBLIC_`, client imports, ordinary academic queries, logs, or documentation. Invitation/profile partial failure requires explicit reconciliation; deleting an existing Auth user is forbidden compensation.
+- Task 09B applied only the reviewed provisioning migration after positive target, count, Auth-setting, schema, history, and dry-run gates. Remote verification found no RLS/policy/grant weakening, overload, profile data mutation, invitation, Auth change, teacher creation, or new application secret.
+- Task 09C isolates `SUPABASE_SECRET_KEY` from client code, validates `APP_URL` as an origin, disables privileged-client session persistence, constrains invitation redirects, maps Auth failures to safe codes, and performs bounded exact-ID compensation. The implementation was validated without a real invitation or remote mutation.
 
 ## Open security decisions
 

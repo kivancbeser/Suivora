@@ -9,6 +9,8 @@ Read this file and the relevant documents under `docs/` before changing the repo
 - Distinguish confirmed product rules, proposed technical choices, open decisions, and deferred features.
 - Use TypeScript strict mode and never use `any`. Keep business logic outside React components, validate inputs explicitly, and prefer feature-first organization.
 - Keep database access server-side where appropriate. Use PostgreSQL migrations for schema changes; commit migrations with the code that depends on them, make them reviewable and documented, and never rewrite an applied migration.
+- Use the project-pinned Supabase CLI through npm scripts. Validate migrations with a clean local reset before any separately authorized remote application; never link, push, or reset a remote database implicitly.
+- Regenerate `src/types/database.generated.ts` from the local schema after migration changes and never edit that generated file manually.
 - Do not add dependencies without a concrete need.
 
 ## Domain invariants
@@ -34,8 +36,10 @@ Read this file and the relevant documents under `docs/` before changing the repo
 - Enforce authorization on the server and with explicitly documented and tested Supabase RLS policies.
 - Use the centralized browser and request-scoped server Supabase factories; never construct ad hoc clients in feature components or retain a server client across requests.
 - A publishable Supabase key identifies the application and is not authorization. Database access must later be mediated by typed repositories/queries, server authorization, and RLS.
+- New application tables enable RLS in the migration that creates them and remain deny-by-default until narrowly reviewed policies are added.
 - Scope every query and mutation to the authenticated user's school and role; teachers additionally require an active assignment.
 - Never expose service-role credentials to the browser or place secrets in committed files or documentation.
+- `SUPABASE_SECRET_KEY` is loaded lazily only by `src/lib/supabase/privileged.ts`; that client is limited to Auth administrative invitation/compensation and must never perform ordinary database access. Teacher profile RPCs always use the authenticated request-scoped client.
 - Grade, homework, contact, progression, mandatory-study, and shared-event mutations require audit metadata. Preserve history rather than overwriting academic or contact records.
 - Protect parent/administration contact history as sensitive data.
 
