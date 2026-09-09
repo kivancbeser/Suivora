@@ -19,6 +19,8 @@ The first pilot is approximately one school, four teachers, fifty students, mult
 
 Administrators manage teachers, years/terms, classes, courses, students, and teacher assignments. Teachers see assigned class courses, may add students to an authorized class, and manage its academic workflow.
 
+Student identity belongs to the school rather than permanently to a class. Class membership is preserved as dated historical enrollment: dates are inclusive, an open enrollment has no end date, and one student cannot have overlapping class enrollments within a school year. A class transfer closes the existing enrollment and creates a new non-overlapping enrollment. The initial identity is deliberately limited to entered first/last names, an optional school-scoped code, and active state; no account, parent, demographic, contact, medical, or national-identity data is stored.
+
 Student detail eventually combines C1-C8 grades, semester and annual averages, suggested and final oral grades, evolution, outcome analysis, homework history, alerts, contact history, and mandatory-study history.
 
 ## Modules

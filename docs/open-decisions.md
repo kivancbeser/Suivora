@@ -35,7 +35,7 @@ This is the canonical unresolved-question list. No item below authorizes an impl
 
 18. May administrators directly edit all academic records, or only configure/manage access and view reports?
 19. Can a teacher add an entirely new student identity or only enroll an existing student in an authorized class, and what duplicate matching applies?
-20. What are archival/deletion policies for students, classes, class courses, quizzes, and assignments?
+20. What are archival/deletion policies for classes, class courses, quizzes, and assignments? Student identity uses `is_active`; students and enrollments are not hard-deleted in the initial version.
 21. What audit representation, immutability, retention, access, redaction, and correction policies are required?
 22. When an assignment or user is deactivated, how quickly must existing sessions lose access?
 23. Beyond Task 09C's bounded exact-new-user compensation and manual runbook, should a later persistent reconciliation queue support operator-approved profile retry?
@@ -81,3 +81,7 @@ This is the canonical unresolved-question list. No item below authorizes an impl
 49. When teacher assignments are introduced, what effective-date and inactive-ClassCourse rules govern continued historical read access?
 
 Task 10C intentionally leaves both lifecycle questions unresolved; its UI neither mutates active state nor claims a cascade/blocking rule.
+
+## Closed student-enrollment decision
+
+Can a student change class? **Yes. A class change closes the existing enrollment and creates a new non-overlapping historical enrollment.** Dates are inclusive, and history is preserved.

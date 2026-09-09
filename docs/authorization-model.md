@@ -90,10 +90,14 @@ Task 09C adds a privileged client only for invitation and exact newly-created-us
 | `classes` | Own-school active ADMIN | Own-school active ADMIN | Own-school active ADMIN, with matching `WITH CHECK` | Denied |
 | `courses` | Own-school active ADMIN | Own-school active ADMIN | Own-school active ADMIN, with matching `WITH CHECK` | Denied |
 | `class_courses` | Own-school active ADMIN | Own-school active ADMIN | Own-school active ADMIN, with matching `WITH CHECK` | Denied |
+| `students` | Own-school active ADMIN | Own-school active ADMIN | Own-school active ADMIN; identity fields except `school_id` | Denied |
+| `enrollments` | Own-school active ADMIN | Own-school active ADMIN | Own-school active ADMIN; `ends_on` only | Denied |
 
 PostgreSQL grants permit an operation to reach RLS; policies then decide which rows are visible or writable. `anon` has no application-table privileges. `authenticated` has required SELECT grants plus narrowly column-scoped structural mutations and no DELETE, school mutation, or direct profile mutation privilege. RLS remains mandatory even where a grant exists.
 
 For the three classroom-structure tables, active TEACHER, inactive/missing profile, anonymous, and other-school actors receive no rows or writes. Teacher access is deliberately deferred until active `ClassCourse` assignments can be checked at the database boundary.
+
+The same initial denial applies to `students` and `enrollments`. Future TEACHER access must derive from active assignments covering the relevant class/ClassCourses and is not granted by school membership alone.
 
 The Task 10C routes recheck ADMIN access server-side even though the application shell hides ADMIN navigation from teachers. IDs are opaque form references only; tenant, role, year ownership, and initial active state are never accepted from the client.
 

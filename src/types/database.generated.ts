@@ -150,6 +150,71 @@ export type Database = {
           },
         ]
       }
+      enrollments: {
+        Row: {
+          class_id: string
+          created_at: string
+          ends_on: string | null
+          id: string
+          school_id: string
+          school_year_id: string
+          starts_on: string
+          student_id: string
+          updated_at: string
+        }
+        Insert: {
+          class_id: string
+          created_at?: string
+          ends_on?: string | null
+          id?: string
+          school_id: string
+          school_year_id: string
+          starts_on: string
+          student_id: string
+          updated_at?: string
+        }
+        Update: {
+          class_id?: string
+          created_at?: string
+          ends_on?: string | null
+          id?: string
+          school_id?: string
+          school_year_id?: string
+          starts_on?: string
+          student_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "enrollments_class_school_year_fk"
+            columns: ["class_id", "school_id", "school_year_id"]
+            isOneToOne: false
+            referencedRelation: "classes"
+            referencedColumns: ["id", "school_id", "school_year_id"]
+          },
+          {
+            foreignKeyName: "enrollments_school_id_fkey"
+            columns: ["school_id"]
+            isOneToOne: false
+            referencedRelation: "schools"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "enrollments_school_year_school_fk"
+            columns: ["school_year_id", "school_id"]
+            isOneToOne: false
+            referencedRelation: "school_years"
+            referencedColumns: ["id", "school_id"]
+          },
+          {
+            foreignKeyName: "enrollments_student_school_fk"
+            columns: ["student_id", "school_id"]
+            isOneToOne: false
+            referencedRelation: "students"
+            referencedColumns: ["id", "school_id"]
+          },
+        ]
+      }
       school_years: {
         Row: {
           active: boolean
@@ -211,6 +276,47 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      students: {
+        Row: {
+          created_at: string
+          first_name: string
+          id: string
+          is_active: boolean
+          last_name: string
+          school_id: string
+          student_code: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          first_name: string
+          id?: string
+          is_active?: boolean
+          last_name: string
+          school_id: string
+          student_code?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          first_name?: string
+          id?: string
+          is_active?: boolean
+          last_name?: string
+          school_id?: string
+          student_code?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "students_school_id_fkey"
+            columns: ["school_id"]
+            isOneToOne: false
+            referencedRelation: "schools"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       terms: {
         Row: {
@@ -330,7 +436,6 @@ export type Database = {
     }
   }
 }
-
 type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
 
 type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">]

@@ -2,6 +2,14 @@
 
 Significant product, domain, architecture, security, and delivery-document changes belong here. This is not a substitute for decision records or version control.
 
+## 2026-09-09 — Student and historical enrollment foundation
+
+- Added one forward-only local migration for minimal school-owned student identities and immutable historical class enrollments, with no seed or real student data.
+- Enforced trimmed bounded/control-free names and optional codes, case-insensitive school-scoped code uniqueness, composite tenant/year relationships, inclusive school-year-contained dates, and concurrency-safe prevention of overlapping enrollment ranges.
+- Added ADMIN-only SELECT/INSERT/limited-UPDATE RLS and column grants; TEACHER, anonymous, cross-school, enrollment-identity updates, and all hard deletion remain denied.
+- Added 82 dedicated transactional pgTAP assertions (352 total) and regenerated deterministic strict database types.
+- After a clean preflight and explicit approval, applied only the reviewed migration once to Suivora development. Six migrations now synchronize, the final dry-run is empty, remote/local types are semantically equivalent, both new tables remain empty, and Numeon/production were untouched.
+
 ## 2026-09-09 — First classroom runtime verification
 
 - Verified the Ready production deployment and synchronized development target before any write, then obtained explicit approval for the exact classroom values.

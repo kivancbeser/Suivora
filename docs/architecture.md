@@ -23,6 +23,8 @@ The implemented production validation uses `next build --webpack`. This is a sup
 
 PostgreSQL fits the strongly relational, tenant-scoped domain and its reporting needs better than MongoDB. Microservices would add operational and consistency cost without benefit at pilot scale.
 
+Student identity and class membership are normalized: `students` is the school-owned identity, while `enrollments` records immutable class/year/start identity and an optional closing date. Composite foreign keys enforce tenant/year ownership, a locked school-year validation trigger enforces date boundaries, and an inclusive `daterange` exclusion constraint provides concurrency-safe overlap prevention.
+
 ## Code organization principles
 
 - Feature-first modules with domain, application, persistence, and UI concerns separated where useful

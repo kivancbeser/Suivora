@@ -55,6 +55,7 @@ Audit logs must not become a secret/PII dumping ground. Contact notes need caref
 - Review of contact-history exposure, audit access, export authorization, and uploaded Excel handling
 - Production configuration review for cookies, headers, origins, logging, and environment separation
 - GDPR/privacy review before real student data is stored; early development and seeds use fictional identities only, and logs exclude grades and contact notes
+- Student identity is data-minimized to names, optional school code, and active state. No student/parent login, contact, demographic, medical, national-identity, address, photo, or family data is part of the foundation; historical enrollments are retained and never hard-deleted through application roles.
 - Clean local migration reset, schema lint, zero-policy/grant verification, and generated-type review before any separately authorized remote migration
 - Remote migration dry-run, target-identity verification, zero-row check, and deny-by-default schema verification completed for the initial development foundation; each future remote change repeats this gate
 - The authorization migration passed the same remote gate, and Task 06C completed controlled first-admin provisioning. Public signup is disabled; real authenticated, anonymous, same-school, cross-school, helper, mutation-denial, temporary calendar-write, cleanup, login, logout and protected-route behavior passed without weakening RLS.

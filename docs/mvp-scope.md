@@ -44,3 +44,5 @@ An item being described here does not mean it is implemented. New business rules
 ## Implemented structural foundation
 
 The database foundation for school-year classes, school-owned courses, and their `ClassCourse` join is implemented without seed or business rows. ADMIN management UI, students, enrollments, and teacher assignments remain separate tasks.
+
+The applied student/enrollment database foundation separates minimal school-owned student identity from inclusive dated class membership, preserves transfer history, prevents overlapping enrollment periods, and provides initial ADMIN-only access without hard deletion or real student data. Student UI and assignment-scoped teacher access remain later tasks.

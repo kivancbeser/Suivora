@@ -6,7 +6,7 @@ Suivora is a French-first shared classroom management web application for clear,
 
 ## Current status
 
-Task 09C2 adds complete French/Turkish localization and a global route-preserving language switcher locally. French remains the default, English remains unsupported, and authentication and authorization retain the selected locale. The completed GitHub/Vercel and Supabase Auth URL setup is unchanged; no invitation or remote change was made by Task 09C2.
+The application has complete French/Turkish localization, authenticated ADMIN structure management, and a remotely applied student/historical-enrollment database foundation. French remains the default and English remains unsupported. No student management UI or real student data exists yet.
 
 ## Users and central concept
 
@@ -124,7 +124,9 @@ ADMIN structure management is available at `/{locale}/app/classes`, `/{locale}/a
 
 The first development classroom structure has been verified end to end through the deployed ADMIN interface in both French and Turkish. The development tenant now contains exactly one class, one course, and one ClassCourse connection; no teacher invitation was sent.
 
-The next recommended task is **TASK 10D — Controlled Remote Class, Course and ClassCourse Runtime Verification**.
+The student foundation models a minimal school-owned identity separately from historical class enrollment. Enrollment periods use inclusive dates, remain within their school year, and cannot overlap for one student/year; transfers close the prior row and create a new one. Initial access is ADMIN-only, hard deletion is unavailable, and no real student data or student UI is included.
+
+The next recommended task is **TASK 11C — Bilingual ADMIN Student and Enrollment Management UI**.
 
 ## Important open decisions
 

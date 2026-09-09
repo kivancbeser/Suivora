@@ -31,7 +31,7 @@
 10. Class, course, and ClassCourse management
 11. Teacher assignments
 12. Student management
-13. Student enrollment
+13. Student identity and historical enrollment database foundation — implemented, remotely verified, and empty
 14. ClassCourse
 15. Teacher assignments
 16. Teacher “Mes classes”

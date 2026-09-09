@@ -18,6 +18,7 @@ Read this file and the relevant documents under `docs/` before changing the repo
 - Every school-owned entity is scoped by `schoolId`; cross-school access is forbidden.
 - A class belongs to one school year, a course belongs to one school, and `ClassCourse` joins them within that same school and year. `weekly_periods` means lesson periods per week, not clock hours.
 - Structural class/course records use `is_active`; do not introduce hard-delete workflows. Until teacher assignments exist, only active same-school administrators may access these tables.
+- A student identity belongs to its school and uses `is_active`; class membership is an immutable historical `enrollment`. Enrollment dates are inclusive, stay within the class's school year, and may not overlap for one student/year. A transfer closes the prior enrollment and creates a new one; neither students nor enrollments are hard-deleted.
 - Teacher access comes from an active assignment to the relevant `ClassCourse`, never merely from hidden UI.
 - Assigned teachers collaborate on the same students, quizzes, grades, homework, contacts, learning outcomes, and other shared academic records defined for that `ClassCourse`.
 - Quiz slots are exactly C1-C4 in Semester 1 and C5-C8 in Semester 2; every quiz is out of 100.

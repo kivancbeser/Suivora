@@ -83,6 +83,8 @@ Task 07 tests the application-context boundary with typed gateways: active ADMIN
 ## Future observation scenarios
 
 - Multiple same-day observations for one student persist as distinct audited records; an empty row persists nothing.
+- Student/enrollment pgTAP coverage verifies minimal identity constraints, same-school/year relationships, inclusive/open date ranges, concurrency-safe overlap prevention, transfers, immutable enrollment identity, parent restrictions, ADMIN-only RLS, teacher/anonymous/cross-school denial, narrow grants, and transactional rollback.
+- TASK 11B applied only the reviewed student/enrollment migration after explicit approval. Six migration histories synchronize, the final dry-run is empty, both remote tables contain zero rows, all 23 existing/new policies and narrow grants match the local design, and remote/local public type contracts are semantically equivalent apart from generator metadata/formatting.
 - Bulk entry creates records only for roster students with entered values and remains usable for at least 35–40 students.
 - Unassigned/cross-school teachers cannot read, create, classify, override, summarize or export observations.
 - Deterministic classification and teacher override remain separate; recalculation never overwrites override history.
