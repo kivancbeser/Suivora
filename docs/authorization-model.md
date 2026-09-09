@@ -103,6 +103,8 @@ The four student workflow RPCs grant execution only to `authenticated` but indep
 
 The Task 10C routes recheck ADMIN access server-side even though the application shell hides ADMIN navigation from teachers. IDs are opaque form references only; tenant, role, year ownership, and initial active state are never accepted from the client.
 
+The local assignment foundation adds `is_teacher_assigned(uuid)`, which derives the active TEACHER profile from `auth.uid()` and requires an active assignment plus active ClassCourse, class, and course. ADMIN may SELECT/INSERT and update only assignment periods/active state; teachers see only their own active rows and receive SELECT-only access to assigned ClassCourses, related structure, and the class roster. Teacher classroom/student mutations and every DELETE remain denied. The two ADMIN RPCs independently derive school authority and validate teacher/ClassCourse eligibility.
+
 ## Revocation and history
 
 Deactivating an assignment removes future teacher access without erasing audit attribution. Historical data keeps immutable actor identifiers even if a profile is later deactivated. Exact session invalidation timing is an open security decision.

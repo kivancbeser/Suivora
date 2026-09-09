@@ -1,6 +1,6 @@
 # Database schema proposal
 
-The foundation migrations through `20260910090000_atomic_student_workflows.sql` have each been reviewed and applied exactly once to the dedicated Suivora development project. Local and remote histories match through seven migrations. Later sections remain logical proposals until their own migrations are implemented.
+The reviewed local and Suivora development foundations currently end at `20260910140000_teacher_assignment_foundation.sql`, with eight synchronized migrations. Later sections remain logical proposals until their own migrations are implemented.
 
 ## Implemented local foundation
 
@@ -11,7 +11,7 @@ The foundation migrations through `20260910090000_atomic_student_workflows.sql` 
 - `school_years` belongs to a school, requires a nonblank label and `start_date < end_date`, and is unique by school and label.
 - `terms` carries `school_id`, references a same-school `school_year` through a composite foreign key, allows semester 1 or 2 only, requires ordered dates, and is unique by school year and semester.
 - School, profile, year, and term updates receive `updated_at` from one trigger function. All timestamps use `timestamptz`.
-- All nine application tables have RLS enabled. The schema has twenty-three explicit authenticated policies: the original eight plus ADMIN-only SELECT/INSERT/UPDATE policies for classes, courses, ClassCourses, students, and enrollments. No DELETE policy exists.
+- The local and development schemas have ten RLS-enabled application tables and thirty-two explicit authenticated policies. The assignment migration adds four assignment policies plus assignment-scoped SELECT policies for classes, courses, ClassCourses, students, and enrollments. No DELETE policy exists.
 - `anon` retains zero table/helper access. `authenticated` receives table SELECT plus column-limited year/term INSERT and UPDATE grants; grants do not bypass RLS.
 - Task 06C provisioned the remote development tenant through an untracked atomic transaction. Its stable post-bootstrap state is one school, one active ADMIN profile linked to the sole Auth user, zero school years and zero terms; temporary RLS verification records were removed.
 
@@ -45,7 +45,7 @@ The generated local schema contract is `src/types/database.generated.ts` and mus
 | `courses` | `id`, `school_id`, trimmed name/optional code, `is_active`, timestamps; case-insensitive school-scoped name/code uniqueness |
 | `students` | `id`, `school_id`, trimmed first/last names, optional case-insensitively unique school code, `is_active`, timestamps |
 | `class_courses` | `id`, `school_id`, `school_year_id`, `class_id`, `course_id`, `weekly_periods`, `is_active`, timestamps; composite tenancy FKs and unique class/course/year |
-| `teacher_assignments` | `id`, `school_id`, `class_course_id`, `teacher_id`, active/from/to; prevent duplicate active assignment |
+| `teacher_assignments` | `id`, `school_id`, `class_course_id`, `teacher_id`, `weekly_periods` 1–40, `is_active`, timestamps; same-school composite FKs and unique teacher/ClassCourse |
 | `enrollments` | `id`, `school_id`, `school_year_id`, `student_id`, `class_id`, inclusive `starts_on`/optional `ends_on`, timestamps; same-school/year FKs and no overlapping student/year ranges |
 
 Every foreign-key path must remain within one `school_id`, enforced through composite constraints, triggers, or an equally reliable design in addition to application validation.
@@ -55,6 +55,8 @@ Every foreign-key path must remain within one `school_id`, enforced through comp
 `20260909180000_student_enrollment_foundation.sql` implements minimal student identity and historical class membership locally and on the Suivora development project. Composite foreign keys bind students/classes/years to one school, a hardened trigger validates inclusive dates against a locked school year, and an `extensions.btree_gist` exclusion constraint prevents overlapping ranges while treating null `ends_on` as open-ended. ADMIN may update student identity/active fields and only close an enrollment via `ends_on`; enrollment identity is immutable through grants. Six ADMIN-only policies exist, TEACHER/anonymous access and all hard deletion remain denied, and both remote tables remain empty.
 
 `20260910090000_atomic_student_workflows.sql` is applied locally and on Suivora development. It adds four authenticated ADMIN RPCs: `admin_create_student_with_enrollment`, `admin_update_student`, `admin_transfer_student`, and `admin_close_current_enrollment`. The functions expose no school/year/role authority, use empty-search-path volatile security-definer execution, normalize identity input, lock lifecycle rows, and return stable failures. Direct table grants and the 23-policy RLS matrix are unchanged; the remote student and enrollment tables remained empty after application.
+
+`20260910140000_teacher_assignment_foundation.sql` adds the assignment table, two protected ADMIN RPCs and `is_teacher_assigned(uuid)`. Validation triggers lock the parent ClassCourse and enforce teacher eligibility, relationship immutability, active-capacity totals, parent period reduction, and parent deactivation rules. Teachers receive SELECT-only access to their own active assignment, assigned structure, and enrolled class roster; no classroom/student mutation or hard deletion is granted. Remote application is approval-gated.
 
 ## Assessment
 

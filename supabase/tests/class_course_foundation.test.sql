@@ -53,8 +53,8 @@ select extensions.ok(
 );
 select extensions.is(
   (select count(*)::integer from pg_policies where schemaname = 'public' and tablename in ('classes','courses','class_courses')),
-  9,
-  'exactly nine ADMIN policies exist'
+  12,
+  'nine ADMIN and three assignment-scoped SELECT policies exist'
 );
 select extensions.is(
   (select count(*)::integer from pg_policies where schemaname = 'public' and tablename in ('classes','courses','class_courses') and cmd = 'DELETE'),

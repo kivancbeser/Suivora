@@ -35,7 +35,7 @@ This is the canonical unresolved-question list. No item below authorizes an impl
 
 18. May administrators directly edit all academic records, or only configure/manage access and view reports?
 19. Can a teacher add an entirely new student identity or only enroll an existing student in an authorized class, and what duplicate matching applies?
-20. What are archival/deletion policies for classes, class courses, quizzes, and assignments? Student identity uses `is_active`; students and enrollments are not hard-deleted in the initial version.
+20. What are later archival/deletion policies for classes, class courses, quizzes, and assignments? Initial teacher assignments and student identities use `is_active`; assignments, students, and enrollments are not hard-deleted.
 21. What audit representation, immutability, retention, access, redaction, and correction policies are required?
 22. When an assignment or user is deactivated, how quickly must existing sessions lose access?
 23. Beyond Task 09C's bounded exact-new-user compensation and manual runbook, should a later persistent reconciliation queue support operator-approved profile retry?
@@ -78,9 +78,11 @@ This is the canonical unresolved-question list. No item below authorizes an impl
 ## ClassCourse lifecycle
 
 48. May an inactive class or course coexist with active ClassCourses, and should deactivation cascade logically or be blocked?
-49. When teacher assignments are introduced, what effective-date and inactive-ClassCourse rules govern continued historical read access?
+49. What future effective-date model and historical-read rules should extend the initial active/inactive teacher assignment lifecycle?
 
 Task 10C intentionally leaves both lifecycle questions unresolved; its UI neither mutates active state nor claims a cascade/blocking rule.
+
+The initial assignment rule is closed for current access: active teacher profile + active assignment + active ClassCourse/class/course is required, and a ClassCourse cannot be deactivated while active assignments exist. Effective-dated historical access and durable audit representation remain open.
 
 ## Closed student-enrollment decision
 

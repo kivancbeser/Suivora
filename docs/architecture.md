@@ -27,6 +27,8 @@ Student identity and class membership are normalized: `students` is the school-o
 
 The student application boundary uses four `SECURITY DEFINER` RPCs rather than coordinating dependent writes in React or Server Actions. Each derives the active ADMIN school through `auth.uid()`, validates protected parents, and uses deterministic row locks. PostgreSQL statement atomicity rolls back student creation or enrollment transfer completely when a dependent write fails.
 
+Teacher assignments are the authorization join between an active TEACHER profile and one ClassCourse. Assignment inserts, period changes and reactivation lock the parent ClassCourse before checking aggregate capacity; parent period/deactivation changes use the same row boundary. A non-recursive security-definer predicate gives RLS only the minimal active assignment fact needed for read-only ClassCourse and roster access.
+
 ## Code organization principles
 
 - Feature-first modules with domain, application, persistence, and UI concerns separated where useful

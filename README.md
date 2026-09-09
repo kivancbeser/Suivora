@@ -6,7 +6,7 @@ Suivora is a French-first shared classroom management web application for clear,
 
 ## Current status
 
-The application has complete French/Turkish localization, authenticated ADMIN structure management, remotely applied atomic student/enrollment workflows, and bilingual student management. French remains the default and English remains unsupported. No real student data exists yet.
+The application has complete French/Turkish localization, authenticated ADMIN structure management, remotely applied student/enrollment and teacher-assignment foundations, bilingual assignment management, and a read-only teacher “Mes classes” workspace. French remains the default and English remains unsupported. No real student or assignment data exists yet.
 
 ## Users and central concept
 
@@ -118,7 +118,7 @@ Add or change user-facing copy in both `src/i18n/messages/fr.json` and `src/i18n
 
 Authentication routes retain the selected locale (`/fr/connexion`, `/tr/connexion`, `/fr/app`, and `/tr/app`). Public registration is intentionally absent and public signup is disabled in the development project. The shared localized module placeholder remains role-aware in both languages. Role-aware link visibility is presentation only: the dynamic module route independently checks the server-resolved role and rejects manually entered role-inappropriate paths.
 
-The database now models `classes`, school-owned `courses`, and the school-year-specific `class_courses` aggregate. These records use `is_active`; only an active same-school ADMIN may currently access them, and hard deletion is unavailable. Teacher access remains closed until active assignments are implemented.
+The database models `classes`, school-owned `courses`, and the school-year-specific `class_courses` aggregate. These records use `is_active`; ADMIN controls structure, while active teachers receive only assignment-scoped read access. Hard deletion is unavailable.
 
 ADMIN structure management is available at `/{locale}/app/classes`, `/{locale}/app/classes/[classId]`, and `/{locale}/app/matieres`. Mutations reauthorize the ADMIN, derive school/year ownership server-side, and expose no lifecycle or hard-delete controls.
 
@@ -128,7 +128,9 @@ The student foundation models a minimal school-owned identity separately from hi
 
 Four locally and remotely validated transactional ADMIN RPCs provide the UI boundary for creating a student with the initial enrollment, updating identity, transferring classes, and closing the current enrollment. They derive tenancy and year server-side, serialize student lifecycle changes with row locks, and reject deactivation while an enrollment is open. The bilingual ADMIN interface is available at `/{locale}/app/eleves` and `/{locale}/app/eleves/[studentId]`; all mutations use these RPCs through the normal authenticated request-scoped client.
 
-The next recommended task is **TASK 11E — Teacher Assignment Foundation**.
+The teacher-assignment foundation is applied locally and to Suivora development. It supports multiple teachers per ClassCourse, enforces total weekly-period capacity with row locking, and grants active teachers read-only access only to their assigned ClassCourses and related class rosters. ADMIN assignment controls live on the bilingual class detail page; teachers use the bilingual `/{locale}/app/mes-classes` list and detail routes. No teacher profile or assignment was created.
+
+The next domain step is Shared Class Detail, followed by the quiz model; any real teacher invitation or assignment remains a separate controlled operation.
 
 ## Important open decisions
 

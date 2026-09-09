@@ -62,6 +62,7 @@ erDiagram
 - Classes, courses, and ClassCourses are deactivated rather than hard-deleted in the initial lifecycle.
 - The ADMIN UI may display inactive structural history but creates relationships only from active school years, classes, and courses. It does not define the unresolved inactive-parent lifecycle invariant.
 - A teacher must have an active assignment to access a class course.
+- One ClassCourse may have multiple teachers and one teacher may have multiple ClassCourses. Each assignment allocates 1–40 weekly periods; the sum of active allocations cannot exceed the ClassCourse total. Inactive rows preserve lifecycle history, but only an active TEACHER profile may receive or reactivate an assignment.
 - Quiz slots are C1-C8, tied to their fixed semester, with exactly one quiz slot per class course.
 - Grades are in the inclusive 0-100 range.
 - Calculated oral suggestions and final teacher grades are different facts.

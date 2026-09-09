@@ -26,7 +26,7 @@ select extensions.ok(exists(select 1 from pg_constraint where conrelid='public.e
 select extensions.ok(exists(select 1 from pg_constraint where conrelid='public.enrollments'::regclass and conname='enrollments_student_year_no_overlap' and contype='x'),'overlap exclusion constraint exists');
 select extensions.ok((select count(*)=3 from pg_trigger where tgrelid in ('public.students'::regclass,'public.enrollments'::regclass) and not tgisinternal),'expected timestamp and integrity triggers exist');
 select extensions.ok((select bool_and(relrowsecurity) from pg_class where oid in ('public.students'::regclass,'public.enrollments'::regclass)),'RLS enabled on both tables');
-select extensions.is((select count(*)::integer from pg_policies where schemaname='public' and tablename in ('students','enrollments')),6,'six ADMIN policies exist');
+select extensions.is((select count(*)::integer from pg_policies where schemaname='public' and tablename in ('students','enrollments')),8,'six ADMIN and two assignment-scoped SELECT policies exist');
 select extensions.is((select count(*)::integer from pg_policies where schemaname='public' and tablename in ('students','enrollments') and cmd='DELETE'),0,'no DELETE policy exists');
 select extensions.ok(not has_table_privilege('anon','public.students','select,insert,update,delete') and not has_table_privilege('anon','public.enrollments','select,insert,update,delete'),'anonymous has no table grants');
 select extensions.ok(has_table_privilege('authenticated','public.students','select') and has_table_privilege('authenticated','public.enrollments','select'),'authenticated has SELECT grants');

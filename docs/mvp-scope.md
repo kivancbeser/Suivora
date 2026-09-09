@@ -43,6 +43,6 @@ An item being described here does not mean it is implemented. New business rules
 
 ## Implemented structural foundation
 
-The database foundation for school-year classes, school-owned courses, and their `ClassCourse` join is implemented without seed or business rows. ADMIN management UI, students, enrollments, and teacher assignments remain separate tasks.
+The database foundation for school-year classes, school-owned courses, their `ClassCourse` join, students, historical enrollments, and teacher assignments is implemented without seed student/assignment rows. Bilingual ADMIN structure, student, and assignment management plus the read-only TEACHER “Mes classes” context are implemented.
 
-The applied student/enrollment foundation separates minimal school-owned student identity from inclusive dated class membership, preserves transfer history, prevents overlapping enrollment periods, and provides ADMIN-only transactional management without hard deletion or real student data. The bilingual ADMIN UI supports creation, editing, history, same-year transfer, and closure; assignment-scoped teacher access remains a later task.
+The applied student/enrollment foundation separates minimal school-owned student identity from inclusive dated class membership, preserves transfer history, prevents overlapping enrollment periods, and provides ADMIN-only transactional management without hard deletion or real student data. Assignment-scoped teacher read access is now enforced by RLS and exposed only through the read-only “Mes classes” list and roster detail.

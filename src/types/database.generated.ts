@@ -318,6 +318,61 @@ export type Database = {
           },
         ]
       }
+      teacher_assignments: {
+        Row: {
+          class_course_id: string
+          created_at: string
+          id: string
+          is_active: boolean
+          school_id: string
+          teacher_id: string
+          updated_at: string
+          weekly_periods: number
+        }
+        Insert: {
+          class_course_id: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          school_id: string
+          teacher_id: string
+          updated_at?: string
+          weekly_periods: number
+        }
+        Update: {
+          class_course_id?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          school_id?: string
+          teacher_id?: string
+          updated_at?: string
+          weekly_periods?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "teacher_assignments_class_course_school_fk"
+            columns: ["class_course_id", "school_id"]
+            isOneToOne: false
+            referencedRelation: "class_courses"
+            referencedColumns: ["id", "school_id"]
+          },
+          {
+            foreignKeyName: "teacher_assignments_school_id_fkey"
+            columns: ["school_id"]
+            isOneToOne: false
+            referencedRelation: "schools"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "teacher_assignments_teacher_school_fk"
+            columns: ["teacher_id", "school_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id", "school_id"]
+          },
+        ]
+      }
       terms: {
         Row: {
           created_at: string
@@ -423,6 +478,14 @@ export type Database = {
         }
         Returns: string
       }
+      admin_create_teacher_assignment: {
+        Args: {
+          assigned_weekly_periods: number
+          target_class_course_id: string
+          target_teacher_id: string
+        }
+        Returns: string
+      }
       admin_provision_teacher_profile: {
         Args: { target_user_id: string; teacher_display_name: string }
         Returns: undefined
@@ -445,6 +508,14 @@ export type Database = {
         }
         Returns: undefined
       }
+      admin_update_teacher_assignment: {
+        Args: {
+          assigned_weekly_periods: number
+          assignment_is_active: boolean
+          target_assignment_id: string
+        }
+        Returns: undefined
+      }
       admin_update_teacher_profile: {
         Args: {
           target_user_id: string
@@ -459,6 +530,10 @@ export type Database = {
       }
       current_school_id: { Args: never; Returns: string }
       is_school_admin: { Args: { target_school_id: string }; Returns: boolean }
+      is_teacher_assigned: {
+        Args: { target_class_course_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
       app_role: "ADMIN" | "TEACHER"
@@ -468,6 +543,7 @@ export type Database = {
     }
   }
 }
+
 type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
 
 type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">]

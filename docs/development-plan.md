@@ -29,13 +29,13 @@
    - Dedicated GitHub/Vercel development deployment and Auth URL configuration — completed in Task 09D-PRE
    - Controlled remote invitation and activation verification — deferred until separately requested; no invitation was sent during the ClassCourse foundation
 10. Class, course, and ClassCourse management
-11. Teacher assignments
+11. Teacher assignments — completed locally and remotely
 12. Student management
 13. Student identity and historical enrollment database foundation — implemented, remotely verified, and empty
 14. Transactional ADMIN student workflows and bilingual management UI — completed locally and remotely; remote tables remain empty
 15. ClassCourse — foundation and ADMIN management completed
-16. Teacher assignments
-17. Teacher “Mes classes”
+16. Teacher assignments — database/RLS/RPC foundation, reviewed remote application, and bilingual ADMIN UI complete; remote table remains empty
+17. Teacher “Mes classes” — bilingual read-only assignment list and roster detail complete
 18. Shared class detail
 19. Quiz model
 20. Bulk grade entry
@@ -105,4 +105,4 @@ Each implementation task should state scope, decisions used, data/security effec
 
 ## Next task
 
-The atomic student workflow migration and bilingual ADMIN student/enrollment interface are complete. No real student was created, and the development student/enrollment tables remain empty. The next recommended task is **TASK 11E — Teacher Assignment Foundation**. Teacher access remains deferred until assignments exist.
+The assignment migration is synchronized locally and on Suivora development, and the bilingual ADMIN assignment and TEACHER “Mes classes” interfaces are complete without creating any teacher, assignment, or student. The next step is Shared Class Detail, then the quiz model.

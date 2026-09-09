@@ -70,6 +70,10 @@ Task 10C adds structurally identical `Classes` and `Courses` namespaces for Fren
 
 The `Students` namespace covers ADMIN list/detail, search and filters, creation with initial enrollment, identity editing, enrollment history, same-year transfer, closure confirmations, validation, pending, empty, success, and safe error states. Names, school codes, and class names remain untranslated school data. Date-only enrollment values use the active locale with UTC formatting, and the global switcher preserves nested student-detail paths while discarding query parameters.
 
+## Assignment and My Classes localization
+
+The matching `Assignments` catalogs cover ADMIN capacity summaries, assignment lifecycle controls, confirmations, validation, pending, success, and safe error states. `MyClasses` covers the TEACHER assignment list, detail, and read-only current roster. Teacher, class, course, year, and student values remain untranslated school data; localized routes preserve nested ClassCourse paths.
+
 ## Testing expectations
 
 Tests cover the exact locale tuple, French default/root redirect, catalog and ICU parity, Turkish terminology, route-preserving query-stripping switches, localized authentication redirects, role navigation, semester labels/date formats, accessible selected state, and representative rendering. Framework integration is additionally covered by build and local runtime verification.

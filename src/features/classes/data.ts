@@ -5,7 +5,9 @@ import { validId } from "@/features/class-courses/structure";
 
 export type ClassSummary = Readonly<{ id: string; name: string; active: boolean; schoolYearId: string; schoolYearLabel: string; schoolYearActive: boolean }>;
 export type ClassListResult = Readonly<{ status: "ready"; classes: readonly ClassSummary[]; years: readonly { id: string; label: string }[] }> | Readonly<{ status: "unauthenticated" | "forbidden" | "access-unavailable" | "error" }>;
-export type ClassDetail = ClassSummary & Readonly<{ connections: readonly { id: string; courseName: string; courseCode: string | null; active: boolean; weeklyPeriods: number }[]; eligibleCourses: readonly { id: string; name: string; code: string | null }[] }>;
+export type AssignmentView=Readonly<{id:string;teacherId:string;teacherName:string;weeklyPeriods:number;active:boolean}>;
+export type TeacherOption=Readonly<{id:string;name:string}>;
+export type ClassDetail = ClassSummary & Readonly<{ connections: readonly { id: string; courseName: string; courseCode: string | null; active: boolean; weeklyPeriods: number; assignedPeriods:number; assignments:readonly AssignmentView[]; eligibleTeachers:readonly TeacherOption[] }[]; eligibleCourses: readonly { id: string; name: string; code: string | null }[] }>;
 export type ClassDetailResult = Readonly<{ status: "ready"; value: ClassDetail }> | Readonly<{ status: "unauthenticated" | "forbidden" | "access-unavailable" | "not-found" | "error" }>;
 
 async function adminContext() {
@@ -34,12 +36,14 @@ export async function getClassDetail(classId: string): Promise<ClassDetailResult
     const context = await adminContext(); if (context.status !== "ready") return context;
     const classResult = await context.supabase.from("classes").select("id, name, is_active, school_year_id, school_years!classes_school_year_school_fk(label, active)").eq("id", classId).eq("school_id", context.schoolId).maybeSingle();
     if (classResult.error) return { status: "error" }; if (!classResult.data) return { status: "not-found" };
-    const [connections, courses] = await Promise.all([
+    const [connections, courses, assignments, teachers] = await Promise.all([
       context.supabase.from("class_courses").select("id, is_active, weekly_periods, course_id, courses!class_courses_course_school_fk(name, code)").eq("class_id", classId).eq("school_id", context.schoolId).order("created_at"),
       context.supabase.from("courses").select("id, name, code").eq("school_id", context.schoolId).eq("is_active", true).order("name"),
+      context.supabase.from("teacher_assignments").select("id, class_course_id, teacher_id, weekly_periods, is_active, user_profiles!teacher_assignments_teacher_school_fk(display_name)").eq("school_id",context.schoolId).order("created_at"),
+      context.supabase.from("user_profiles").select("id, display_name").eq("school_id",context.schoolId).eq("role","TEACHER").eq("active",true).order("display_name"),
     ]);
-    if (connections.error || courses.error || !connections.data || !courses.data) return { status: "error" };
+    if (connections.error || courses.error || assignments.error || teachers.error || !connections.data || !courses.data || !assignments.data || !teachers.data) return { status: "error" };
     const connected = new Set(connections.data.map((row) => row.course_id));
-    return { status: "ready", value: { id: classResult.data.id, name: classResult.data.name, active: classResult.data.is_active, schoolYearId: classResult.data.school_year_id, schoolYearLabel: classResult.data.school_years.label, schoolYearActive: classResult.data.school_years.active, connections: connections.data.map((row) => ({ id: row.id, courseName: row.courses.name, courseCode: row.courses.code, active: row.is_active, weeklyPeriods: row.weekly_periods })), eligibleCourses: courses.data.filter((row) => !connected.has(row.id)) } };
+    return { status: "ready", value: { id: classResult.data.id, name: classResult.data.name, active: classResult.data.is_active, schoolYearId: classResult.data.school_year_id, schoolYearLabel: classResult.data.school_years.label, schoolYearActive: classResult.data.school_years.active, connections: connections.data.map((row) => {const rows=assignments.data.filter(item=>item.class_course_id===row.id).map(item=>({id:item.id,teacherId:item.teacher_id,teacherName:item.user_profiles.display_name??"—",weeklyPeriods:item.weekly_periods,active:item.is_active}));const assignedPeriods=rows.filter(item=>item.active).reduce((sum,item)=>sum+item.weeklyPeriods,0);const existing=new Set(rows.map(item=>item.teacherId));return { id: row.id, courseName: row.courses.name, courseCode: row.courses.code, active: row.is_active, weeklyPeriods: row.weekly_periods,assignedPeriods,assignments:rows,eligibleTeachers:teachers.data.filter(item=>item.display_name&&!existing.has(item.id)).map(item=>({id:item.id,name:item.display_name??"—"}))};}), eligibleCourses: courses.data.filter((row) => !connected.has(row.id)) } };
   } catch { return { status: "error" }; }
 }

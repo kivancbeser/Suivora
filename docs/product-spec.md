@@ -19,6 +19,8 @@ The first pilot is approximately one school, four teachers, fifty students, mult
 
 Administrators manage teachers, years/terms, classes, courses, students, and teacher assignments. Teachers see assigned class courses, may add students to an authorized class, and manage its academic workflow.
 
+Teacher assignment is scoped to ClassCourse and may be shared by multiple active teachers. Active allocations cannot exceed the ClassCourse weekly-period total. The first assignment release grants teachers read-only access to assigned classroom structure and its class roster; teacher student mutations remain deferred until explicitly designed.
+
 Student identity belongs to the school rather than permanently to a class. Class membership is preserved as dated historical enrollment: dates are inclusive, an open enrollment has no end date, and one student cannot have overlapping class enrollments within a school year. A class transfer closes the existing enrollment and creates a new non-overlapping enrollment. The initial identity is deliberately limited to entered first/last names, an optional school-scoped code, and active state; no account, parent, demographic, contact, medical, or national-identity data is stored.
 
 Creation with initial enrollment, class transfer, and enrollment closure are transactional workflows rather than independent writes. Student deactivation is rejected while an open enrollment exists; closing enrollment does not automatically deactivate the identity.

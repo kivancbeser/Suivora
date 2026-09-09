@@ -21,6 +21,7 @@ Read this file and the relevant documents under `docs/` before changing the repo
 - A student identity belongs to its school and uses `is_active`; class membership is an immutable historical `enrollment`. Enrollment dates are inclusive, stay within the class's school year, and may not overlap for one student/year. A transfer closes the prior enrollment and creates a new one; neither students nor enrollments are hard-deleted.
 - Dependent student writes use the protected transactional ADMIN RPCs: create-with-enrollment, identity update, transfer, and close-current-enrollment. Do not split these workflows into unrelated application writes. Deactivation is rejected while an open enrollment exists until a different explicit lifecycle rule is adopted.
 - Teacher access comes from an active assignment to the relevant `ClassCourse`, never merely from hidden UI.
+- Active teacher-assignment weekly periods may not exceed the parent `ClassCourse` total; assignment and parent changes serialize on that aggregate.
 - Assigned teachers collaborate on the same students, quizzes, grades, homework, contacts, learning outcomes, and other shared academic records defined for that `ClassCourse`.
 - Quiz slots are exactly C1-C4 in Semester 1 and C5-C8 in Semester 2; every quiz is out of 100.
 - Semester suggestions are the arithmetic means of their four quiz slots; the annual quiz average is the mean of C1-C8. Missing-grade behavior is unresolved and must not be guessed.

@@ -2,6 +2,17 @@
 
 Significant product, domain, architecture, security, and delivery-document changes belong here. This is not a substitute for decision records or version control.
 
+## 2026-09-10 — Shared teacher assignment foundation and bilingual interfaces
+
+- Added the local `teacher_assignments` migration with same-school composite relationships, unique teacher/ClassCourse membership, soft lifecycle, and weekly-period bounds.
+- Serialized assignment and ClassCourse capacity changes on the parent row; active allocations cannot exceed the ClassCourse total, and incompatible period reductions/deactivation are rejected atomically.
+- Added hardened assignment authorization and two ADMIN mutation RPCs. Active teachers receive SELECT-only access to their own assigned ClassCourses, related structure, and class rosters; all mutations and unrelated/cross-school data remain denied.
+- Added 89 transactional assertions for 513 total. Two clean resets, schema lint, and two byte-identical generated-type runs pass.
+- After explicit approval, applied only the reviewed migration once to Suivora development. Eight migration histories synchronize, the final dry-run is empty, and remote assignment, teacher, and student counts remain zero.
+- Added bilingual ADMIN assignment controls to ClassCourse detail with capacity feedback, lifecycle confirmation, accessible pending/error states, and independently authorizing Server Actions.
+- Added bilingual TEACHER “Mes classes” list/detail routes with assignment-scoped, read-only current rosters. Application tests cover exact-field parsing, localized routing, empty states, identifier non-rendering, and absence of mutation controls.
+- No teacher invitation, Auth user, teacher profile, assignment, student, seed, production database, or Numeon change was created.
+
 ## 2026-09-10 — Atomic student workflows and bilingual ADMIN UI
 
 - Added one forward-only migration with four hardened ADMIN RPCs for atomic create-with-enrollment, identity update, same-year class transfer, and current-enrollment closure.
