@@ -85,3 +85,5 @@ Task 10C intentionally leaves both lifecycle questions unresolved; its UI neithe
 ## Closed student-enrollment decision
 
 Can a student change class? **Yes. A class change closes the existing enrollment and creates a new non-overlapping historical enrollment.** Dates are inclusive, and history is preserved.
+
+Student deactivation while an enrollment remains open is currently rejected rather than cascaded. Enrollment closure leaves the student active. A future change to this lifecycle requires an explicit product decision.

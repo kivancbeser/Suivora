@@ -25,6 +25,8 @@ PostgreSQL fits the strongly relational, tenant-scoped domain and its reporting 
 
 Student identity and class membership are normalized: `students` is the school-owned identity, while `enrollments` records immutable class/year/start identity and an optional closing date. Composite foreign keys enforce tenant/year ownership, a locked school-year validation trigger enforces date boundaries, and an inclusive `daterange` exclusion constraint provides concurrency-safe overlap prevention.
 
+The student application boundary uses four `SECURITY DEFINER` RPCs rather than coordinating dependent writes in React or Server Actions. Each derives the active ADMIN school through `auth.uid()`, validates protected parents, and uses deterministic row locks. PostgreSQL statement atomicity rolls back student creation or enrollment transfer completely when a dependent write fails.
+
 ## Code organization principles
 
 - Feature-first modules with domain, application, persistence, and UI concerns separated where useful

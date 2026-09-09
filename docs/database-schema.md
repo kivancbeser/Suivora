@@ -1,6 +1,6 @@
 # Database schema proposal
 
-The foundation migrations through `20260909180000_student_enrollment_foundation.sql` have each been reviewed and applied exactly once to the dedicated Suivora development project. Local and remote histories match through six migrations. Later sections remain logical proposals until their own migrations are implemented.
+The foundation migrations through `20260910090000_atomic_student_workflows.sql` have each been reviewed and applied exactly once to the dedicated Suivora development project. Local and remote histories match through seven migrations. Later sections remain logical proposals until their own migrations are implemented.
 
 ## Implemented local foundation
 
@@ -53,6 +53,8 @@ Every foreign-key path must remain within one `school_id`, enforced through comp
 `20260909013000_class_course_foundation.sql` implements these three tables. Composite parent keys make same-school and same-school-year relationships declarative; case-insensitive unique indexes provide concurrency-safe business uniqueness. `weekly_periods` is a 1–40 lesson-period count, not clock-hour duration. RLS is enabled at creation, only active same-school ADMIN policies exist, mutation grants are column-limited, and DELETE is neither granted nor covered by policy. All three tables start empty.
 
 `20260909180000_student_enrollment_foundation.sql` implements minimal student identity and historical class membership locally and on the Suivora development project. Composite foreign keys bind students/classes/years to one school, a hardened trigger validates inclusive dates against a locked school year, and an `extensions.btree_gist` exclusion constraint prevents overlapping ranges while treating null `ends_on` as open-ended. ADMIN may update student identity/active fields and only close an enrollment via `ends_on`; enrollment identity is immutable through grants. Six ADMIN-only policies exist, TEACHER/anonymous access and all hard deletion remain denied, and both remote tables remain empty.
+
+`20260910090000_atomic_student_workflows.sql` is applied locally and on Suivora development. It adds four authenticated ADMIN RPCs: `admin_create_student_with_enrollment`, `admin_update_student`, `admin_transfer_student`, and `admin_close_current_enrollment`. The functions expose no school/year/role authority, use empty-search-path volatile security-definer execution, normalize identity input, lock lifecycle rows, and return stable failures. Direct table grants and the 23-policy RLS matrix are unchanged; the remote student and enrollment tables remained empty after application.
 
 ## Assessment
 

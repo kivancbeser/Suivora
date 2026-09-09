@@ -6,7 +6,7 @@ Suivora is a French-first shared classroom management web application for clear,
 
 ## Current status
 
-The application has complete French/Turkish localization, authenticated ADMIN structure management, and a remotely applied student/historical-enrollment database foundation. French remains the default and English remains unsupported. No student management UI or real student data exists yet.
+The application has complete French/Turkish localization, authenticated ADMIN structure management, remotely applied atomic student/enrollment workflows, and bilingual student management. French remains the default and English remains unsupported. No real student data exists yet.
 
 ## Users and central concept
 
@@ -124,9 +124,11 @@ ADMIN structure management is available at `/{locale}/app/classes`, `/{locale}/a
 
 The first development classroom structure has been verified end to end through the deployed ADMIN interface in both French and Turkish. The development tenant now contains exactly one class, one course, and one ClassCourse connection; no teacher invitation was sent.
 
-The student foundation models a minimal school-owned identity separately from historical class enrollment. Enrollment periods use inclusive dates, remain within their school year, and cannot overlap for one student/year; transfers close the prior row and create a new one. Initial access is ADMIN-only, hard deletion is unavailable, and no real student data or student UI is included.
+The student foundation models a minimal school-owned identity separately from historical class enrollment. Enrollment periods use inclusive dates, remain within their school year, and cannot overlap for one student/year; transfers close the prior row and create a new one. Initial access is ADMIN-only, hard deletion is unavailable, and no real student data is included.
 
-The next recommended task is **TASK 11C — Bilingual ADMIN Student and Enrollment Management UI**.
+Four locally and remotely validated transactional ADMIN RPCs provide the UI boundary for creating a student with the initial enrollment, updating identity, transferring classes, and closing the current enrollment. They derive tenancy and year server-side, serialize student lifecycle changes with row locks, and reject deactivation while an enrollment is open. The bilingual ADMIN interface is available at `/{locale}/app/eleves` and `/{locale}/app/eleves/[studentId]`; all mutations use these RPCs through the normal authenticated request-scoped client.
+
+The next recommended task is **TASK 11E — Teacher Assignment Foundation**.
 
 ## Important open decisions
 

@@ -2,6 +2,16 @@
 
 Significant product, domain, architecture, security, and delivery-document changes belong here. This is not a substitute for decision records or version control.
 
+## 2026-09-10 — Atomic student workflows and bilingual ADMIN UI
+
+- Added one forward-only migration with four hardened ADMIN RPCs for atomic create-with-enrollment, identity update, same-year class transfer, and current-enrollment closure.
+- Derived school/year authority server-side, normalized minimal identity data, serialized lifecycle operations with deterministic student/enrollment/class/year locks, and preserved full rollback on dependent-write failures.
+- Kept the 23-policy RLS matrix and narrow table grants unchanged; PUBLIC/anon cannot execute the functions and TEACHER/cross-school/inactive/profileless callers fail safely.
+- Added 72 transactional pgTAP assertions (424 total), regenerated the four typed RPC contracts twice deterministically, and created no seed or real student data.
+- After explicit approval, applied the single reviewed migration exactly once to Suivora development. Seven migration histories synchronize, the final dry-run is empty, the four function ACLs match the reviewed design, all 23 policies remain unchanged, and both remote tables remain empty.
+- Added localized ADMIN student list/detail routes with search, class/status filters, initial enrollment creation, identity editing, full enrollment history, same-year transfer, and enrollment closure. Server Actions reauthorize independently and call only the transactional RPC boundary.
+- Added strict workflow/action/component tests in both locale contexts, accessible confirmations and pending/error states, and responsive layouts without exposing internal identifiers or destructive controls.
+
 ## 2026-09-09 — Student and historical enrollment foundation
 
 - Added one forward-only local migration for minimal school-owned student identities and immutable historical class enrollments, with no seed or real student data.

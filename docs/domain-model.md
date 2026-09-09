@@ -56,6 +56,7 @@ erDiagram
 - `ClassCourse` membership and teacher authorization are scoped to the same school.
 - A student identity belongs to one school and is soft-deactivated with `is_active`; names are stored as entered and are not translated.
 - An enrollment preserves one student's class membership for inclusive `starts_on`/optional `ends_on` dates within one school year. Student, class, year, and school must agree. Ranges for one student/year cannot overlap; a transfer closes the existing row and creates a new non-overlapping historical row. Enrollment identity fields are not normally editable and neither record type is hard-deleted.
+- Student creation plus initial enrollment and class transfer are atomic aggregates. Student-row locking serializes transfer/close operations; closure preserves active state, while deactivation with an open enrollment is rejected.
 - A `Class` belongs to exactly one school and school year. A `Course` belongs to one school and its stored name/code are not translated.
 - A `ClassCourse` joins one class and course, must match the class's school and year, and is unique for that class/course/year. `weekly_periods` is an integer lesson-period count from 1 through 40.
 - Classes, courses, and ClassCourses are deactivated rather than hard-deleted in the initial lifecycle.

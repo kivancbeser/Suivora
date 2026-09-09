@@ -409,8 +409,40 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_close_current_enrollment: {
+        Args: { enrollment_end_date: string; target_student_id: string }
+        Returns: undefined
+      }
+      admin_create_student_with_enrollment: {
+        Args: {
+          enrollment_starts_on: string
+          student_code: string
+          student_first_name: string
+          student_last_name: string
+          target_class_id: string
+        }
+        Returns: string
+      }
       admin_provision_teacher_profile: {
         Args: { target_user_id: string; teacher_display_name: string }
+        Returns: undefined
+      }
+      admin_transfer_student: {
+        Args: {
+          target_class_id: string
+          target_student_id: string
+          transfer_date: string
+        }
+        Returns: string
+      }
+      admin_update_student: {
+        Args: {
+          student_code: string
+          student_first_name: string
+          student_is_active: boolean
+          student_last_name: string
+          target_student_id: string
+        }
         Returns: undefined
       }
       admin_update_teacher_profile: {

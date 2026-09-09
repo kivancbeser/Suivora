@@ -45,4 +45,4 @@ An item being described here does not mean it is implemented. New business rules
 
 The database foundation for school-year classes, school-owned courses, and their `ClassCourse` join is implemented without seed or business rows. ADMIN management UI, students, enrollments, and teacher assignments remain separate tasks.
 
-The applied student/enrollment database foundation separates minimal school-owned student identity from inclusive dated class membership, preserves transfer history, prevents overlapping enrollment periods, and provides initial ADMIN-only access without hard deletion or real student data. Student UI and assignment-scoped teacher access remain later tasks.
+The applied student/enrollment foundation separates minimal school-owned student identity from inclusive dated class membership, preserves transfer history, prevents overlapping enrollment periods, and provides ADMIN-only transactional management without hard deletion or real student data. The bilingual ADMIN UI supports creation, editing, history, same-year transfer, and closure; assignment-scoped teacher access remains a later task.

@@ -99,6 +99,8 @@ For the three classroom-structure tables, active TEACHER, inactive/missing profi
 
 The same initial denial applies to `students` and `enrollments`. Future TEACHER access must derive from active assignments covering the relevant class/ClassCourses and is not granted by school membership alone.
 
+The four student workflow RPCs grant execution only to `authenticated` but independently require an active ADMIN and derive the caller's school from `auth.uid()`/profile data. `PUBLIC` and `anon` cannot execute them. RPC availability never grants TEACHER data access, and inaccessible/cross-school targets use the same non-sensitive rejection.
+
 The Task 10C routes recheck ADMIN access server-side even though the application shell hides ADMIN navigation from teachers. IDs are opaque form references only; tenant, role, year ownership, and initial active state are never accepted from the client.
 
 ## Revocation and history

@@ -18,7 +18,7 @@ An unsupported route locale is not treated as French; it produces a 404. `/fr` i
 
 ## Message catalogs
 
-`src/i18n/messages/fr.json` is the source catalog and `src/i18n/messages/tr.json` is its complete Turkish peer. Their nested keys and ICU parameters must match exactly. Semantic namespaces describe meaning rather than component ownership: `Metadata`, `Foundation`, `Auth`, `Application`, `Calendar`, `Teachers`, `Activation`, and `Common` are active namespaces. Module augmentation uses the French catalog as the message-key type contract.
+`src/i18n/messages/fr.json` is the source catalog and `src/i18n/messages/tr.json` is its complete Turkish peer. Their nested keys and ICU parameters must match exactly. Semantic namespaces describe meaning rather than component ownership: `Metadata`, `Foundation`, `Auth`, `Application`, `Calendar`, `Teachers`, `Activation`, `Classes`, `Courses`, `Students`, and `Common` are active namespaces. Module augmentation uses the French catalog as the message-key type contract.
 
 Future strings require a catalog key before component use. During review, inspect changed files under `src/app`, `src/components`, and `src/features` for visible literals. Do not build a brittle string-lint rule until the project has a demonstrated need.
 
@@ -65,6 +65,10 @@ Task 09C adds `Teachers` and `Activation` namespaces for list, form, active/inac
 ## Class and course localization
 
 Task 10C adds structurally identical `Classes` and `Courses` namespaces for French and Turkish lists, details, forms, status, validation, success, empty, loading, and safe error states. User-entered class/course names and codes are displayed unchanged. The global switcher preserves nested class-detail paths and continues to discard query parameters.
+
+## Student localization
+
+The `Students` namespace covers ADMIN list/detail, search and filters, creation with initial enrollment, identity editing, enrollment history, same-year transfer, closure confirmations, validation, pending, empty, success, and safe error states. Names, school codes, and class names remain untranslated school data. Date-only enrollment values use the active locale with UTC formatting, and the global switcher preserves nested student-detail paths while discarding query parameters.
 
 ## Testing expectations
 

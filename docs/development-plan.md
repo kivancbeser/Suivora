@@ -32,50 +32,51 @@
 11. Teacher assignments
 12. Student management
 13. Student identity and historical enrollment database foundation — implemented, remotely verified, and empty
-14. ClassCourse
-15. Teacher assignments
-16. Teacher “Mes classes”
-17. Shared class detail
-18. Quiz model
-19. Bulk grade entry
-20. Grading calculation engine
-21. Suggested and final oral grades
-22. Student progress foundation
-23. Learning outcomes
-24. Detailed outcome scoring
-25. Outcome analysis
-26. Lesson progression planning
-27. Excel progression import
-28. Homework assignments
-29. Homework student statuses
-30. Homework alert engine
-31. Parent/administration contact history
-32. Mandatory study domain rules
-33. Mandatory study scheduling and history
-34. Academic events
-35. In-app reminder projection
-36. Personal teacher tasks
-37. Teacher action-center aggregation
-38. “À faire aujourd’hui” UI
-39. Teacher dashboard
-40. Administrator dashboard
-41. PDF and Excel exports
-42. Responsive and accessibility polish
-43. E2E shared-classroom scenarios
-44. Action-center authorization and E2E tests
-45. Security review
-46. Pilot preparation
-47. Observation domain and schema
-48. Observation RLS and audit rules
-49. Flash class-entry screen
-50. Detailed observation panel
-51. Student observation history
-52. Evolution calculation engine
-53. Deterministic observation alerts
-54. Rule-based observation summaries
-55. Class observation dashboard indicators
-56. PDF/Excel observation reporting
-57. Optional AI observation summaries — only after MVP validation
+14. Transactional ADMIN student workflows and bilingual management UI — completed locally and remotely; remote tables remain empty
+15. ClassCourse — foundation and ADMIN management completed
+16. Teacher assignments
+17. Teacher “Mes classes”
+18. Shared class detail
+19. Quiz model
+20. Bulk grade entry
+21. Grading calculation engine
+22. Suggested and final oral grades
+23. Student progress foundation
+24. Learning outcomes
+25. Detailed outcome scoring
+26. Outcome analysis
+27. Lesson progression planning
+28. Excel progression import
+29. Homework assignments
+30. Homework student statuses
+31. Homework alert engine
+32. Parent/administration contact history
+33. Mandatory study domain rules
+34. Mandatory study scheduling and history
+35. Academic events
+36. In-app reminder projection
+37. Personal teacher tasks
+38. Teacher action-center aggregation
+39. “À faire aujourd’hui” UI
+40. Teacher dashboard
+41. Administrator dashboard
+42. PDF and Excel exports
+43. Responsive and accessibility polish
+44. E2E shared-classroom scenarios
+45. Action-center authorization and E2E tests
+46. Security review
+47. Pilot preparation
+48. Observation domain and schema
+49. Observation RLS and audit rules
+50. Flash class-entry screen
+51. Detailed observation panel
+52. Student observation history
+53. Evolution calculation engine
+54. Deterministic observation alerts
+55. Rule-based observation summaries
+56. Class observation dashboard indicators
+57. PDF/Excel observation reporting
+58. Optional AI observation summaries — only after MVP validation
 
 Order changes require documenting dependencies and security consequences. Cross-cutting testing, accessibility, localization, auditability, and documentation are continuous rather than postponed to their named hardening steps.
 
@@ -104,4 +105,4 @@ Each implementation task should state scope, decisions used, data/security effec
 
 ## Next task
 
-TASK 10D is complete: the first development class, course, and ClassCourse were created and verified through the deployed ADMIN workflow. The next recommended task is **TASK 11A/11B — Student and Enrollment Database Foundation, Local Testing and Reviewed Remote Migration**. Teacher access remains deferred until assignments exist.
+The atomic student workflow migration and bilingual ADMIN student/enrollment interface are complete. No real student was created, and the development student/enrollment tables remain empty. The next recommended task is **TASK 11E — Teacher Assignment Foundation**. Teacher access remains deferred until assignments exist.
