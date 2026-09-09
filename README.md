@@ -122,6 +122,8 @@ The database now models `classes`, school-owned `courses`, and the school-year-s
 
 ADMIN structure management is available at `/{locale}/app/classes`, `/{locale}/app/classes/[classId]`, and `/{locale}/app/matieres`. Mutations reauthorize the ADMIN, derive school/year ownership server-side, and expose no lifecycle or hard-delete controls.
 
+The first development classroom structure has been verified end to end through the deployed ADMIN interface in both French and Turkish. The development tenant now contains exactly one class, one course, and one ClassCourse connection; no teacher invitation was sent.
+
 The next recommended task is **TASK 10D — Controlled Remote Class, Course and ClassCourse Runtime Verification**.
 
 ## Important open decisions

@@ -104,4 +104,4 @@ Each implementation task should state scope, decisions used, data/security effec
 
 ## Next task
 
-**TASK 10D — Controlled Remote Class, Course and ClassCourse Runtime Verification** is next. It may exercise controlled development records only under its own explicit authorization and cleanup plan. Teacher access remains deferred until assignments exist.
+TASK 10D is complete: the first development class, course, and ClassCourse were created and verified through the deployed ADMIN workflow. The next recommended task is **TASK 11A/11B — Student and Enrollment Database Foundation, Local Testing and Reviewed Remote Migration**. Teacher access remains deferred until assignments exist.

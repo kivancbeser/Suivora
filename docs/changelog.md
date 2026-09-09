@@ -2,6 +2,13 @@
 
 Significant product, domain, architecture, security, and delivery-document changes belong here. This is not a substitute for decision records or version control.
 
+## 2026-09-09 — First classroom runtime verification
+
+- Verified the Ready production deployment and synchronized development target before any write, then obtained explicit approval for the exact classroom values.
+- Created exactly one course, one class, and one ClassCourse through the French production ADMIN forms and normal authenticated Server Actions; no direct SQL or privileged creation path was used.
+- Confirmed localized success, refresh persistence, single-row rendering, active state, weekly-period display, eligible-course removal, absence of internal identifiers/destructive controls, and matching Turkish list/detail behavior.
+- Final development counts are one class, one course, one ClassCourse, and zero TEACHER profiles. No invitation, Auth change, migration, seed, dependency, Numeon, or production Supabase change occurred.
+
 ## 2026-09-09 — Bilingual class and course management
 
 - Replaced ADMIN class/course placeholders with FR/TR list, create, edit, class-detail, ClassCourse connection, and weekly-period editing experiences.
