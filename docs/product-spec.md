@@ -79,6 +79,8 @@ Task 08C lets administrators list, create, and edit real school years and their 
 
 `ClassCourse` is the central teaching aggregate: one class plus one school-owned course in the class's school year. Classes are unique by case-insensitive name within a year; courses are unique by case-insensitive name and optional code within a school. `weekly_periods` records lesson periods per week (1–40), not clock hours. All three structures use active/inactive lifecycle state and no hard-delete access. Initially only active same-school administrators can access them; teacher access requires the later assignment model.
 
+Task 10C adds bilingual ADMIN lists and forms for classes and courses plus ClassCourse association/editing on class detail. Class edits are name-only, course edits are name/code-only, and ClassCourse edits are weekly-period-only. Existing inactive rows stay visibly labelled, while only active parents are offered for new relationships.
+
 ## Confirmed teacher account lifecycle
 
 Teacher accounts are invitation-only and public signup stays disabled. Administrators provide an email address and mandatory display name but never choose or store a teacher password. Supabase Auth remains authoritative for email and password establishment; the application profile stores only school, fixed TEACHER role, active state, and display name.

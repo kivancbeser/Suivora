@@ -54,6 +54,7 @@ erDiagram
 - A `Class` belongs to exactly one school and school year. A `Course` belongs to one school and its stored name/code are not translated.
 - A `ClassCourse` joins one class and course, must match the class's school and year, and is unique for that class/course/year. `weekly_periods` is an integer lesson-period count from 1 through 40.
 - Classes, courses, and ClassCourses are deactivated rather than hard-deleted in the initial lifecycle.
+- The ADMIN UI may display inactive structural history but creates relationships only from active school years, classes, and courses. It does not define the unresolved inactive-parent lifecycle invariant.
 - A teacher must have an active assignment to access a class course.
 - Quiz slots are C1-C8, tied to their fixed semester, with exactly one quiz slot per class course.
 - Grades are in the inclusive 0-100 range.

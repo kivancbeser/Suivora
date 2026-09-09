@@ -120,7 +120,9 @@ Authentication routes retain the selected locale (`/fr/connexion`, `/tr/connexio
 
 The database now models `classes`, school-owned `courses`, and the school-year-specific `class_courses` aggregate. These records use `is_active`; only an active same-school ADMIN may currently access them, and hard deletion is unavailable. Teacher access remains closed until active assignments are implemented.
 
-The next recommended task is **TASK 10C — ADMIN Class, Course and ClassCourse Management UI**.
+ADMIN structure management is available at `/{locale}/app/classes`, `/{locale}/app/classes/[classId]`, and `/{locale}/app/matieres`. Mutations reauthorize the ADMIN, derive school/year ownership server-side, and expose no lifecycle or hard-delete controls.
+
+The next recommended task is **TASK 10D — Controlled Remote Class, Course and ClassCourse Runtime Verification**.
 
 ## Important open decisions
 

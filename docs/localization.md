@@ -62,6 +62,10 @@ Localization applies to components, page metadata, navigation, actions, empty/er
 
 Task 09C adds `Teachers` and `Activation` namespaces for list, form, active/inactive, invitation, compensation, invalid-link, and password-creation states. Task 09C2 maps the same language-independent Server Action result codes in both catalogs. Email, UUID, token, provider text, and passwords are never interpolation values.
 
+## Class and course localization
+
+Task 10C adds structurally identical `Classes` and `Courses` namespaces for French and Turkish lists, details, forms, status, validation, success, empty, loading, and safe error states. User-entered class/course names and codes are displayed unchanged. The global switcher preserves nested class-detail paths and continues to discard query parameters.
+
 ## Testing expectations
 
 Tests cover the exact locale tuple, French default/root redirect, catalog and ICU parity, Turkish terminology, route-preserving query-stripping switches, localized authentication redirects, role navigation, semester labels/date formats, accessible selected state, and representative rendering. Framework integration is additionally covered by build and local runtime verification.

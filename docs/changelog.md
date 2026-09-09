@@ -2,6 +2,13 @@
 
 Significant product, domain, architecture, security, and delivery-document changes belong here. This is not a substitute for decision records or version control.
 
+## 2026-09-09 — Bilingual class and course management
+
+- Replaced ADMIN class/course placeholders with FR/TR list, create, edit, class-detail, ClassCourse connection, and weekly-period editing experiences.
+- Added strict reusable validation, request-scoped reads, independently authorizing Server Actions, server-derived tenancy/year fields, safe error mapping, accessible pending/error/success states, and responsive layouts.
+- Kept UUIDs and raw errors out of visible output, omitted delete/deactivation controls, retained inactive history visibility, and left TEACHER access denied.
+- Added mocked/fictional tests without remote writes, migrations, seed changes, Auth changes, or invitations.
+
 ## 2026-09-09 — ClassCourse database foundation
 
 - Added one forward-only migration for school-year classes, school-owned courses, and the central ClassCourse aggregate without seed or business data.

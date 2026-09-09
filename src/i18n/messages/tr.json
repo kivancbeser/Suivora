@@ -124,6 +124,22 @@
       "yearContainsTerms": "Bu tarihler mevcut bir dönemi dışarıda bırakır. Önce dönem tarihlerini değiştirin."
     }
   },
+  "Classes": {
+    "eyebrow": "Yönetim", "title": "Sınıflar", "description": "Sınıfları eğitim yılına göre yönetin.", "add": "Sınıf ekle", "edit": "Düzenle", "schoolYear": "Eğitim yılı", "details": "Aç", "back": "Sınıflara dön", "connected": "Bağlı dersler", "connect": "Ders bağla", "noConnections": "Henüz bağlı ders yok.", "noEligible": "Bağlanabilecek aktif ders yok.", "periods": "Haftalık ders sayısı",
+    "empty": { "title": "Sınıf bulunmuyor", "description": "Aktif bir eğitim yılına ilk sınıfı ekleyin." },
+    "readError": { "title": "Sınıflar kullanılamıyor", "description": "Sınıflar şu anda yüklenemiyor." },
+    "status": { "active": "Aktif", "inactive": "Pasif" },
+    "form": { "name": "Ad", "schoolYear": "Eğitim yılı", "code": "İsteğe bağlı kod", "course": "Ders", "weeklyPeriods": "Haftalık ders sayısı", "save": "Kaydet", "saving": "Kaydediliyor…", "cancel": "İptal" },
+    "results": { "accessDenied":"Bu işlem için yetkiniz yok.","classCreated":"Sınıf oluşturuldu.","classUpdated":"Sınıf güncellendi.","connectionCreated":"Ders sınıfa bağlandı.","connectionUpdated":"Haftalık ders sayısı güncellendi.","courseCreated":"Ders oluşturuldu.","courseUpdated":"Ders güncellendi.","duplicateClass":"Bu eğitim yılında aynı adlı bir sınıf zaten var.","duplicateCode":"Bu kod zaten kullanılıyor.","duplicateConnection":"Bu ders sınıfa zaten bağlı.","duplicateCourse":"Aynı adlı bir ders zaten var.","inactiveClass":"Pasif bir sınıfa ders bağlanamaz.","inactiveCourse":"Bu ders pasif.","inactiveYear":"Aktif bir eğitim yılı seçin.","invalidCode":"Kod 1 ile 30 arasında geçerli karakter içermelidir.","invalidId":"Seçim geçersiz.","invalidName":"Ad izin verilmeyen karakterler içeriyor.","invalidPeriods":"1 ile 40 arasında bir tam sayı girin.","nameRequired":"Bir ad girin.","nameTooLong":"Ad 120 karakteri aşmamalıdır.","notFound":"İstenen öğe bulunamadı veya erişilemiyor.","unexpected":"İşlem şu anda gerçekleştirilemiyor.","unexpectedFields":"Form beklenmeyen veriler içeriyor.","yearRequired":"Bir eğitim yılı seçin." }
+  },
+  "Courses": {
+    "eyebrow": "Yönetim", "title": "Dersler", "description": "Sınıflarda yeniden kullanılabilen dersleri yönetin.", "add": "Ders ekle", "edit": "Düzenle", "schoolYear": "Eğitim yılı", "details": "Aç", "back": "Geri", "connected": "Bağlı dersler", "connect": "Ders bağla", "noConnections": "Bağlı ders yok.", "noEligible": "Uygun ders yok.", "periods": "Haftalık ders sayısı",
+    "empty": { "title": "Ders bulunmuyor", "description": "Okulun ilk dersini ekleyin." },
+    "readError": { "title": "Dersler kullanılamıyor", "description": "Dersler şu anda yüklenemiyor." },
+    "status": { "active": "Aktif", "inactive": "Pasif" },
+    "form": { "name": "Ad", "schoolYear": "Eğitim yılı", "code": "İsteğe bağlı kod", "course": "Ders", "weeklyPeriods": "Haftalık ders sayısı", "save": "Kaydet", "saving": "Kaydediliyor…", "cancel": "İptal" },
+    "results": { "accessDenied":"Bu işlem için yetkiniz yok.","classCreated":"Sınıf oluşturuldu.","classUpdated":"Sınıf güncellendi.","connectionCreated":"Ders sınıfa bağlandı.","connectionUpdated":"Haftalık ders sayısı güncellendi.","courseCreated":"Ders oluşturuldu.","courseUpdated":"Ders güncellendi.","duplicateClass":"Bu sınıf zaten var.","duplicateCode":"Bu kod zaten kullanılıyor.","duplicateConnection":"Bu bağlantı zaten var.","duplicateCourse":"Aynı adlı bir ders zaten var.","inactiveClass":"Sınıf pasif.","inactiveCourse":"Ders pasif.","inactiveYear":"Eğitim yılı pasif.","invalidCode":"Kod 1 ile 30 arasında geçerli karakter içermelidir.","invalidId":"Seçim geçersiz.","invalidName":"Ad izin verilmeyen karakterler içeriyor.","invalidPeriods":"1 ile 40 arasında bir tam sayı girin.","nameRequired":"Bir ad girin.","nameTooLong":"Ad 120 karakteri aşmamalıdır.","notFound":"İstenen öğe bulunamadı veya erişilemiyor.","unexpected":"İşlem şu anda gerçekleştirilemiyor.","unexpectedFields":"Form beklenmeyen veriler içeriyor.","yearRequired":"Bir eğitim yılı seçin." }
+  },
   "Teachers": {
     "eyebrow": "Yönetim",
     "title": "Öğretmenler",

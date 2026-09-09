@@ -79,3 +79,5 @@ This is the canonical unresolved-question list. No item below authorizes an impl
 
 48. May an inactive class or course coexist with active ClassCourses, and should deactivation cascade logically or be blocked?
 49. When teacher assignments are introduced, what effective-date and inactive-ClassCourse rules govern continued historical read access?
+
+Task 10C intentionally leaves both lifecycle questions unresolved; its UI neither mutates active state nor claims a cascade/blocking rule.

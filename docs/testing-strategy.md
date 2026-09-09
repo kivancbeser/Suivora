@@ -133,3 +133,5 @@ Do not overuse snapshots for domain behavior; assert meaningful outcomes and den
 ## ClassCourse foundation tests
 
 The dedicated pgTAP suite checks schema shape, keys, composite tenancy relationships, triggers, RLS/grants, name/code normalization and scoped uniqueness, weekly-period boundaries, restricted parent deletion, the complete initial actor matrix, and rollback-safe failed mutations. Generated local types must be byte-identical across two generations, and two clean reset/test/lint cycles are required before a reviewed remote application.
+
+Task 10C adds pure validation and presentation coverage for trimmed/bounded names, optional codes, unexpected-field rejection, opaque identifiers, weekly-period boundaries, safe conflict mapping, visible non-color-only states, accessible labels, empty/read-error states, ClassCourse details, and absence of delete/deactivate controls. Automated tests use fictional or mocked data only.

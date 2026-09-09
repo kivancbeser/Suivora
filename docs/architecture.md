@@ -118,3 +118,5 @@ The dedicated public GitHub repository `kivancbeser/Suivora` drives the dedicate
 ## ClassCourse persistence boundary
 
 The relational dependency order is School → SchoolYear → Class → ClassCourse, with Course joining at the ClassCourse boundary. Composite foreign keys enforce school and year ownership independently of application code. Declarative checks and unique indexes enforce normalized names, codes, weekly-period bounds, and concurrency-safe business uniqueness. The tables are typed infrastructure only; feature reads and writes will remain server-side and request-scoped.
+
+Task 10C implements feature-scoped `classes`, `courses`, and `class-courses` modules. Server Components compose reads; small client forms call separately defined Server Actions. Every action resolves the authenticated ADMIN again, accepts only its documented editable fields, loads referenced parents through RLS, and derives `school_id`, `school_year_id`, and initial active state on the server. The privileged Auth client is outside this boundary.

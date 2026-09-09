@@ -95,6 +95,8 @@ PostgreSQL grants permit an operation to reach RLS; policies then decide which r
 
 For the three classroom-structure tables, active TEACHER, inactive/missing profile, anonymous, and other-school actors receive no rows or writes. Teacher access is deliberately deferred until active `ClassCourse` assignments can be checked at the database boundary.
 
+The Task 10C routes recheck ADMIN access server-side even though the application shell hides ADMIN navigation from teachers. IDs are opaque form references only; tenant, role, year ownership, and initial active state are never accepted from the client.
+
 ## Revocation and history
 
 Deactivating an assignment removes future teacher access without erasing audit attribution. Historical data keeps immutable actor identifiers even if a profile is later deactivated. Exact session invalidation timing is an open security decision.

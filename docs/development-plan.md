@@ -104,4 +104,4 @@ Each implementation task should state scope, decisions used, data/security effec
 
 ## Next task
 
-**TASK 10C — ADMIN Class, Course and ClassCourse Management UI** is next. It should use the implemented typed schema and existing ADMIN-only RLS boundary without adding teacher access or real seed data. Teacher access remains deferred until assignments exist.
+**TASK 10D — Controlled Remote Class, Course and ClassCourse Runtime Verification** is next. It may exercise controlled development records only under its own explicit authorization and cleanup plan. Teacher access remains deferred until assignments exist.

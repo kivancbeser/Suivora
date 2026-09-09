@@ -951,3 +951,29 @@ h1 {
     padding: 0.8rem;
   }
 }
+
+.structure-page { display: grid; gap: 1.5rem; max-width: 72rem; margin: 0 auto; }
+.structure-header, .structure-detail-header, .structure-card { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.structure-header, .structure-detail-header, .structure-empty, .structure-card, .structure-connect { padding: 1.25rem; border: 1px solid var(--border); border-radius: 1rem; background: white; }
+.structure-header h1, .structure-detail-header h1 { margin-top: .35rem; }
+.structure-header > details > summary, .structure-card summary, .structure-page a { color: #245c45; font-weight: 750; cursor: pointer; }
+.structure-list { display: grid; gap: .85rem; }
+.structure-card { min-width: 0; }
+.structure-card__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+.structure-status { display: inline-flex; gap: .35rem; align-items: center; margin-top: .5rem; padding: .3rem .55rem; border: 1px solid #bfd0c4; border-radius: 999px; font-size: .82rem; }
+.structure-form { display: grid; gap: .85rem; width: min(100%, 28rem); margin-top: .8rem; padding: 1rem; border: 1px solid var(--border); border-radius: .8rem; background: #f8faf8; }
+.structure-field { display: grid; gap: .35rem; }
+.structure-field label { font-weight: 750; }
+.structure-field input, .structure-field select { min-width: 0; width: 100%; min-height: 2.7rem; padding: .6rem .7rem; border: 1px solid #aebbb2; border-radius: .55rem; background: white; font: inherit; }
+.structure-field [aria-invalid="true"] { border-color: #9f3030; }
+.structure-field__error, .structure-feedback--error { color: #8d2929; }
+.structure-field__error, .structure-feedback { margin: 0; font-size: .84rem; }
+.structure-feedback { padding: .65rem; border-radius: .5rem; background: #edf5f0; }
+.structure-feedback--error { background: #fff2f2; }
+.structure-form__actions { display: flex; flex-wrap: wrap; gap: .6rem; }
+.structure-button { min-height: 2.65rem; padding: .6rem .85rem; border: 1px solid #afc2b5; border-radius: .55rem; background: white; font: inherit; font-weight: 750; cursor: pointer; }
+.structure-button--primary { border-color: var(--accent); color: white; background: var(--accent); }
+.structure-button:disabled { opacity: .6; cursor: wait; }
+.structure-loading { padding: 1rem; }
+.structure-page :is(a, summary, input, select, button):focus-visible { outline: 3px solid rgb(36 92 69 / 32%); outline-offset: 2px; }
+@media (max-width: 430px) { .structure-header, .structure-detail-header, .structure-card { display: grid; } .structure-header > details, .structure-header > details > summary, .structure-form { width: 100%; min-width: 0; } }
