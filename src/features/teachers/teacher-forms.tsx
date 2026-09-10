@@ -2,11 +2,12 @@
 
 import { useActionState, useEffect, useId, useRef } from "react";
 import { useFormStatus } from "react-dom";
-import { inviteTeacherAction, updateTeacherAction } from "./actions";
+import { createTestTeacherAction, updateTeacherAction } from "./actions";
 import { initialTeacherActionState, type TeacherActionState, type TeacherResultCode } from "./teacher-management";
 
 export type TeacherFormMessages = Readonly<{
   displayName: string; email: string; invite: string; inviting: string;
+  password: string; passwordConfirmation: string; testWarning: string;
   save: string; saving: string; edit: string; cancel: string;
   deactivate: string; reactivate: string; deactivationWarning: string; confirmDeactivation: string;
   errors: Record<TeacherResultCode, string>;
@@ -23,7 +24,7 @@ function Feedback({ messages, state }: Readonly<{ messages: TeacherFormMessages;
 }
 
 export function TeacherInvitationForm({ messages }: Readonly<{ messages: TeacherFormMessages }>) {
-  const [state, action] = useActionState(inviteTeacherAction, initialTeacherActionState);
+  const [state, action] = useActionState(createTestTeacherAction, initialTeacherActionState);
   const id = useId();
   const form = useRef<HTMLFormElement>(null);
   useEffect(() => {
@@ -42,6 +43,17 @@ export function TeacherInvitationForm({ messages }: Readonly<{ messages: Teacher
       <input aria-invalid={Boolean(state.fieldErrors?.email)} autoComplete="email" id={`${id}-email`} maxLength={254} name="email" required type="email" />
       {state.fieldErrors?.email ? <p className="teacher-field__error">{messages.errors[state.fieldErrors.email]}</p> : null}
     </div>
+    <div className="teacher-field">
+      <label htmlFor={`${id}-password`}>{messages.password}</label>
+      <input aria-invalid={Boolean(state.fieldErrors?.password)} autoComplete="new-password" id={`${id}-password`} minLength={12} name="password" required type="password" />
+      {state.fieldErrors?.password ? <p className="teacher-field__error">{messages.errors[state.fieldErrors.password]}</p> : null}
+    </div>
+    <div className="teacher-field">
+      <label htmlFor={`${id}-confirmation`}>{messages.passwordConfirmation}</label>
+      <input aria-invalid={Boolean(state.fieldErrors?.confirmation)} autoComplete="new-password" id={`${id}-confirmation`} minLength={12} name="confirmation" required type="password" />
+      {state.fieldErrors?.confirmation ? <p className="teacher-field__error">{messages.errors[state.fieldErrors.confirmation]}</p> : null}
+    </div>
+    <p className="teacher-form__hint">{messages.testWarning}</p>
     <Submit idle={messages.invite} pending={messages.inviting} />
   </form>;
 }

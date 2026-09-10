@@ -48,3 +48,45 @@ export async function inviteAndProvisionTeacher(input: Readonly<{
     return invitedUserId ? "manualIntervention" : "invitationFailed";
   }
 }
+
+export async function createAndProvisionTestTeacher(input: Readonly<{
+  adminUserId: string;
+  displayName: string;
+  email: string;
+  password: string;
+  schoolId: string;
+  supabase: NormalClient;
+}>): Promise<TeacherResultCode> {
+  let createdUserId: string | undefined;
+  try {
+    const privileged = createPrivilegedInvitationResources().client;
+    const created = await privileged.auth.admin.createUser({
+      email: input.email,
+      password: input.password,
+      email_confirm: true,
+    });
+    if (created.error || !created.data.user) {
+      return isDuplicateInvitationError(created.error) ? "userAlreadyExists" : "invitationFailed";
+    }
+    createdUserId = created.data.user.id;
+    const provision = await input.supabase.rpc("admin_provision_teacher_profile", {
+      target_user_id: createdUserId,
+      teacher_display_name: input.displayName,
+    });
+    if (!provision.error) return "testUserCreated";
+
+    const profile = await input.supabase.from("user_profiles")
+      .select("id, school_id, role, display_name")
+      .eq("id", createdUserId)
+      .eq("school_id", input.schoolId)
+      .eq("role", "TEACHER")
+      .maybeSingle();
+    if (!profile.error && profile.data?.display_name) return "testUserCreated";
+    if (createdUserId === input.adminUserId) return "manualIntervention";
+    const cleanup = await privileged.auth.admin.deleteUser(createdUserId);
+    return cleanup.error ? "manualIntervention" : "retryableFailure";
+  } catch (error) {
+    if (error instanceof PrivilegedEnvironmentError) return "configurationUnavailable";
+    return createdUserId ? "manualIntervention" : "invitationFailed";
+  }
+}

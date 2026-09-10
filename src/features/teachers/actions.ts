@@ -4,12 +4,13 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 import { resolveApplicationContext } from "@/server/application-context";
-import { inviteAndProvisionTeacher } from "./provisioning";
+import { createAndProvisionTestTeacher, inviteAndProvisionTeacher } from "./provisioning";
 import {
   initialTeacherActionState,
   invitationSchema,
   parseForm,
   passwordSchema,
+  testTeacherSchema,
   teacherUpdateSchema,
   type TeacherActionState,
 } from "./teacher-management";
@@ -42,6 +43,33 @@ export async function inviteTeacherAction(
     });
     if (message === "invitationSent") revalidateTeacherPaths();
     return { status: message === "invitationSent" ? "success" : "error", message };
+  } catch {
+    return { status: "error", message: "unexpected" };
+  }
+}
+
+export async function createTestTeacherAction(
+  _previous: TeacherActionState,
+  formData: FormData,
+): Promise<TeacherActionState> {
+  const access = await resolveApplicationContext();
+  if (access.status !== "ready" || access.context.role !== "ADMIN") {
+    return { status: "error", message: "accessDenied" };
+  }
+  const parsed = parseForm(testTeacherSchema, formData);
+  if (!parsed.ok) return parsed.state;
+  try {
+    const supabase = await createServerSupabaseClient();
+    const message = await createAndProvisionTestTeacher({
+      adminUserId: access.context.userId,
+      displayName: parsed.data.displayName,
+      email: parsed.data.email,
+      password: parsed.data.password,
+      schoolId: access.context.school.id,
+      supabase,
+    });
+    if (message === "testUserCreated") revalidateTeacherPaths();
+    return { status: message === "testUserCreated" ? "success" : "error", message };
   } catch {
     return { status: "error", message: "unexpected" };
   }

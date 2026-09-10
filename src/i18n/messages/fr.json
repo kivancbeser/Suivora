@@ -158,8 +158,8 @@
   "Teachers": {
     "eyebrow": "Administration",
     "title": "Enseignants",
-    "description": "Invitez les enseignants et gérez leur accès à l’établissement.",
-    "invitation": { "title": "Inviter un enseignant" },
+    "description": "Créez des comptes enseignants de test et gérez leur accès à l’établissement.",
+    "invitation": { "title": "Créer un enseignant de test" },
     "listTitle": "Équipe enseignante",
     "loading": "Chargement des enseignants…",
     "empty": { "title": "Aucun enseignant", "description": "Invitez le premier enseignant pour constituer l’équipe." },
@@ -168,8 +168,11 @@
     "form": {
       "displayName": "Nom affiché",
       "email": "Adresse e-mail",
-      "invite": "Envoyer l’invitation",
-      "inviting": "Envoi en cours…",
+      "invite": "Créer le compte de test",
+      "inviting": "Création en cours…",
+      "password": "Mot de passe temporaire",
+      "passwordConfirmation": "Confirmer le mot de passe temporaire",
+      "testWarning": "Usage de test uniquement. Transmettez le mot de passe temporaire par un canal sûr.",
       "save": "Enregistrer",
       "saving": "Enregistrement en cours…",
       "edit": "Modifier ou désactiver",
@@ -199,7 +202,9 @@
       "confirmationRequired": "Confirmez la désactivation avant de continuer.",
       "passwordMismatch": "Les mots de passe ne correspondent pas.",
       "passwordTooLong": "Le mot de passe est trop long.",
-      "passwordTooShort": "Le mot de passe doit contenir au moins 12 caractères."
+      "passwordTooShort": "Le mot de passe doit contenir au moins 12 caractères.",
+      "testUserCreated": "Le compte de test et le profil enseignant ont été créés.",
+      "userAlreadyExists": "Un compte Auth utilise déjà cette adresse. Aucun doublon n’a été créé."
     }
   },
   "Activation": {

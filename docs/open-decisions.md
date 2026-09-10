@@ -1,5 +1,7 @@
 # Open decisions
 
+- **Temporary teacher onboarding exit:** Development currently permits ADMIN-created confirmed test accounts with transient temporary passwords because custom SMTP is unavailable. Before pilot use, configure SMTP, validate the token-hash invitation template, remove the test-account form, and require teacher-owned password establishment.
+
 This is the canonical unresolved-question list. No item below authorizes an implementation assumption. When resolved, record the decision (and rationale where material), update affected documents, and note it in the changelog.
 
 ## Grading

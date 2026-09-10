@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const { createPrivilegedInvitationResources } = vi.hoisted(() => ({ createPrivilegedInvitationResources: vi.fn() }));
 vi.mock("@/lib/supabase/privileged", () => ({ createPrivilegedInvitationResources }));
-import { inviteAndProvisionTeacher } from "./provisioning";
+import { createAndProvisionTestTeacher, inviteAndProvisionTeacher } from "./provisioning";
 import { PrivilegedEnvironmentError } from "@/lib/env/privileged";
 
 const invitedId = "11111111-1111-4111-8111-111111111111";
@@ -15,9 +15,10 @@ function normalClient(rpcError: unknown = null, profile: unknown = null) {
 
 function privileged(inviteError: unknown = null, cleanupError: unknown = null) {
   const inviteUserByEmail = vi.fn().mockResolvedValue({ data: { user: inviteError ? null : { id: invitedId } }, error: inviteError });
+  const createUser = vi.fn().mockResolvedValue({ data: { user: inviteError ? null : { id: invitedId } }, error: inviteError });
   const deleteUser = vi.fn().mockResolvedValue({ error: cleanupError });
-  createPrivilegedInvitationResources.mockReturnValue({ appOrigin: "https://app.example.test", client: { auth: { admin: { inviteUserByEmail, deleteUser } } } });
-  return { inviteUserByEmail, deleteUser };
+  createPrivilegedInvitationResources.mockReturnValue({ appOrigin: "https://app.example.test", client: { auth: { admin: { createUser, inviteUserByEmail, deleteUser } } } });
+  return { createUser, inviteUserByEmail, deleteUser };
 }
 
 function input(client: ReturnType<typeof normalClient>, adminUserId = "admin") {
@@ -66,5 +67,28 @@ describe("invitation provisioning compensation", () => {
   it("maps an unexpected pre-invitation failure safely", async () => {
     createPrivilegedInvitationResources.mockImplementation(() => { throw new Error("secret-value"); });
     expect(await inviteAndProvisionTeacher(input(normalClient()))).toBe("invitationFailed");
+  });
+});
+
+describe("temporary test-teacher provisioning", () => {
+  it("creates a confirmed Auth user and provisions its TEACHER profile", async () => {
+    const elevated = privileged(); const normal = normalClient();
+    expect(await createAndProvisionTestTeacher({ ...input(normal), password: "temporary-pass-1" })).toBe("testUserCreated");
+    expect(elevated.createUser).toHaveBeenCalledWith({ email: "marie@example.test", password: "temporary-pass-1", email_confirm: true });
+    expect(normal.rpc).toHaveBeenCalledWith("admin_provision_teacher_profile", { target_user_id: invitedId, teacher_display_name: "Marie Curie" });
+    expect(elevated.deleteUser).not.toHaveBeenCalled();
+  });
+
+  it("does not provision or clean up an existing Auth user", async () => {
+    const elevated = privileged({ code: "email_exists" }); const normal = normalClient();
+    expect(await createAndProvisionTestTeacher({ ...input(normal), password: "temporary-pass-1" })).toBe("userAlreadyExists");
+    expect(normal.rpc).not.toHaveBeenCalled();
+    expect(elevated.deleteUser).not.toHaveBeenCalled();
+  });
+
+  it("removes only the newly created Auth user when profile provisioning fails", async () => {
+    const elevated = privileged(); const normal = normalClient(new Error("profile failure"));
+    expect(await createAndProvisionTestTeacher({ ...input(normal), password: "temporary-pass-1" })).toBe("retryableFailure");
+    expect(elevated.deleteUser).toHaveBeenCalledWith(invitedId);
   });
 });

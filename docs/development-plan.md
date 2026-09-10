@@ -28,6 +28,7 @@
    - Complete Turkish localization and global FR/TR switcher — completed locally in Task 09C2
    - Dedicated GitHub/Vercel development deployment and Auth URL configuration — completed in Task 09D-PRE
    - Controlled remote invitation and activation verification — deferred until separately requested; no invitation was sent during the ClassCourse foundation
+   - Temporary ADMIN-only confirmed test-account creation — implemented for development; removal and SMTP-backed invitation restoration required before pilot use
 10. Class, course, and ClassCourse management
 11. Teacher assignments — completed locally and remotely
 12. Student management

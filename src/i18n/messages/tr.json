@@ -158,8 +158,8 @@
   "Teachers": {
     "eyebrow": "Yönetim",
     "title": "Öğretmenler",
-    "description": "Öğretmenleri davet edin ve okula erişimlerini yönetin.",
-    "invitation": { "title": "Öğretmen Davet Et" },
+    "description": "Test öğretmen hesapları oluşturun ve okula erişimlerini yönetin.",
+    "invitation": { "title": "Test Öğretmeni Oluştur" },
     "listTitle": "Öğretmen Ekibi",
     "loading": "Öğretmenler yükleniyor…",
     "empty": { "title": "Öğretmen bulunmuyor", "description": "Ekibi oluşturmak için ilk öğretmeni davet edin." },
@@ -168,8 +168,11 @@
     "form": {
       "displayName": "Görünen ad",
       "email": "E-posta adresi",
-      "invite": "Daveti Gönder",
-      "inviting": "Gönderiliyor…",
+      "invite": "Test Hesabını Oluştur",
+      "inviting": "Oluşturuluyor…",
+      "password": "Geçici şifre",
+      "passwordConfirmation": "Geçici şifreyi doğrula",
+      "testWarning": "Yalnızca test içindir. Geçici şifreyi güvenli bir kanaldan iletin.",
       "save": "Kaydet",
       "saving": "Kaydediliyor…",
       "edit": "Düzenle veya Devre Dışı Bırak",
@@ -199,7 +202,9 @@
       "confirmationRequired": "Devam etmeden önce devre dışı bırakmayı onaylayın.",
       "passwordMismatch": "Şifreler eşleşmiyor.",
       "passwordTooLong": "Şifre çok uzun.",
-      "passwordTooShort": "Şifre en az 12 karakter olmalıdır."
+      "passwordTooShort": "Şifre en az 12 karakter olmalıdır.",
+      "testUserCreated": "Test hesabı ve öğretmen profili oluşturuldu.",
+      "userAlreadyExists": "Bu adresi kullanan bir Auth hesabı zaten var. Yinelenen hesap oluşturulmadı."
     }
   },
   "Activation": {

@@ -9,6 +9,16 @@ const email = z.string().trim().min(1, "emailRequired").max(254, "emailTooLong")
 const exactForm = <T extends z.ZodRawShape>(shape: T) => z.strictObject(shape);
 
 export const invitationSchema = exactForm({ displayName, email });
+export const testTeacherSchema = exactForm({
+  displayName,
+  email,
+  password: z.string().min(12, "passwordTooShort").max(1024, "passwordTooLong"),
+  confirmation: z.string().max(1024, "passwordTooLong"),
+}).superRefine((value, context) => {
+  if (value.password !== value.confirmation) {
+    context.addIssue({ code: "custom", path: ["confirmation"], message: "passwordMismatch" });
+  }
+});
 export const teacherUpdateSchema = exactForm({
   teacherId: z.string().uuid("notFound"),
   displayName,
@@ -35,7 +45,8 @@ export type TeacherResultCode =
   | "displayNameTooLong" | "emailInvalid" | "emailRequired" | "emailTooLong"
   | "invitationFailed" | "invitationSent" | "manualIntervention" | "notFound"
   | "profileUpdated" | "retryableFailure" | "unexpectedFields" | "unexpected"
-  | "confirmationRequired" | "passwordMismatch" | "passwordTooLong" | "passwordTooShort";
+  | "confirmationRequired" | "passwordMismatch" | "passwordTooLong" | "passwordTooShort"
+  | "testUserCreated" | "userAlreadyExists";
 
 export type TeacherActionState = Readonly<{
   status: "idle" | "success" | "error";

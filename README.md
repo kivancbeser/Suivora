@@ -6,7 +6,7 @@ Suivora is a French-first shared classroom management web application for clear,
 
 ## Current status
 
-The application has complete French/Turkish localization, authenticated ADMIN structure management, remotely applied student/enrollment and teacher-assignment foundations, bilingual assignment management, and a read-only teacher “Mes classes” workspace. French remains the default and English remains unsupported. No real student or assignment data exists yet.
+The application has complete French/Turkish localization, authenticated ADMIN structure management, remotely applied student/enrollment and teacher-assignment foundations, bilingual assignment management, and a read-only teacher “Mes classes” workspace. A deliberately temporary ADMIN-only form can create confirmed TEACHER Auth users without email delivery during development. French remains the default and English remains unsupported.
 
 ## Users and central concept
 
@@ -129,6 +129,8 @@ The student foundation models a minimal school-owned identity separately from hi
 Four locally and remotely validated transactional ADMIN RPCs provide the UI boundary for creating a student with the initial enrollment, updating identity, transferring classes, and closing the current enrollment. They derive tenancy and year server-side, serialize student lifecycle changes with row locks, and reject deactivation while an enrollment is open. The bilingual ADMIN interface is available at `/{locale}/app/eleves` and `/{locale}/app/eleves/[studentId]`; all mutations use these RPCs through the normal authenticated request-scoped client.
 
 The teacher-assignment foundation is applied locally and to Suivora development. It supports multiple teachers per ClassCourse, enforces total weekly-period capacity with row locking, and grants active teachers read-only access only to their assigned ClassCourses and related class rosters. ADMIN assignment controls live on the bilingual class detail page; teachers use the bilingual `/{locale}/app/mes-classes` list and detail routes. No teacher profile or assignment was created.
+
+During development, the ADMIN teacher page can create a confirmed test Auth user from a temporary password and provision its TEACHER profile in the same workflow. The password is transient, never returned or stored by Suivora, and must be shared outside the application through a safe channel. Duplicate Auth emails are rejected without creating another profile. This test-only path must be removed before pilot use in favor of the reviewed invitation/activation and SMTP flow.
 
 The next domain step is Shared Class Detail, followed by the quiz model; any real teacher invitation or assignment remains a separate controlled operation.
 

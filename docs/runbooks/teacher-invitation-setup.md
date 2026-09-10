@@ -31,3 +31,9 @@ An active ADMIN supplies an email and display name. The server re-authenticates 
 The email link reaches `/auth/confirm`, which accepts only `type=invite`, a bounded token hash, and exact `next=/fr/activation`. Successful OTP verification establishes SSR cookies and redirects without the token. The authenticated active TEACHER may remain on `/fr/activation` or safely switch to `/tr/activation`; the switch never copies token/query data. ADMIN and unauthenticated access are rejected.
 
 TASK 09D is required before pilot use to review the remote template/URL/SMTP configuration and exercise exactly one controlled invitation and activation without exposing identifiers or credentials.
+
+## Temporary development account creation
+
+Until custom SMTP and the token-hash invite template are ready, the bilingual ADMIN teacher page exposes a clearly labeled test-only account form. It calls Supabase Auth Admin `createUser` with a validated temporary password and confirmed email, then provisions the normal same-school TEACHER profile through the authenticated ADMIN RPC. Suivora never persists or returns the password. A duplicate Auth email is rejected; a profile failure deletes only the newly created Auth identity when safe, using the same compensation boundary as invitation provisioning.
+
+This is not the pilot onboarding design. Remove the test-account form before real pilot operation, restore the invite form, configure custom SMTP, and validate the token-hash activation route end to end.

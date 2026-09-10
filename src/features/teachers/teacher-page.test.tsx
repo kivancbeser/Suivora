@@ -1,7 +1,7 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
-vi.mock("./actions", () => ({ inviteTeacherAction: vi.fn(), updateTeacherAction: vi.fn() }));
+vi.mock("./actions", () => ({ createTestTeacherAction: vi.fn(), inviteTeacherAction: vi.fn(), updateTeacherAction: vi.fn() }));
 import { TeacherPage, type TeacherPageMessages } from "./teacher-page";
 
 const errors = new Proxy({}, { get: (_target, property) => String(property) }) as Record<import("./teacher-management").TeacherResultCode, string>;
@@ -9,7 +9,7 @@ const messages: TeacherPageMessages = {
   eyebrow: "Administration", title: "Enseignants", description: "Gérez l’équipe.", invitationTitle: "Inviter un enseignant",
   listTitle: "Équipe enseignante", emptyTitle: "Aucun enseignant", emptyDescription: "Invitez le premier enseignant.",
   readErrorTitle: "Enseignants indisponibles", readErrorDescription: "Réessayez.", active: "Accès actif", inactive: "Accès inactif",
-  form: { displayName: "Nom affiché", email: "Adresse e-mail", invite: "Envoyer l’invitation", inviting: "Envoi…", save: "Enregistrer", saving: "Enregistrement…", edit: "Modifier", cancel: "Annuler", deactivate: "Désactiver l’accès", reactivate: "Réactiver l’accès", deactivationWarning: "L’accès deviendra indisponible.", confirmDeactivation: "Je confirme", errors },
+  form: { displayName: "Nom affiché", email: "Adresse e-mail", invite: "Créer le compte", inviting: "Création…", password: "Mot de passe temporaire", passwordConfirmation: "Confirmer le mot de passe", testWarning: "Test uniquement.", save: "Enregistrer", saving: "Enregistrement…", edit: "Modifier", cancel: "Annuler", deactivate: "Désactiver l’accès", reactivate: "Réactiver l’accès", deactivationWarning: "L’accès deviendra indisponible.", confirmDeactivation: "Je confirme", errors },
 };
 
 afterEach(cleanup);
@@ -20,6 +20,9 @@ describe("teacher page", () => {
     expect(screen.getByRole("heading", { name: "Aucun enseignant" })).toBeInTheDocument();
     expect(screen.getByRole("textbox", { name: "Nom affiché" })).toHaveAttribute("maxlength", "120");
     expect(screen.getByRole("textbox", { name: "Adresse e-mail" })).toHaveAttribute("type", "email");
+    expect(screen.getByLabelText("Mot de passe temporaire")).toHaveAttribute("autocomplete", "new-password");
+    expect(screen.getByLabelText("Confirmer le mot de passe")).toHaveAttribute("type", "password");
+    expect(screen.getByText("Test uniquement.")).toBeInTheDocument();
   });
   it("shows names and textual states without visible identifiers or email", () => {
     const id = "11111111-1111-4111-8111-111111111111";

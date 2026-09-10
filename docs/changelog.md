@@ -2,6 +2,13 @@
 
 Significant product, domain, architecture, security, and delivery-document changes belong here. This is not a substitute for decision records or version control.
 
+## 2026-09-10 — Temporary ADMIN test-teacher creation
+
+- Replaced the unusable email-invite form in the development ADMIN teacher page with a clearly labeled bilingual test-account form accepting display name, email, and a confirmed temporary password.
+- Added server-side exact-field/password validation, active-ADMIN reauthorization, confirmed Auth creation through the isolated privileged client, existing same-school TEACHER provisioning RPC use, duplicate protection, and exact-new-user compensation on profile failure.
+- Kept passwords transient and out of application storage, responses, logs, documentation, and database RPC arguments. Added focused provisioning, action, accessibility, and localization coverage.
+- This development shortcut is explicitly temporary and must be removed in favor of custom SMTP plus the reviewed token-hash invitation/activation flow before pilot use.
+
 ## 2026-09-10 — Shared teacher assignment foundation and bilingual interfaces
 
 - Added the local `teacher_assignments` migration with same-school composite relationships, unique teacher/ClassCourse membership, soft lifecycle, and weekly-period bounds.

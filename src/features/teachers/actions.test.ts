@@ -1,12 +1,12 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-const mocks = vi.hoisted(() => ({ revalidatePath: vi.fn(), redirect: vi.fn(), resolveApplicationContext: vi.fn(), createServerSupabaseClient: vi.fn(), inviteAndProvisionTeacher: vi.fn() }));
+const mocks = vi.hoisted(() => ({ revalidatePath: vi.fn(), redirect: vi.fn(), resolveApplicationContext: vi.fn(), createServerSupabaseClient: vi.fn(), inviteAndProvisionTeacher: vi.fn(), createAndProvisionTestTeacher: vi.fn() }));
 vi.mock("next/cache", () => ({ revalidatePath: mocks.revalidatePath }));
 vi.mock("next/navigation", () => ({ redirect: mocks.redirect }));
 vi.mock("@/server/application-context", () => ({ resolveApplicationContext: mocks.resolveApplicationContext }));
 vi.mock("@/lib/supabase/server", () => ({ createServerSupabaseClient: mocks.createServerSupabaseClient }));
-vi.mock("./provisioning", () => ({ inviteAndProvisionTeacher: mocks.inviteAndProvisionTeacher }));
-import { createTeacherPasswordAction, inviteTeacherAction, updateTeacherAction } from "./actions";
+vi.mock("./provisioning", () => ({ inviteAndProvisionTeacher: mocks.inviteAndProvisionTeacher, createAndProvisionTestTeacher: mocks.createAndProvisionTestTeacher }));
+import { createTeacherPasswordAction, createTestTeacherAction, inviteTeacherAction, updateTeacherAction } from "./actions";
 import { initialTeacherActionState } from "./teacher-management";
 
 function form(entries: Record<string, string>) { const data = new FormData(); Object.entries(entries).forEach(([key, value]) => data.set(key, value)); return data; }
@@ -29,6 +29,19 @@ describe("teacher server actions", () => {
     expect(mocks.inviteAndProvisionTeacher).toHaveBeenCalledWith({ adminUserId: "admin", displayName: "Marie", email: "m@example.test", schoolId: "trusted-school", supabase: normalClient });
     expect(mocks.revalidatePath).toHaveBeenCalledWith("/fr/app/enseignants");
     expect(mocks.revalidatePath).toHaveBeenCalledWith("/tr/app/enseignants");
+  });
+  it("creates a test teacher with transient credentials and trusted tenancy", async () => {
+    const normalClient = { marker: "normal" };
+    mocks.createServerSupabaseClient.mockResolvedValue(normalClient);
+    mocks.createAndProvisionTestTeacher.mockResolvedValue("testUserCreated");
+    expect(await createTestTeacherAction(initialTeacherActionState, form({ displayName: " Marie ", email: " M@EXAMPLE.TEST ", password: "temporary-pass-1", confirmation: "temporary-pass-1" }))).toEqual({ status: "success", message: "testUserCreated" });
+    expect(mocks.createAndProvisionTestTeacher).toHaveBeenCalledWith({ adminUserId: "admin", displayName: "Marie", email: "m@example.test", password: "temporary-pass-1", schoolId: "trusted-school", supabase: normalClient });
+  });
+  it("rejects mismatched test passwords and non-admin callers before privileged work", async () => {
+    expect((await createTestTeacherAction(initialTeacherActionState, form({ displayName: "Marie", email: "m@example.test", password: "temporary-pass-1", confirmation: "different-pass-1" }))).fieldErrors?.confirmation).toBe("passwordMismatch");
+    mocks.resolveApplicationContext.mockResolvedValueOnce({ ...admin, context: { ...admin.context, role: "TEACHER" } });
+    expect((await createTestTeacherAction(initialTeacherActionState, form({ displayName: "Marie", email: "m@example.test", password: "temporary-pass-1", confirmation: "temporary-pass-1" }))).message).toBe("accessDenied");
+    expect(mocks.createAndProvisionTestTeacher).not.toHaveBeenCalled();
   });
   it("updates only the target, validated name and active state through the RPC", async () => {
     const rpc = vi.fn().mockResolvedValue({ error: null });
