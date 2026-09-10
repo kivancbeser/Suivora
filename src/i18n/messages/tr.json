@@ -61,6 +61,7 @@
     "brand": "Suivora",
     "navigationLabel": "Ana navigasyon",
     "mobileMenuLabel": "Navigasyonu Aç",
+    "mobileMenuCloseLabel": "Navigasyonu Kapat",
     "schoolLabel": "Okul",
     "roleLabel": "Rol",
     "roles": {

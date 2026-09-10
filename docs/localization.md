@@ -34,6 +34,8 @@ Task 07 adds the `Application` namespace for the shell, role labels, ADMIN/TEACH
 
 `src/i18n/navigation.ts` centralizes locale-aware application navigation. One global accessible `FR | TR` switcher lives at the localized root layout, marks the current language semantically, and remains keyboard/touch accessible on every localized surface. New application pages belong below `src/app/[locale]` and inherit it automatically.
 
+The authenticated mobile drawer has matching localized open and close labels. Switching FR/TR changes the full pathname, remounts the shared drawer closed, preserves the equivalent application route, and releases any body scroll lock or obscured-content state.
+
 The authentication-only `proxy.ts` matcher covers French and Turkish sign-in, activation, and application routes solely to refresh session cookies. It does not negotiate or rewrite locales: public root/locale entry routes redirect explicitly to localized sign-in, and unknown locale segments still 404. Sign-in, post-login, sign-out, and protected-route redirects retain the validated active locale.
 
 The switcher replaces only the leading locale segment and preserves the remaining pathname. It drops all query parameters rather than forwarding an allow-list, so token hashes, access/refresh/recovery/invitation tokens, email addresses, passwords, and arbitrary `next` values cannot cross locale URLs. `/auth/confirm` remains non-localized and retains `/fr/activation` as its secure invitation default; the authenticated activation page can then switch safely to Turkish.

@@ -850,7 +850,8 @@ h1 {
 
 .app-navigation__link:focus-visible,
 .app-sign-out:focus-visible,
-.app-mobile-menu summary:focus-visible {
+.app-mobile-menu__trigger:focus-visible,
+.app-mobile-menu__backdrop:focus-visible {
   outline: 3px solid rgb(36 92 69 / 32%);
   outline-offset: 2px;
 }
@@ -878,21 +879,40 @@ h1 {
     border: 0;
   }
 
-  .app-mobile-menu summary {
+  .app-mobile-menu__trigger {
     padding: 0.7rem 0.8rem;
     border: 1px solid #b9c8be;
     border-radius: 0.65rem;
     color: #254535;
+    background: white;
+    font: inherit;
     font-weight: 700;
     cursor: pointer;
-    list-style-position: inside;
     white-space: nowrap;
+  }
+
+  .app-mobile-menu__layer {
+    position: fixed;
+    z-index: 20;
+    inset: 0;
+  }
+
+  .app-mobile-menu__backdrop {
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    border: 0;
+    background: rgb(17 31 24 / 32%);
+    cursor: pointer;
   }
 
   .app-mobile-menu__panel {
     position: absolute;
-    top: calc(100% + 0.5rem);
+    z-index: 1;
+    top: 0.75rem;
     right: 1rem;
+    max-height: calc(100dvh - 1.5rem);
+    overflow-y: auto;
     width: min(calc(100vw - 2rem), 20rem);
     padding: 0.75rem;
     border: 1px solid var(--border);
@@ -941,7 +961,7 @@ h1 {
     max-width: 11rem;
   }
 
-  .app-mobile-menu summary {
+  .app-mobile-menu__trigger {
     max-width: 8.75rem;
     white-space: normal;
   }

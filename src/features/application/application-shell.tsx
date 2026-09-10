@@ -3,6 +3,7 @@ import type { AppContext } from "./application-context";
 import { RoleNavigation, type LocalizedNavigationItem } from "./role-navigation";
 import { SignOutButton } from "@/features/auth/sign-out-button";
 import type { Locale } from "@/i18n/routing";
+import { MobileNavigation } from "./mobile-navigation";
 
 type ApplicationShellProps = Readonly<{
   children: ReactNode;
@@ -13,6 +14,7 @@ type ApplicationShellProps = Readonly<{
     brand: string;
     navigationLabel: string;
     mobileMenuLabel: string;
+    mobileMenuCloseLabel: string;
     schoolLabel: string;
     roleLabel: string;
     role: string;
@@ -63,18 +65,17 @@ export function ApplicationShell({
           <p className="app-brand">{messages.brand}</p>
           <SchoolContext context={context} messages={messages} />
         </div>
-        <details className="app-mobile-menu">
-          <summary aria-label={messages.mobileMenuLabel}>{messages.mobileMenuLabel}</summary>
-          <div className="app-mobile-menu__panel">
-            {navigation}
-            <SignOutButton
-              className="app-sign-out"
-              label={messages.signOut}
-              pendingLabel={messages.signingOut}
-              locale={locale}
-            />
-          </div>
-        </details>
+        <MobileNavigation
+          items={navigationItems}
+          locale={locale}
+          messages={{
+            navigationLabel: messages.navigationLabel,
+            openLabel: messages.mobileMenuLabel,
+            closeLabel: messages.mobileMenuCloseLabel,
+            signOut: messages.signOut,
+            signingOut: messages.signingOut,
+          }}
+        />
       </header>
 
       <main className="app-main" id="contenu-principal">

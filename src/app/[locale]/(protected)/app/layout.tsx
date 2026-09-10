@@ -61,6 +61,7 @@ export default async function ProtectedLayout({ children, params }: ProtectedLay
         brand: t("brand"),
         navigationLabel: t("navigationLabel"),
         mobileMenuLabel: t("mobileMenuLabel"),
+        mobileMenuCloseLabel: t("mobileMenuCloseLabel"),
         schoolLabel: t("schoolLabel"),
         roleLabel: t("roleLabel"),
         role: t(`roles.${result.context.role}`),

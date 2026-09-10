@@ -80,6 +80,8 @@ Task 06B remotely verified the structural contract without fabricating users. Ta
 
 Task 07 tests the application-context boundary with typed gateways: active ADMIN success, unauthenticated short-circuit/redirect, missing and inactive profiles, missing school, query/throw failures and unsupported roles. UI tests cover the ADMIN and TEACHER navigation contracts, absence of ADMIN links for TEACHER, manual ADMIN-route rejection, active-link `aria-current`, localized safe-state sign-out, mobile menu naming, and non-rendering of email/UUID values. These tests use fixtures only and require no remote account or mutation.
 
+Task 14D extends the shared-shell UI suite with mobile drawer opening, immediate link dismissal, pathname/locale/history remount closure, rapid route changes, Escape and backdrop dismissal, focus return, body scroll locking/restoration, inert background content, single-drawer rendering, and preservation of desktop and role-aware navigation semantics. Production checks use read-only ADMIN and pilot TEACHER sessions at 390 px and 1280 px; they never create or modify application data.
+
 ## Future observation scenarios
 
 - Multiple same-day observations for one student persist as distinct audited records; an empty row persists nothing.

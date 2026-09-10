@@ -2,6 +2,14 @@
 
 Significant product, domain, architecture, security, and delivery-document changes belong here. This is not a substitute for decision records or version control.
 
+## 2026-09-10 — Task 14D mobile navigation auto-close hotfix
+
+- Replaced the uncontrolled mobile `details` disclosure with one small pathname-keyed client drawer inside the shared authenticated shell; desktop navigation and role-specific navigation data remain unchanged.
+- The drawer now closes immediately on destination selection and remounts closed after every pathname change, including locale switches and browser history navigation.
+- Added localized open/close labels, Escape and backdrop dismissal, focus return for non-navigation dismissal, body scroll restoration, an inert obscured application surface, and explicit dialog/expanded/control semantics.
+- Added fixture-only interaction coverage for link, pathname, locale/history, rapid navigation, Escape, backdrop, scroll lock, cleanup, active links, one mobile drawer, and the existing ADMIN/TEACHER navigation contracts.
+- No database, Supabase configuration, remote record, pilot profile, teacher assignment, homework record, or unrelated project was accessed or changed.
+
 ## 2026-09-10 — Task 14B/14C remote homework foundation and bilingual UI
 
 - Applied the reviewed homework migration exactly once to the linked Suivora development project and verified synchronized migration history, generated types, schema objects, RLS policies, grants, and unchanged pre-existing record counts.
