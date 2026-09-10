@@ -5,8 +5,8 @@ const userId = "11111111-1111-4111-8111-111111111111";
 
 function form(overrides: Partial<Record<string, string>> = {}) {
   const values = {
-    displayName: "  Victoria Erol  ",
-    email: "  VICTORIA@EXAMPLE.TEST ",
+    displayName: "  Pilot Teacher  ",
+    email: "  PILOT@EXAMPLE.TEST ",
     password: "secret1",
     passwordConfirmation: "secret1",
     locale: "fr",
@@ -40,16 +40,16 @@ function gateways(options: Readonly<{
 describe("signUpSchema", () => {
   it("normalizes the display name and email", () => {
     const result = signUpSchema.parse({
-      displayName: "  Victoria Erol  ", email: " VICTORIA@EXAMPLE.TEST ",
+      displayName: "  Pilot Teacher  ", email: " PILOT@EXAMPLE.TEST ",
       password: "secret1", passwordConfirmation: "secret1", locale: "tr",
     });
-    expect(result.displayName).toBe("Victoria Erol");
-    expect(result.email).toBe("victoria@example.test");
+    expect(result.displayName).toBe("Pilot Teacher");
+    expect(result.email).toBe("pilot@example.test");
   });
 
   it("rejects short and mismatched passwords", () => {
     const result = signUpSchema.safeParse({
-      displayName: "Victoria", email: "v@example.test",
+      displayName: "Pilot Teacher", email: "pilot@example.test",
       password: "123", passwordConfirmation: "456", locale: "fr",
     });
     expect(result.success).toBe(false);
@@ -66,10 +66,10 @@ describe("registerTestTeacher", () => {
     const gateway = gateways();
     await expect(registerTestTeacher(gateway, form())).resolves.toEqual({ ok: true, redirectTo: "/fr/app" });
     expect(gateway.admin.createUser).toHaveBeenCalledWith({
-      email: "victoria@example.test", password: "secret1", email_confirm: true,
+      email: "pilot@example.test", password: "secret1", email_confirm: true,
       user_metadata: { suivora_test_signup: true },
     });
-    expect(gateway.user.claimTeacherProfile).toHaveBeenCalledWith("Victoria Erol");
+    expect(gateway.user.claimTeacherProfile).toHaveBeenCalledWith("Pilot Teacher");
     expect(gateway.admin.deleteUser).not.toHaveBeenCalled();
   });
 

@@ -107,4 +107,4 @@ Each implementation task should state scope, decisions used, data/security effec
 
 ## Next task
 
-The assignment migration is synchronized locally and on Suivora development, and the bilingual ADMIN assignment and TEACHER “Mes classes” interfaces are complete without creating any teacher, assignment, or student. The next step is Shared Class Detail, then the quiz model.
+The assignment migration is synchronized locally and on Suivora development. One anonymized pilot TEACHER assignment and the bilingual shared-class roster access have been verified in production without student data. The next step is Shared Class Detail, then the quiz model.

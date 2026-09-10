@@ -2,6 +2,16 @@
 
 Significant product, domain, architecture, security, and delivery-document changes belong here. This is not a substitute for decision records or version control.
 
+## 2026-09-10 — Controlled pilot teacher assignment and shared-class verification
+
+- Verified through the production ADMIN workflow that the target profile was an active same-school TEACHER and that the active ClassCourse had exactly 20 weekly periods with no existing assignment.
+- Created exactly one active 20-period assignment through the protected ADMIN Server Action and RPC; no direct SQL mutation was used and the real profile/assignment remained active throughout verification.
+- Verified with the real TEACHER session that only the assigned class/course appears, the 20-period load is displayed, and the assigned roster opens with the localized empty state because no student exists.
+- Confirmed that ADMIN routes return the localized not-found boundary for the TEACHER, while automated fixtures continue to cover ADMIN mutation denial, inactive access, unassigned ClassCourses, and cross-school isolation.
+- Confirmed FR/TR route preservation, localized roster content, no horizontal overflow at 1280 px or 390 px, no browser console errors, and no sensitive identifier, credential, token, email, privileged secret, or raw provider error in the verified UI.
+- Final development counts are anonymized: 3 Auth identities, 2 active TEACHER profiles, and 1 active assignment. The additional historical TEACHER profile was not modified.
+- Lint, strict type-check, 227 application tests, coverage, production build, dependency audit with zero findings, clean local reset, 528 pgTAP assertions, local/linked database lint, and diff validation pass.
+
 ## 2026-09-10 — Temporary single-school teacher self-signup
 
 - Added localized FR/TR signup screens and a signup link from both login screens.
