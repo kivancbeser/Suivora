@@ -1,6 +1,8 @@
 import { describe, expect, expectTypeOf, it } from "vitest";
 import {
   defaultLocale,
+  getLocaleEntryPath,
+  getRootRedirectPath,
   isLocale,
   locales,
   type Locale,
@@ -19,5 +21,11 @@ describe("locale contract", () => {
     expect(locales).toEqual(["fr", "tr"]);
     expectTypeOf(locales).toEqualTypeOf<readonly ["fr", "tr"]>();
     expectTypeOf<Locale>().toEqualTypeOf<"fr" | "tr">();
+  });
+
+  it("uses each locale's sign-in screen as its public entry point", () => {
+    expect(getRootRedirectPath()).toBe("/fr/connexion");
+    expect(getLocaleEntryPath("fr")).toBe("/fr/connexion");
+    expect(getLocaleEntryPath("tr")).toBe("/tr/connexion");
   });
 });

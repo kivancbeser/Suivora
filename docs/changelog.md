@@ -8,6 +8,7 @@ Significant product, domain, architecture, security, and delivery-document chang
 - Added server-side exact-field/password validation, active-ADMIN reauthorization, confirmed Auth creation through the isolated privileged client, existing same-school TEACHER provisioning RPC use, duplicate protection, and exact-new-user compensation on profile failure.
 - Kept passwords transient and out of application storage, responses, logs, documentation, and database RPC arguments. Added focused provisioning, action, accessibility, and localization coverage.
 - This development shortcut is explicitly temporary and must be removed in favor of custom SMTP plus the reviewed token-hash invitation/activation flow before pilot use.
+- Changed `/`, `/fr`, and `/tr` public entry behavior to lead directly to the appropriate localized sign-in screen instead of the obsolete foundation placeholder.
 
 ## 2026-09-10 — Shared teacher assignment foundation and bilingual interfaces
 

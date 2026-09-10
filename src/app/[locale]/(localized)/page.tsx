@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
-import { FoundationView } from "@/components/shared/foundation-view";
 import frMessages from "@/i18n/messages/fr.json";
-import { isLocale } from "@/i18n/routing";
+import { getLocaleEntryPath, isLocale } from "@/i18n/routing";
 
 type LocalizedPageProps = Readonly<{
   params: Promise<{ locale: string }>;
@@ -35,17 +34,5 @@ export default async function LocalizedHomePage({ params }: LocalizedPageProps) 
     notFound();
   }
 
-  const t = await getTranslations("Foundation");
-
-  return (
-    <FoundationView
-      messages={{
-        productName: t("productName"),
-        tagline: t("tagline"),
-        status: t("status"),
-        milestoneLabel: t("milestoneLabel"),
-        milestoneName: t("milestoneName"),
-      }}
-    />
-  );
+  redirect(getLocaleEntryPath(locale));
 }

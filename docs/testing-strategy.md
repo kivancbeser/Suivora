@@ -25,10 +25,10 @@ Tests follow risk and ownership boundaries. Deterministic business rules receive
 
 ## Localization scenarios
 
-- `/fr` and `/tr` render from their complete catalogs.
+- `/fr` and `/tr` redirect to their complete localized sign-in surfaces.
 - Exactly `fr` and `tr` are accepted, an unknown locale is rejected, and the default remains `fr`.
 - The supported-locale tuple remains immutable and is the source of the `Locale` type.
-- The application-owned root redirect target is `/fr`.
+- The application-owned root redirect target is `/fr/connexion`; each locale root retains its locale when entering sign-in.
 - Unsupported locale segments reach a 404 without falling back to French.
 - Metadata and visible placeholder copy use catalog keys rather than duplicated component strings.
 - Catalog key structures and ICU placeholders are identical and values are non-empty.
@@ -87,7 +87,7 @@ Task 07 tests the application-context boundary with typed gateways: active ADMIN
 - TASK 11B applied only the reviewed student/enrollment migration after explicit approval. Six migration histories synchronize, the final dry-run is empty, both remote tables contain zero rows, all 23 existing/new policies and narrow grants match the local design, and remote/local public type contracts are semantically equivalent apart from generator metadata/formatting.
 - The atomic student workflow package adds 72 transactional assertions covering function hardening, tenant/year derivation, normalization, full rollback, actor denial, identity-only updates, transfer history, inclusive close dates, lifecycle locking outcomes, unchanged RLS/grants, and fixture rollback. The full local suite contains 424 assertions. The reviewed migration was applied exactly once after explicit approval; seven histories synchronize, its final dry-run is empty, and both remote tables remain empty.
 - The teacher-assignment package adds 89 assertions covering schema, composite integrity, teacher eligibility, capacity bounds, inactive/reactivation behavior, ClassCourse guards, hardened functions/ACLs, ADMIN RPCs, teacher read-only assignment/structure/roster access, inactive/profileless/cross-school denial, and rollback. Two clean resets pass all 513 assertions; schema lint is clean and generated types are deterministic. The reviewed migration was applied exactly once; eight histories synchronize and the remote assignment table remains empty.
-- Student application tests cover strict exact-field parsing, active ADMIN/cross-role authorization, request-scoped RPC use, safe error mapping, active-state preservation, bilingual list/detail rendering, filters, enrollment history, explicit transfer/closure confirmation, pending states, and hidden internal identifiers. Assignment validation, independently authorizing Server Actions, read-only My Classes presentation, and compensated test-account creation bring the complete application suite to 216 tests across 34 files.
+- Student application tests cover strict exact-field parsing, active ADMIN/cross-role authorization, request-scoped RPC use, safe error mapping, active-state preservation, bilingual list/detail rendering, filters, enrollment history, explicit transfer/closure confirmation, pending states, and hidden internal identifiers. Assignment validation, independently authorizing Server Actions, read-only My Classes presentation, compensated test-account creation, and localized sign-in entry routing bring the complete application suite to 217 tests across 34 files.
 - Bulk entry creates records only for roster students with entered values and remains usable for at least 35–40 students.
 - Unassigned/cross-school teachers cannot read, create, classify, override, summarize or export observations.
 - Deterministic classification and teacher override remain separate; recalculation never overwrites override history.

@@ -109,8 +109,8 @@ Before implementation, read `AGENTS.md` and the relevant feature documents. Work
 
 The application is French-first with complete Turkish support:
 
-- Visit `http://localhost:3000/fr` for French or `http://localhost:3000/tr` for Turkish.
-- Visiting `/` redirects to `/fr`.
+- Visit `http://localhost:3000/fr/connexion` for French or `http://localhost:3000/tr/connexion` for Turkish.
+- Visiting `/`, `/fr`, or `/tr` redirects to the corresponding French-default or locale-specific sign-in screen.
 - Browser-language detection, locale cookies, and database-backed language preferences remain absent.
 - The global `FR | TR` switcher preserves the current safe route while discarding all query parameters, including authentication-sensitive values.
 

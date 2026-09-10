@@ -14,7 +14,7 @@ French is the source and default locale; Turkish is the second complete active l
 - `isLocale`, which safely narrows untrusted values without casting;
 - typed next-intl routing/navigation configuration.
 
-An unsupported route locale is not treated as French; it produces a 404. `/fr` is canonical and `/` redirects explicitly to `/fr` without browser-language detection.
+An unsupported route locale is not treated as French; it produces a 404. `/fr/connexion` is the default public entry: `/` redirects there, while `/fr` and `/tr` redirect to their own localized sign-in screens without browser-language detection.
 
 ## Message catalogs
 
@@ -34,7 +34,7 @@ Task 07 adds the `Application` namespace for the shell, role labels, ADMIN/TEACH
 
 `src/i18n/navigation.ts` centralizes locale-aware application navigation. One global accessible `FR | TR` switcher lives at the localized root layout, marks the current language semantically, and remains keyboard/touch accessible on every localized surface. New application pages belong below `src/app/[locale]` and inherit it automatically.
 
-The authentication-only `proxy.ts` matcher covers French and Turkish sign-in, activation, and application routes solely to refresh session cookies. It does not negotiate or rewrite locales: `/` still redirects to `/fr`, and unknown locale segments still 404. Sign-in, post-login, sign-out, and protected-route redirects retain the validated active locale.
+The authentication-only `proxy.ts` matcher covers French and Turkish sign-in, activation, and application routes solely to refresh session cookies. It does not negotiate or rewrite locales: public root/locale entry routes redirect explicitly to localized sign-in, and unknown locale segments still 404. Sign-in, post-login, sign-out, and protected-route redirects retain the validated active locale.
 
 The switcher replaces only the leading locale segment and preserves the remaining pathname. It drops all query parameters rather than forwarding an allow-list, so token hashes, access/refresh/recovery/invitation tokens, email addresses, passwords, and arbitrary `next` values cannot cross locale URLs. `/auth/confirm` remains non-localized and retains `/fr/activation` as its secure invitation default; the authenticated activation page can then switch safely to Turkish.
 

@@ -46,8 +46,8 @@ A detailed directory tree is intentionally deferred until repository bootstrap.
 The implemented next-intl 4.14 integration uses Next.js 16.3's `next/root-params` convention rather than the legacy `setRequestLocale` pattern. Separate root layouts keep the explicit `/` redirect and the locale parameter at the localized document root:
 
 ```text
-/ → application redirect → /fr
-/fr → [locale] validation → request config → fr.json → server translations
+/ → application redirect → /fr/connexion
+/fr or /tr → [locale] validation → localized connexion redirect
 unknown locale → [locale] validation → 404
 ```
 

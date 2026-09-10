@@ -9,8 +9,12 @@ export function isLocale(value: unknown): value is Locale {
   return typeof value === "string" && locales.some((locale) => locale === value);
 }
 
-export function getRootRedirectPath(): `/${Locale}` {
-  return `/${defaultLocale}`;
+export function getLocaleEntryPath(locale: Locale): `/${Locale}/connexion` {
+  return `/${locale}/connexion`;
+}
+
+export function getRootRedirectPath(): `/${Locale}/connexion` {
+  return getLocaleEntryPath(defaultLocale);
 }
 
 export const routing = defineRouting({
