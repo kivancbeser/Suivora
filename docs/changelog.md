@@ -2,6 +2,15 @@
 
 Significant product, domain, architecture, security, and delivery-document changes belong here. This is not a substitute for decision records or version control.
 
+## 2026-09-10 — Controlled quiz and grade runtime verification
+
+- Created one synthetic demo student with one active enrollment through the production ADMIN workflow; no direct SQL mutation was used.
+- Verified that the assigned pilot TEACHER could see only the shared pilot ClassCourse roster, then created four synthetic Semester 1 quizzes and entered four synthetic scores through the protected application and RPC workflows.
+- Confirmed that incomplete quiz data produced no premature suggestion, while the completed score set produced an exact average and dynamic oral suggestion of 75. A controlled score update recalculated to 76.25 and persisted after refresh before the final score was restored and the suggestion returned to 75.
+- Verified matching FR/TR records and formatting, detail-route preservation, ADMIN-route denial for the TEACHER, no page-level horizontal overflow at 1280 px or 390 px, and a clean browser console.
+- Automated fixtures cover zero-versus-missing scores, decimal/range validation, duplicate and invalid semester slots, unknown fields, inactive access, unassigned identifiers, cross-class/cross-school isolation, and anonymous denial without mutating real profiles or assignments.
+- The separate historical TEACHER profile remained untouched and unassigned. No unrelated project was accessed or modified.
+
 ## 2026-09-10 — Task 13B/13C quiz release
 
 - Applied only the reviewed quiz/score migration to the confirmed Suivora development project after explicit approval; migration histories are synchronized and both new tables remain empty.
