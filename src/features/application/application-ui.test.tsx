@@ -10,7 +10,6 @@ const push = vi.fn();
 
 vi.mock("@/i18n/navigation", () => ({
   usePathname: () => usePathname(),
-  useRouter: () => ({ push }),
   Link: ({ children, href, ...props }: React.ComponentProps<"a"> & { href: string }) => (
     <a href={href} {...props}>{children}</a>
   ),
@@ -18,6 +17,7 @@ vi.mock("@/i18n/navigation", () => ({
 
 vi.mock("next/navigation", () => ({
   usePathname: () => useBrowserPathname(),
+  useRouter: () => ({ push }),
 }));
 
 vi.mock("@/features/auth/sign-out-button", () => ({
@@ -111,7 +111,7 @@ describe("application interface", () => {
     await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
     expect(trigger).toHaveAttribute("aria-expanded", "false");
     expect(document.body.style.overflow).toBe("");
-    expect(push).toHaveBeenCalledWith("/app/enseignants");
+    expect(push).toHaveBeenCalledWith("/fr/app/enseignants");
     expect(document.querySelector(".app-main")).toHaveProperty("inert", false);
   });
 

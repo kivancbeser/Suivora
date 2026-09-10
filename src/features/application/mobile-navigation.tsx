@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import { SignOutButton } from "@/features/auth/sign-out-button";
 import type { Locale } from "@/i18n/routing";
@@ -9,7 +9,6 @@ import {
   RoleNavigation,
   type LocalizedNavigationItem,
 } from "./role-navigation";
-import { useRouter } from "@/i18n/navigation";
 
 type MobileNavigationProps = Readonly<{
   items: readonly LocalizedNavigationItem[];
@@ -92,7 +91,7 @@ function MobileNavigationDrawer({
   ) => {
     event.preventDefault();
     setOpen(false);
-    router.push(href);
+    router.push(`/${locale}${href}`);
   };
 
   return (
