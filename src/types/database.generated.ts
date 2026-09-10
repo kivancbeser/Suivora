@@ -524,6 +524,10 @@ export type Database = {
         }
         Returns: undefined
       }
+      claim_test_teacher_profile: {
+        Args: { teacher_display_name: string }
+        Returns: undefined
+      }
       current_app_role: {
         Args: never
         Returns: Database["public"]["Enums"]["app_role"]

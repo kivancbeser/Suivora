@@ -366,6 +366,20 @@ h1 {
   opacity: 0.65;
 }
 
+.auth-card__alternate {
+  margin: 1.25rem 0 0;
+  color: var(--muted);
+  font-size: 0.925rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.auth-card__alternate a {
+  color: var(--accent);
+  font-weight: 700;
+  text-underline-offset: 0.2em;
+}
+
 .app-placeholder__sign-out {
   width: 100%;
   margin-top: 2rem;

@@ -18,6 +18,8 @@
     "passwordLabel": "Şifre",
     "submit": "Giriş Yap",
     "submitting": "Giriş yapılıyor…",
+    "noAccount": "Henüz hesabınız yok mu?",
+    "signUpLink": "Test hesabı oluştur",
     "signOut": "Çıkış Yap",
     "signingOut": "Çıkış yapılıyor…",
     "authenticatedTitle": "Kimliği doğrulanmış alan",
@@ -28,6 +30,31 @@
       "passwordRequired": "Şifrenizi girin.",
       "credentialsInvalid": "Giriş yapılamadı. Bilgilerinizi kontrol edip yeniden deneyin.",
       "unexpected": "Şu anda giriş yapılamıyor. Daha sonra yeniden deneyin."
+    }
+  },
+  "Signup": {
+    "productName": "Suivora",
+    "title": "Hesap Oluştur",
+    "intro": "Mevcut okul için test öğretmen hesabınızı oluşturun.",
+    "displayNameLabel": "Görünen ad",
+    "emailLabel": "E-posta adresi",
+    "passwordLabel": "Şifre",
+    "passwordConfirmationLabel": "Şifreyi doğrula",
+    "submit": "Hesabımı Oluştur",
+    "submitting": "Hesap oluşturuluyor…",
+    "haveAccount": "Zaten hesabınız var mı?",
+    "signInLink": "Giriş Yap",
+    "errors": {
+      "displayNameRequired": "Adınızı girin.",
+      "displayNameTooLong": "Ad 120 karakterden uzun olamaz.",
+      "emailRequired": "E-posta adresinizi girin.",
+      "emailInvalid": "Geçerli bir e-posta adresi girin.",
+      "passwordTooShort": "En az 6 karakter kullanın.",
+      "passwordConfirmationRequired": "Şifrenizi tekrar girin.",
+      "passwordMismatch": "Şifreler eşleşmiyor.",
+      "accountAlreadyExists": "Bu e-posta adresiyle bir hesap zaten var. Giriş yapın veya başka bir adres seçin.",
+      "signupUnavailable": "Hesap şu anda oluşturulamıyor. Daha sonra yeniden deneyin.",
+      "unexpected": "Beklenmeyen bir hata oluştu. Daha sonra yeniden deneyin."
     }
   },
   "Application": {

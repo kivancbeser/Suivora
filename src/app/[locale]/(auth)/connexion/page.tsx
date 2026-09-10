@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { SignInForm } from "@/features/auth/sign-in-form";
@@ -69,6 +70,9 @@ export default async function SignInPage({ params, searchParams }: SignInPagePro
           }}
           returnTo={returnTo}
         />
+        <p className="auth-card__alternate">
+          {t("noAccount")} <Link href={`/${locale}/inscription`}>{t("signUpLink")}</Link>
+        </p>
       </section>
     </main>
   );

@@ -2,6 +2,16 @@
 
 Significant product, domain, architecture, security, and delivery-document changes belong here. This is not a substitute for decision records or version control.
 
+## 2026-09-10 — Temporary single-school teacher self-signup
+
+- Added localized FR/TR signup screens and a signup link from both login screens.
+- Added a development-only server flow that creates a confirmed, marked Auth identity, signs it in, and provisions it as an active TEACHER in the sole existing school.
+- Added `claim_test_teacher_profile(text)`, which accepts no tenant, role, or user identifier and rejects unmarked identities or databases with zero/multiple schools.
+- Added exact-user compensation for failed sign-in/profile provisioning and kept privileged credentials limited to Auth administration.
+- Clean local reset, schema lint, all 528 database tests, strict type-check, lint, all 227 application tests, and the production build pass.
+- After explicit approval, applied only `20260910190000_test_teacher_self_signup.sql` to Suivora development. Local and remote migration histories synchronize and the final remote dry-run is empty.
+- This temporary self-signup must be removed before multi-school onboarding or pilot access.
+
 ## 2026-09-10 — Temporary ADMIN test-teacher creation
 
 - Replaced the unusable email-invite form in the development ADMIN teacher page with a clearly labeled bilingual test-account form accepting display name, email, and a confirmed temporary password.

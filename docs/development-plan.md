@@ -29,6 +29,7 @@
    - Dedicated GitHub/Vercel development deployment and Auth URL configuration — completed in Task 09D-PRE
    - Controlled remote invitation and activation verification — deferred until separately requested; no invitation was sent during the ClassCourse foundation
    - Temporary ADMIN-only confirmed test-account creation — implemented for development; removal and SMTP-backed invitation restoration required before pilot use
+   - Temporary public single-school TEACHER self-signup — implemented and synchronized with Suivora development; removal is required before multi-school or pilot use
 10. Class, course, and ClassCourse management
 11. Teacher assignments — completed locally and remotely
 12. Student management

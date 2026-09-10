@@ -10,9 +10,11 @@ export const config = {
   matcher: [
     "/auth/confirm",
     "/fr/connexion",
+    "/fr/inscription",
     "/fr/activation",
     "/fr/app/:path*",
     "/tr/connexion",
+    "/tr/inscription",
     "/tr/activation",
     "/tr/app/:path*",
   ],

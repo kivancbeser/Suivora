@@ -105,6 +105,8 @@ The Task 10C routes recheck ADMIN access server-side even though the application
 
 The local assignment foundation adds `is_teacher_assigned(uuid)`, which derives the active TEACHER profile from `auth.uid()` and requires an active assignment plus active ClassCourse, class, and course. ADMIN may SELECT/INSERT and update only assignment periods/active state; teachers see only their own active rows and receive SELECT-only access to assigned ClassCourses, related structure, and the class roster. Teacher classroom/student mutations and every DELETE remain denied. The two ADMIN RPCs independently derive school authority and validate teacher/ClassCourse eligibility.
 
+The temporary test self-signup boundary creates a confirmed Auth identity on the server, marks only that newly created identity, signs in through the ordinary request-scoped client, and calls `claim_test_teacher_profile(text)`. The RPC accepts no school, role, or user identifier, requires the trusted Auth marker, derives `auth.uid()`, and succeeds only while exactly one school exists; it always creates an active `TEACHER`. `PUBLIC` and `anon` cannot execute it. Failed sign-in or profile creation triggers best-effort deletion of only the newly created Auth identity. This development-only boundary must be removed before multi-school onboarding or pilot access.
+
 ## Revocation and history
 
 Deactivating an assignment removes future teacher access without erasing audit attribution. Historical data keeps immutable actor identifiers even if a profile is later deactivated. Exact session invalidation timing is an open security decision.

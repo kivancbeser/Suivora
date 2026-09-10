@@ -18,6 +18,8 @@
     "passwordLabel": "Mot de passe",
     "submit": "Se connecter",
     "submitting": "Connexion en cours…",
+    "noAccount": "Pas encore de compte ?",
+    "signUpLink": "Créer un compte de test",
     "signOut": "Se déconnecter",
     "signingOut": "Déconnexion en cours…",
     "authenticatedTitle": "Espace authentifié",
@@ -28,6 +30,31 @@
       "passwordRequired": "Saisissez votre mot de passe.",
       "credentialsInvalid": "Connexion impossible. Vérifiez vos identifiants et réessayez.",
       "unexpected": "Connexion impossible pour le moment. Réessayez plus tard."
+    }
+  },
+  "Signup": {
+    "productName": "Suivora",
+    "title": "Créer un compte",
+    "intro": "Créez votre accès enseignant de test pour l’établissement actuel.",
+    "displayNameLabel": "Nom affiché",
+    "emailLabel": "Adresse e-mail",
+    "passwordLabel": "Mot de passe",
+    "passwordConfirmationLabel": "Confirmer le mot de passe",
+    "submit": "Créer mon compte",
+    "submitting": "Création en cours…",
+    "haveAccount": "Vous avez déjà un compte ?",
+    "signInLink": "Se connecter",
+    "errors": {
+      "displayNameRequired": "Saisissez votre nom.",
+      "displayNameTooLong": "Le nom ne peut pas dépasser 120 caractères.",
+      "emailRequired": "Saisissez votre adresse e-mail.",
+      "emailInvalid": "Saisissez une adresse e-mail valide.",
+      "passwordTooShort": "Utilisez au moins 6 caractères.",
+      "passwordConfirmationRequired": "Confirmez votre mot de passe.",
+      "passwordMismatch": "Les mots de passe ne correspondent pas.",
+      "accountAlreadyExists": "Un compte utilise déjà cette adresse. Connectez-vous ou choisissez une autre adresse.",
+      "signupUnavailable": "Le compte ne peut pas être créé pour le moment. Réessayez plus tard.",
+      "unexpected": "Une erreur inattendue est survenue. Réessayez plus tard."
     }
   },
   "Application": {
