@@ -6,9 +6,11 @@ import { RoleNavigation } from "./role-navigation";
 
 const usePathname = vi.fn(() => "/app");
 const useBrowserPathname = vi.fn(() => "/fr/app");
+const push = vi.fn();
 
 vi.mock("@/i18n/navigation", () => ({
   usePathname: () => usePathname(),
+  useRouter: () => ({ push }),
   Link: ({ children, href, ...props }: React.ComponentProps<"a"> & { href: string }) => (
     <a href={href} {...props}>{children}</a>
   ),
@@ -45,6 +47,7 @@ describe("application interface", () => {
   beforeEach(() => {
     usePathname.mockReturnValue("/app");
     useBrowserPathname.mockReturnValue("/fr/app");
+    push.mockReset();
     document.body.style.overflow = "";
   });
   afterEach(() => {
@@ -108,6 +111,7 @@ describe("application interface", () => {
     await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
     expect(trigger).toHaveAttribute("aria-expanded", "false");
     expect(document.body.style.overflow).toBe("");
+    expect(push).toHaveBeenCalledWith("/app/enseignants");
     expect(document.querySelector(".app-main")).toHaveProperty("inert", false);
   });
 

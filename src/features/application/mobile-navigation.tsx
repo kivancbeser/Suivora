@@ -9,6 +9,7 @@ import {
   RoleNavigation,
   type LocalizedNavigationItem,
 } from "./role-navigation";
+import { useRouter } from "@/i18n/navigation";
 
 type MobileNavigationProps = Readonly<{
   items: readonly LocalizedNavigationItem[];
@@ -43,6 +44,7 @@ function MobileNavigationDrawer({
   locale,
   messages,
 }: MobileNavigationProps) {
+  const router = useRouter();
   const panelId = useId();
   const triggerRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -84,6 +86,15 @@ function MobileNavigationDrawer({
     triggerRef.current?.focus();
   };
 
+  const navigate: React.ComponentProps<typeof RoleNavigation>["onNavigate"] = (
+    event,
+    href,
+  ) => {
+    event.preventDefault();
+    setOpen(false);
+    router.push(href);
+  };
+
   return (
     <div className="app-mobile-menu">
       <button
@@ -113,12 +124,11 @@ function MobileNavigationDrawer({
             ref={panelRef}
             role="dialog"
           >
-            <div onClick={(event) => {
-              if ((event.target as HTMLElement).closest("a")) setOpen(false);
-            }}>
+            <div>
               <RoleNavigation
                 ariaLabel={messages.navigationLabel}
                 items={items}
+                onNavigate={navigate}
               />
             </div>
             <SignOutButton

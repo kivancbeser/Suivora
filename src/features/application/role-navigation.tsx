@@ -8,9 +8,13 @@ export type LocalizedNavigationItem = NavigationItem & Readonly<{ label: string 
 type RoleNavigationProps = Readonly<{
   ariaLabel: string;
   items: readonly LocalizedNavigationItem[];
+  onNavigate?: (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    href: NavigationItem["href"],
+  ) => void;
 }>;
 
-export function RoleNavigation({ ariaLabel, items }: RoleNavigationProps) {
+export function RoleNavigation({ ariaLabel, items, onNavigate }: RoleNavigationProps) {
   const pathname = usePathname();
 
   return (
@@ -24,6 +28,7 @@ export function RoleNavigation({ ariaLabel, items }: RoleNavigationProps) {
                 aria-current={active ? "page" : undefined}
                 className="app-navigation__link"
                 href={item.href}
+                onClick={(event) => onNavigate?.(event, item.href)}
               >
                 <span aria-hidden="true" className="app-navigation__marker">
                   {item.marker}
