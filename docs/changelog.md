@@ -2,6 +2,19 @@
 
 Significant product, domain, architecture, security, and delivery-document changes belong here. This is not a substitute for decision records or version control.
 
+## 2026-09-10 — Task 13B/13C quiz release
+
+- Applied only the reviewed quiz/score migration to the confirmed Suivora development project after explicit approval; migration histories are synchronized and both new tables remain empty.
+- Verified the remote enum, tables, constraints, indexes, RLS policies, hardened functions and minimal grants. Existing anonymized structural row counts remained unchanged.
+- Added shared ADMIN/TEACHER FR/TR quiz routes, metadata forms, enrollment-scoped score entry, semester summaries, dynamic oral suggestions, localized safe feedback, and an honest no-student state.
+- Added the assessment module to both role-aware navigation menus and kept every mutation behind request-scoped authentication plus protected database RPCs.
+
+## 2026-09-10 — Task 13A local quiz and grade foundation
+
+- Confirmed the missing-score, two-decimal precision, unrounded-comparison, and dynamic oral-suggestion contract.
+- Added the local C1–C8 quiz and audited score-entry migration with tenant-safe relationships, term/date/enrollment integrity, assignment-scoped reads, and protected quiz/score RPCs.
+- Added deterministic pure grading calculations and focused unit/pgTAP coverage. Remote application was separately approval-gated and completed in Task 13B.
+
 ## 2026-09-10 — Controlled pilot teacher assignment and shared-class verification
 
 - Verified through the production ADMIN workflow that the target profile was an active same-school TEACHER and that the active ClassCourse had exactly 20 weekly periods with no existing assignment.

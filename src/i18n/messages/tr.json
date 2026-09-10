@@ -182,6 +182,11 @@
   "MyClasses": {
     "eyebrow":"Öğretmen alanı","title":"Sınıflarım","description":"Yalnızca size atanmış ortak eğitim alanlarını görüntüleyin.","empty":"Şu anda size atanmış sınıf bulunmuyor.","open":"Aç","class":"Sınıf","course":"Ders","year":"Eğitim yılı","allocated":"Ders sayınız","total":"Toplam ders sayısı","back":"Sınıflarıma dön","roster":"Kayıtlı öğrenciler","noStudents":"Bu sınıfta devam eden öğrenci kaydı bulunmuyor.","code":"Öğrenci kodu","current":"Devam eden kayıt","error":"Sınıflarınız şu anda yüklenemiyor."
   },
+  "Grading": {
+    "eyebrow":"Ortak değerlendirmeler","title":"Quizler ve Notlar","description":"Quizleri ve notları yalnızca yetkili olduğunuz sınıf alanlarında yönetin.","emptyClasses":"Yetkili olduğunuz bir sınıf alanı bulunmuyor.","open":"Quizleri aç","back":"Quizlere dön","noStudents":"Kayıtlı öğrenci bulunmuyor; henüz not girişi yapılamaz.","noQuizzes":"Bu dönem için henüz quiz oluşturulmadı.","addQuiz":"Quiz oluştur","term":"Dönem","semester1":"1. Dönem","semester2":"2. Dönem","slot":"Quiz sırası","date":"Quiz tarihi","active":"Quiz aktif","create":"Oluştur","edit":"Düzenle","save":"Kaydet","saving":"Kaydediliyor…","cancel":"İptal","notEntered":"Girilmedi","score":"100 üzerinden not","average":"Ortalama","suggestion":"Sözlü notu önerisi (dört quiz ortalaması)","unavailable":"Quizler ve notlar şu anda kullanılamıyor.",
+    "performance":{"EXCELLENT":"Mükemmel","GOOD":"İyi","AVERAGE":"Orta","NEEDS_REINFORCEMENT":"Destek gerekli"},
+    "results":{"accessDenied":"Bu işlem için yetkiniz yok.","invalidFields":"Form geçersiz veya beklenmeyen veri içeriyor.","invalidTitle":"En fazla 160 karakterlik geçerli bir başlık girin.","invalidDate":"Dönem içinde bir tarih seçin.","invalidScore":"En fazla iki ondalıkla 0 ile 100 arasında bir not girin.","duplicateQuiz":"Bu quiz sırası zaten kullanılıyor.","unavailable":"Quiz veya öğrenci kullanılamıyor.","unexpected":"İşlem şu anda gerçekleştirilemiyor.","quizCreated":"Quiz oluşturuldu.","quizUpdated":"Quiz güncellendi.","scoresSaved":"Girilen notlar kaydedildi."}
+  },
   "Teachers": {
     "eyebrow": "Yönetim",
     "title": "Öğretmenler",

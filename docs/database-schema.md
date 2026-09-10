@@ -62,13 +62,15 @@ Every foreign-key path must remain within one `school_id`, enforced through comp
 
 | Table | Essential fields / constraints |
 |---|---|
-| `quizzes` | `id`, `school_id`, `class_course_id`, slot C1-C8, mode, max score fixed at 100, metadata; unique course + slot |
-| `grades` | `id`, `school_id`, `quiz_id`, `student_id`, total score, audit timestamps/actor; unique quiz + student |
+| `quizzes` | `id`, `school_id`, `school_year_id`, `term_id`, `class_course_id`, slot C1-C8, title/date, max score fixed at 100, active lifecycle, creation/update actors and timestamps; unique ClassCourse + slot |
+| `quiz_scores` | `id`, `school_id`, `quiz_id`, `student_id`, decimal score 0–100 (maximum two decimals), creation/update actors and timestamps; unique quiz + student, while no row means not entered |
 | `oral_grades` | `id`, `school_id`, course/student/term, calculated suggestion, final teacher grade, calculation version/time, decision actor/time |
 | `learning_outcomes` | `id`, `school_id`, optional subject/year scope, stable code, description |
 | `assessment_elements` | `id`, `school_id`, `quiz_id`, order/title, maximum points |
 | `element_outcomes` | element/outcome link plus future allocation metadata after decision |
 | `student_element_scores` | `id`, `school_id`, element/student, score, audit metadata |
+
+`20260911100000_quiz_grade_foundation.sql` implements the first two assessment tables locally and on Suivora development. Composite foreign keys and hardened triggers enforce one-school ownership, ClassCourse/year/term consistency, C1–C4 versus C5–C8 semester placement, quiz dates inside the term, and active enrollment on the quiz date. Direct mutations and hard deletion are unavailable to application roles. Assigned teachers and same-school administrators read through RLS and mutate only through audited protected RPCs; bulk score saving validates the complete request before committing. Remote application created no quiz or score rows.
 
 ## Homework and contact
 

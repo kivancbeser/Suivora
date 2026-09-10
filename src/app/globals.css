@@ -996,6 +996,15 @@ h1 {
 .structure-button:disabled { opacity: .6; cursor: wait; }
 .structure-loading { padding: 1rem; }
 .structure-page :is(a, summary, input, select, button):focus-visible { outline: 3px solid rgb(36 92 69 / 32%); outline-offset: 2px; }
+.grade-semester { display: grid; gap: .85rem; min-width: 0; }
+.grade-quiz-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.grade-grid-form { display: grid; gap: .75rem; min-width: 0; }
+.grade-grid-scroll { max-width: 100%; overflow-x: auto; border: 1px solid var(--border); border-radius: .75rem; }
+.grade-grid-scroll table { width: 100%; min-width: 32rem; border-collapse: collapse; background: white; }
+.grade-grid-scroll caption { padding: .75rem; text-align: left; font-weight: 800; }
+.grade-grid-scroll th, .grade-grid-scroll td { padding: .65rem .75rem; border-top: 1px solid var(--border); text-align: left; }
+.grade-grid-scroll input { width: 9rem; max-width: 100%; min-height: 2.5rem; padding: .5rem; border: 1px solid #aebbb2; border-radius: .5rem; font: inherit; }
+.grade-grid-scroll :focus-visible { outline: 3px solid rgb(36 92 69 / 32%); outline-offset: 2px; }
 @media (max-width: 430px) { .structure-header, .structure-detail-header, .structure-card { display: grid; } .structure-header > details, .structure-header > details > summary, .structure-form { width: 100%; min-width: 0; } }
 
 .student-page { display: grid; gap: 1.5rem; width: min(100%,72rem); margin: 0 auto; }

@@ -29,6 +29,7 @@ const adminNavigation = [
   { key: "classes", href: "/app/classes", marker: "CL" },
   { key: "students", href: "/app/eleves", marker: "ÉL" },
   { key: "subjects", href: "/app/matieres", marker: "MA" },
+  { key: "quizzesAndGrades", href: "/app/quiz-et-notes", marker: "QN" },
   { key: "settings", href: "/app/parametres", marker: "PA" },
 ] as const satisfies readonly NavigationItem[];
 

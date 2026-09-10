@@ -182,6 +182,11 @@
   "MyClasses": {
     "eyebrow":"Espace enseignant","title":"Mes classes","description":"Consultez uniquement les espaces pédagogiques qui vous sont affectés.","empty":"Aucune classe ne vous est actuellement affectée.","open":"Ouvrir","class":"Classe","course":"Matière","year":"Année scolaire","allocated":"Vos périodes","total":"Périodes totales","back":"Retour à mes classes","roster":"Élèves inscrits","noStudents":"Aucun élève n’est actuellement inscrit dans cette classe.","code":"Code élève","current":"Inscription en cours","error":"Vos classes ne peuvent pas être chargées pour le moment."
   },
+  "Grading": {
+    "eyebrow":"Évaluations partagées","title":"Quiz et notes","description":"Gérez les quiz et les notes uniquement dans vos espaces autorisés.","emptyClasses":"Aucun espace de classe autorisé n’est disponible.","open":"Ouvrir les quiz","back":"Retour aux quiz","noStudents":"Aucun élève n’est inscrit : aucune note ne peut encore être saisie.","noQuizzes":"Aucun quiz n’est encore configuré pour ce semestre.","addQuiz":"Créer un quiz","term":"Semestre","semester1":"Semestre 1","semester2":"Semestre 2","slot":"Emplacement","date":"Date du quiz","active":"Quiz actif","create":"Créer","edit":"Modifier","save":"Enregistrer","saving":"Enregistrement…","cancel":"Annuler","notEntered":"Non saisie","score":"Note sur 100","average":"Moyenne","suggestion":"Suggestion de note orale (moyenne des quatre quiz)","unavailable":"Les quiz et notes sont indisponibles pour le moment.",
+    "performance":{"EXCELLENT":"Excellent","GOOD":"Bon","AVERAGE":"Moyen","NEEDS_REINFORCEMENT":"À renforcer"},
+    "results":{"accessDenied":"Cette opération n’est pas autorisée.","invalidFields":"Le formulaire contient des données invalides ou inattendues.","invalidTitle":"Saisissez un titre valide de 160 caractères maximum.","invalidDate":"Choisissez une date comprise dans le semestre.","invalidScore":"Saisissez une note de 0 à 100 avec deux décimales maximum.","duplicateQuiz":"Cet emplacement de quiz est déjà utilisé.","unavailable":"Le quiz ou l’élève est indisponible.","unexpected":"L’opération est impossible pour le moment.","quizCreated":"Le quiz a été créé.","quizUpdated":"Le quiz a été mis à jour.","scoresSaved":"Les notes saisies ont été enregistrées."}
+  },
   "Teachers": {
     "eyebrow": "Administration",
     "title": "Enseignants",

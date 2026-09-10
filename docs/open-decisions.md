@@ -6,10 +6,7 @@ This is the canonical unresolved-question list. No item below authorizes an impl
 
 ## Grading
 
-1. How are absent, exempt, withdrawn, or otherwise missing C1-C8 grades represented, and when are semester/annual averages available?
-2. Are scores and final oral grades decimals? What precision is stored, displayed, and used for evolution/band comparisons?
-3. Do performance bands use raw or rounded averages, and do stated integer ranges mean 84.999 is `GOOD` or `EXCELLENT`?
-4. When quiz grades change, is the calculated oral suggestion versioned/recomputed, and how is the original suggestion at teacher decision time preserved?
+TASK 13's missing-score, precision, raw-comparison, and dynamic oral-suggestion contract is confirmed in `docs/grading-rules.md`. Absence, exemption, withdrawal, and the later final-oral-grade decision workflow remain deferred.
 
 ## Learning outcomes
 

@@ -215,6 +215,165 @@ export type Database = {
           },
         ]
       }
+      quiz_scores: {
+        Row: {
+          created_at: string
+          created_by: string
+          id: string
+          quiz_id: string
+          school_id: string
+          score: number
+          student_id: string
+          updated_at: string
+          updated_by: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          id?: string
+          quiz_id: string
+          school_id: string
+          score: number
+          student_id: string
+          updated_at?: string
+          updated_by: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          id?: string
+          quiz_id?: string
+          school_id?: string
+          score?: number
+          student_id?: string
+          updated_at?: string
+          updated_by?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quiz_scores_created_by_school_fk"
+            columns: ["created_by", "school_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id", "school_id"]
+          },
+          {
+            foreignKeyName: "quiz_scores_quiz_school_fk"
+            columns: ["quiz_id", "school_id"]
+            isOneToOne: false
+            referencedRelation: "quizzes"
+            referencedColumns: ["id", "school_id"]
+          },
+          {
+            foreignKeyName: "quiz_scores_school_id_fkey"
+            columns: ["school_id"]
+            isOneToOne: false
+            referencedRelation: "schools"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "quiz_scores_student_school_fk"
+            columns: ["student_id", "school_id"]
+            isOneToOne: false
+            referencedRelation: "students"
+            referencedColumns: ["id", "school_id"]
+          },
+          {
+            foreignKeyName: "quiz_scores_updated_by_school_fk"
+            columns: ["updated_by", "school_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id", "school_id"]
+          },
+        ]
+      }
+      quizzes: {
+        Row: {
+          class_course_id: string
+          created_at: string
+          created_by: string
+          id: string
+          is_active: boolean
+          max_score: number
+          quiz_date: string
+          school_id: string
+          school_year_id: string
+          slot: Database["public"]["Enums"]["quiz_slot"]
+          term_id: string
+          title: string
+          updated_at: string
+          updated_by: string
+        }
+        Insert: {
+          class_course_id: string
+          created_at?: string
+          created_by: string
+          id?: string
+          is_active?: boolean
+          max_score?: number
+          quiz_date: string
+          school_id: string
+          school_year_id: string
+          slot: Database["public"]["Enums"]["quiz_slot"]
+          term_id: string
+          title: string
+          updated_at?: string
+          updated_by: string
+        }
+        Update: {
+          class_course_id?: string
+          created_at?: string
+          created_by?: string
+          id?: string
+          is_active?: boolean
+          max_score?: number
+          quiz_date?: string
+          school_id?: string
+          school_year_id?: string
+          slot?: Database["public"]["Enums"]["quiz_slot"]
+          term_id?: string
+          title?: string
+          updated_at?: string
+          updated_by?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quizzes_class_course_school_fk"
+            columns: ["class_course_id", "school_id"]
+            isOneToOne: false
+            referencedRelation: "class_courses"
+            referencedColumns: ["id", "school_id"]
+          },
+          {
+            foreignKeyName: "quizzes_created_by_school_fk"
+            columns: ["created_by", "school_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id", "school_id"]
+          },
+          {
+            foreignKeyName: "quizzes_school_id_fkey"
+            columns: ["school_id"]
+            isOneToOne: false
+            referencedRelation: "schools"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "quizzes_term_school_year_school_fk"
+            columns: ["term_id", "school_year_id", "school_id"]
+            isOneToOne: false
+            referencedRelation: "terms"
+            referencedColumns: ["id", "school_year_id", "school_id"]
+          },
+          {
+            foreignKeyName: "quizzes_updated_by_school_fk"
+            columns: ["updated_by", "school_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id", "school_id"]
+          },
+        ]
+      }
       school_years: {
         Row: {
           active: boolean
@@ -528,6 +687,16 @@ export type Database = {
         Args: { teacher_display_name: string }
         Returns: undefined
       }
+      create_quiz: {
+        Args: {
+          quiz_title: string
+          target_class_course_id: string
+          target_quiz_date: string
+          target_slot: Database["public"]["Enums"]["quiz_slot"]
+          target_term_id: string
+        }
+        Returns: string
+      }
       current_app_role: {
         Args: never
         Returns: Database["public"]["Enums"]["app_role"]
@@ -538,9 +707,27 @@ export type Database = {
         Args: { target_class_course_id: string }
         Returns: boolean
       }
+      save_quiz_scores: {
+        Args: {
+          entered_scores: number[]
+          target_quiz_id: string
+          target_student_ids: string[]
+        }
+        Returns: number
+      }
+      update_quiz: {
+        Args: {
+          quiz_is_active: boolean
+          quiz_title: string
+          target_quiz_date: string
+          target_quiz_id: string
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       app_role: "ADMIN" | "TEACHER"
+      quiz_slot: "C1" | "C2" | "C3" | "C4" | "C5" | "C6" | "C7" | "C8"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -669,6 +856,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["ADMIN", "TEACHER"],
+      quiz_slot: ["C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8"],
     },
   },
 } as const
