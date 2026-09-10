@@ -90,8 +90,8 @@ function MobileNavigationDrawer({
     href,
   ) => {
     event.preventDefault();
-    setOpen(false);
     router.push(`/${locale}${href}`);
+    setOpen(false);
   };
 
   return (
