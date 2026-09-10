@@ -1,0 +1,14 @@
+import { z } from "zod";
+
+export const homeworkStates = ["SUBMITTED_ON_TIME", "SUBMITTED_LATE", "NOT_SUBMITTED"] as const;
+export type HomeworkState = (typeof homeworkStates)[number];
+export type HomeworkMessage = "accessDenied"|"invalidFields"|"invalidTitle"|"invalidDate"|"invalidState"|"unavailable"|"unexpected"|"created"|"updated"|"statusesSaved";
+export type HomeworkActionState = Readonly<{status:"idle"|"success"|"error";message?:HomeworkMessage}>;
+export const initialHomeworkActionState:HomeworkActionState={status:"idle"};
+const id=z.string().uuid();
+const title=z.string().trim().min(1).max(160).refine(v=>!/[\u0000-\u001f\u007f]/u.test(v));
+const description=z.string().trim().max(4000).refine(v=>!/[\u0000-\u001f\u007f]/u.test(v));
+const date=z.iso.date();
+function exact(data:FormData,allowed:readonly string[]){return [...data.keys()].filter(k=>!k.startsWith("$ACTION_")).every(k=>allowed.includes(k));}
+export function parseHomeworkForm(data:FormData){const allowed=["termId","title","description","assignedOn","dueOn","isActive"];if(!exact(data,allowed))return{ok:false as const,message:"invalidFields" as const};const parsed=z.object({termId:id,title,description,assignedOn:date,dueOn:date}).safeParse({termId:data.get("termId"),title:data.get("title"),description:data.get("description")??"",assignedOn:data.get("assignedOn"),dueOn:data.get("dueOn")});if(!parsed.success){const field=parsed.error.issues[0]?.path[0];return{ok:false as const,message:field==="title"?"invalidTitle" as const:field==="assignedOn"||field==="dueOn"?"invalidDate" as const:"invalidFields" as const};}if(parsed.data.assignedOn>parsed.data.dueOn)return{ok:false as const,message:"invalidDate" as const};return{ok:true as const,data:{...parsed.data,isActive:!data.has("isActive")||data.getAll("isActive").includes("true")}};}
+export function parseStatusForm(data:FormData,count:number){const allowed=Array.from({length:count},(_,i)=>[`state-${i}`,`submitted-${i}`]).flat();if(!exact(data,allowed))return{ok:false as const,message:"invalidFields" as const};const values:{index:number;state:HomeworkState;submittedOn:string|null}[]=[];for(let i=0;i<count;i++){const raw=data.get(`state-${i}`);const submitted=data.get(`submitted-${i}`);if(raw==="")continue;const state=z.enum(homeworkStates).safeParse(raw);if(!state.success||typeof submitted!=="string")return{ok:false as const,message:"invalidState" as const};const submittedOn=submitted.trim()===""?null:submitted;if(submittedOn!==null&&!date.safeParse(submittedOn).success)return{ok:false as const,message:"invalidDate" as const};if((state.data==="NOT_SUBMITTED")!== (submittedOn===null))return{ok:false as const,message:"invalidState" as const};values.push({index:i,state:state.data,submittedOn});}if(values.length===0)return{ok:false as const,message:"invalidState" as const};return{ok:true as const,values};}

@@ -6,13 +6,15 @@ Suivora is a French-first shared classroom management web application for clear,
 
 ## Current status
 
-The application has complete French/Turkish localization, authenticated ADMIN structure management, remotely applied student/enrollment and teacher-assignment foundations, bilingual assignment management, and a read-only teacher “Mes classes” workspace. A deliberately temporary ADMIN-only form can create confirmed TEACHER Auth users without email delivery during development. French remains the default and English remains unsupported.
+The application has complete French/Turkish localization, authenticated ADMIN structure management, remotely applied student/enrollment, teacher-assignment, quiz/grade, and homework foundations, bilingual management workflows, and a scoped teacher workspace. A deliberately temporary ADMIN-only form can create confirmed TEACHER Auth users without email delivery during development. French remains the default and English remains unsupported.
 
 ## Users and central concept
 
 The pilot targets one school, roughly four teachers and fifty students. Administrators configure school structures and assignments. Teachers work only within assigned ClassCourses. Student and parent accounts are not part of the MVP.
 
 The central aggregate is `ClassCourse`: one class, one course, and one school year with one or more teacher assignments. Assigned teachers work on the same quizzes, grades, outcomes, homework, contact history, and shared academic information. Server authorization and database policies—not UI visibility—protect access.
+
+Homework tracking is available at `/{locale}/app/devoirs` to same-school administrators and actively assigned teachers only.
 
 ## MVP modules
 

@@ -71,6 +71,8 @@ The administrator's direct academic-edit permissions are not fully specified; im
 
 ## Implemented policy matrix
 
+TASK 14 adds two RLS-enabled homework tables with one narrow SELECT policy each. Same-school active ADMIN users and actively assigned TEACHER users may read only authorized ClassCourse homework/status rows. All application mutations pass through hardened authenticated RPCs; direct INSERT, UPDATE and DELETE grants remain absent, anonymous access is denied, and the derived attention projection repeats the school/role/assignment boundary. The reviewed contract is synchronized with the linked Suivora development database.
+
 Task 08A added only database-integrity triggers, and Task 08B verified the same boundary remotely after applying the migration once. Their `VOLATILE SECURITY DEFINER` functions use an empty `search_path`, have no `PUBLIC`, `anon`, or `authenticated` execution privilege, and are reachable only as triggers on already RLS-protected writes. They add no policy, grant, role capability, or authorization bypass; the remote project retains exactly the original eight policies.
 
 Task 08C restricts the calendar route, reads, and every mutation to active `ADMIN` profiles. Each Server Action resolves fresh request context, ignores client-supplied tenant identity, and scopes identifiers to the trusted school. Missing and foreign-school records share the same safe not-found response so tenant existence is not disclosed; RLS remains independently active.

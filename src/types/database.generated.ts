@@ -215,6 +215,168 @@ export type Database = {
           },
         ]
       }
+      homework_assignments: {
+        Row: {
+          assigned_on: string
+          class_course_id: string
+          created_at: string
+          created_by: string
+          description: string | null
+          due_on: string
+          id: string
+          is_active: boolean
+          school_id: string
+          school_year_id: string
+          term_id: string
+          title: string
+          updated_at: string
+          updated_by: string
+        }
+        Insert: {
+          assigned_on: string
+          class_course_id: string
+          created_at?: string
+          created_by: string
+          description?: string | null
+          due_on: string
+          id?: string
+          is_active?: boolean
+          school_id: string
+          school_year_id: string
+          term_id: string
+          title: string
+          updated_at?: string
+          updated_by: string
+        }
+        Update: {
+          assigned_on?: string
+          class_course_id?: string
+          created_at?: string
+          created_by?: string
+          description?: string | null
+          due_on?: string
+          id?: string
+          is_active?: boolean
+          school_id?: string
+          school_year_id?: string
+          term_id?: string
+          title?: string
+          updated_at?: string
+          updated_by?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "homework_assignments_class_course_school_fk"
+            columns: ["class_course_id", "school_id"]
+            isOneToOne: false
+            referencedRelation: "class_courses"
+            referencedColumns: ["id", "school_id"]
+          },
+          {
+            foreignKeyName: "homework_assignments_created_by_school_fk"
+            columns: ["created_by", "school_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id", "school_id"]
+          },
+          {
+            foreignKeyName: "homework_assignments_school_id_fkey"
+            columns: ["school_id"]
+            isOneToOne: false
+            referencedRelation: "schools"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "homework_assignments_term_school_year_school_fk"
+            columns: ["term_id", "school_year_id", "school_id"]
+            isOneToOne: false
+            referencedRelation: "terms"
+            referencedColumns: ["id", "school_year_id", "school_id"]
+          },
+          {
+            foreignKeyName: "homework_assignments_updated_by_school_fk"
+            columns: ["updated_by", "school_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id", "school_id"]
+          },
+        ]
+      }
+      homework_student_statuses: {
+        Row: {
+          created_at: string
+          created_by: string
+          homework_assignment_id: string
+          id: string
+          school_id: string
+          state: Database["public"]["Enums"]["homework_state"]
+          student_id: string
+          submitted_on: string | null
+          updated_at: string
+          updated_by: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          homework_assignment_id: string
+          id?: string
+          school_id: string
+          state: Database["public"]["Enums"]["homework_state"]
+          student_id: string
+          submitted_on?: string | null
+          updated_at?: string
+          updated_by: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          homework_assignment_id?: string
+          id?: string
+          school_id?: string
+          state?: Database["public"]["Enums"]["homework_state"]
+          student_id?: string
+          submitted_on?: string | null
+          updated_at?: string
+          updated_by?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "homework_status_assignment_school_fk"
+            columns: ["homework_assignment_id", "school_id"]
+            isOneToOne: false
+            referencedRelation: "homework_assignments"
+            referencedColumns: ["id", "school_id"]
+          },
+          {
+            foreignKeyName: "homework_status_created_by_school_fk"
+            columns: ["created_by", "school_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id", "school_id"]
+          },
+          {
+            foreignKeyName: "homework_status_student_school_fk"
+            columns: ["student_id", "school_id"]
+            isOneToOne: false
+            referencedRelation: "students"
+            referencedColumns: ["id", "school_id"]
+          },
+          {
+            foreignKeyName: "homework_status_updated_by_school_fk"
+            columns: ["updated_by", "school_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id", "school_id"]
+          },
+          {
+            foreignKeyName: "homework_student_statuses_school_id_fkey"
+            columns: ["school_id"]
+            isOneToOne: false
+            referencedRelation: "schools"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       quiz_scores: {
         Row: {
           created_at: string
@@ -687,6 +849,17 @@ export type Database = {
         Args: { teacher_display_name: string }
         Returns: undefined
       }
+      create_homework_assignment: {
+        Args: {
+          homework_description: string
+          homework_title: string
+          target_assigned_on: string
+          target_class_course_id: string
+          target_due_on: string
+          target_term_id: string
+        }
+        Returns: string
+      }
       create_quiz: {
         Args: {
           quiz_title: string
@@ -701,11 +874,38 @@ export type Database = {
         Args: never
         Returns: Database["public"]["Enums"]["app_role"]
       }
+      current_homework_streak: {
+        Args: {
+          as_of_date?: string
+          target_class_course_id: string
+          target_student_id: string
+        }
+        Returns: number
+      }
       current_school_id: { Args: never; Returns: string }
       is_school_admin: { Args: { target_school_id: string }; Returns: boolean }
       is_teacher_assigned: {
         Args: { target_class_course_id: string }
         Returns: boolean
+      }
+      list_homework_attention: {
+        Args: { as_of_date?: string }
+        Returns: {
+          class_course_id: string
+          current_streak: number
+          student_first_name: string
+          student_id: string
+          student_last_name: string
+        }[]
+      }
+      save_homework_statuses: {
+        Args: {
+          target_homework_id: string
+          target_states: Database["public"]["Enums"]["homework_state"][]
+          target_student_ids: string[]
+          target_submitted_on: string[]
+        }
+        Returns: number
       }
       save_quiz_scores: {
         Args: {
@@ -714,6 +914,17 @@ export type Database = {
           target_student_ids: string[]
         }
         Returns: number
+      }
+      update_homework_assignment: {
+        Args: {
+          homework_description: string
+          homework_is_active: boolean
+          homework_title: string
+          target_assigned_on: string
+          target_due_on: string
+          target_homework_id: string
+        }
+        Returns: undefined
       }
       update_quiz: {
         Args: {
@@ -727,6 +938,7 @@ export type Database = {
     }
     Enums: {
       app_role: "ADMIN" | "TEACHER"
+      homework_state: "SUBMITTED_ON_TIME" | "SUBMITTED_LATE" | "NOT_SUBMITTED"
       quiz_slot: "C1" | "C2" | "C3" | "C4" | "C5" | "C6" | "C7" | "C8"
     }
     CompositeTypes: {
@@ -856,6 +1068,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["ADMIN", "TEACHER"],
+      homework_state: ["SUBMITTED_ON_TIME", "SUBMITTED_LATE", "NOT_SUBMITTED"],
       quiz_slot: ["C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8"],
     },
   },

@@ -23,6 +23,8 @@ TASK 13's missing-score, precision, raw-comparison, and dynamic oral-suggestion 
 12. How is delay in days calculated across due times, weekends, holidays, and timezone boundaries?
 13. What contact types are allowed, who may view notes, and how are mistakes amended without overwriting history?
 
+TASK 14 closes the initial projection questions: it uses a derived consecutive streak, both submitted states reset it, unrecorded work interrupts it, only active due homework participates, ordering is due date then assigned date then immutable ID, eligibility is checked on the due date, corrections recalculate immediately, and same-day assignment/due dates are valid. Persisted resolution and cumulative contact-baseline episodes remain deferred with contact history.
+
 ## Progression and Excel
 
 14. Does one worksheet represent exactly one class?
@@ -32,13 +34,13 @@ TASK 13's missing-score, precision, raw-comparison, and dynamic oral-suggestion 
 
 ## Roles, records, and lifecycle
 
-18. May administrators directly edit all academic records, or only configure/manage access and view reports?
-19. Can a teacher add an entirely new student identity or only enroll an existing student in an authorized class, and what duplicate matching applies?
-20. What are later archival/deletion policies for classes, class courses, quizzes, and assignments? Initial teacher assignments and student identities use `is_active`; assignments, students, and enrollments are not hard-deleted.
-21. What audit representation, immutability, retention, access, redaction, and correction policies are required?
-22. When an assignment or user is deactivated, how quickly must existing sessions lose access?
-23. Beyond Task 09C's bounded exact-new-user compensation and manual runbook, should a later persistent reconciliation queue support operator-approved profile retry?
-24. How are already-existing Auth emails, expired invitations, resend limits, and email-address changes handled without leaking account existence or duplicating profiles?
+20. May administrators directly edit all academic records, or only configure/manage access and view reports? TASK 14 explicitly authorizes same-school ADMIN management for homework only; other academic modules remain unresolved.
+21. Can a teacher add an entirely new student identity or only enroll an existing student in an authorized class, and what duplicate matching applies?
+22. What are later archival/deletion policies for classes, class courses, quizzes, and assignments? Initial teacher assignments and student identities use `is_active`; assignments, students, and enrollments are not hard-deleted.
+23. What audit representation, immutability, retention, access, redaction, and correction policies are required?
+24. When an assignment or user is deactivated, how quickly must existing sessions lose access?
+25. Beyond Task 09C's bounded exact-new-user compensation and manual runbook, should a later persistent reconciliation queue support operator-approved profile retry?
+26. How are already-existing Auth emails, expired invitations, resend limits, and email-address changes handled without leaking account existence or duplicating profiles?
 
 ## Exports and operations
 

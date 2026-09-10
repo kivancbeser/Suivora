@@ -2,6 +2,28 @@
 
 Significant product, domain, architecture, security, and delivery-document changes belong here. This is not a substitute for decision records or version control.
 
+## 2026-09-10 — Task 14B/14C remote homework foundation and bilingual UI
+
+- Applied the reviewed homework migration exactly once to the linked Suivora development project and verified synchronized migration history, generated types, schema objects, RLS policies, grants, and unchanged pre-existing record counts.
+- Added localized ADMIN/assigned-TEACHER homework routes for authorized class-course selection, assignment creation and correction, due-date roster tracking, explicit bulk status recording, safe empty states, and the derived three-item attention signal.
+- Added strict form-contract and presentation tests covering same-day dates, invalid ranges, injection resistance, all explicit states, unrecorded behavior, localized routing, accessible controls, and safe alert rendering.
+- Kept production smoke checks read-only: no real homework assignment, student status, alert, contact, or unrelated data was created.
+
+## 2026-09-10 — Task 14 Phase 0 homework contract review
+
+- Reconciled the requested homework foundation against the existing homework, product, domain, authorization, schema, security, localization and testing contracts before writing SQL.
+- Identified a blocking conflict between the documented cumulative resolved-contact baseline alert and the requested consecutive non-submission streak/reset model.
+- Recorded the still-missing ordering, due-state participation, enrollment-date eligibility, historical-correction reconciliation, pre-contact-module resolution and same-day date-boundary decisions in the canonical open-decision list.
+- Created no migration, application code, remote change, homework record, commit or deployment while the integrity contract remains unresolved.
+
+## 2026-09-10 — Task 14A local homework foundation
+
+- Confirmed the derived consecutive-streak contract, conservative unrecorded-state break, due-date enrollment boundary, deterministic ordering, correction recalculation and same-day assignment rule.
+- Added a forward-only local migration for shared homework assignments, explicit per-student states, audited protected mutation RPCs and an authorization-filtered derived attention projection.
+- Kept “not recorded” as row absence, retained submission dates without inventing unresolved working-day delay totals, and added no persisted alert/contact model.
+- Added transactional pgTAP coverage for schema, integrity, date/enrollment validation, correction, threshold/reset behavior, least privilege, ADMIN/assigned-TEACHER access and unassigned/cross-school denial.
+- Two independent clean resets, full 619-assertion database coverage, schema lint and byte-identical generated types pass. No remote database was accessed or changed.
+
 ## 2026-09-10 — Controlled quiz and grade runtime verification
 
 - Created one synthetic demo student with one active enrollment through the production ADMIN workflow; no direct SQL mutation was used.

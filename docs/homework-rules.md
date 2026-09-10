@@ -10,18 +10,29 @@ Each homework assignment belongs to a `ClassCourse`. Every participating student
 
 Track the assignment and due date, state, submission date when available, delay in days, modifying teacher, and modification timestamp. Changes are auditable.
 
+TASK 14 confirms the initial tracking contract as follows:
+
+- “Not recorded” is the absence of a student-state row, not a fourth enum value. An existing explicit state is corrected in place with audit actor/time; it is not hard-deleted back to “not recorded.”
+- Homework may be assigned and due on the same date (`assigned_on <= due_on`). Both dates must be inside the selected term.
+- Enrollment eligibility is evaluated on the due date for the homework's class and school year.
+- Only active homework whose due date is today or earlier participates in the current attention calculation.
+- Ordering is deterministic by due date, assigned date, then immutable homework identifier. An unrecorded item conservatively interrupts the current streak because there is not enough evidence to classify it as submitted or not submitted.
+- `SUBMITTED_ON_TIME` and `SUBMITTED_LATE` reset the current streak. Historical corrections recalculate the projection immediately from authoritative status rows.
+- The initial alert is a derived current projection at a streak of three or more. It is not persisted and has no independent resolution control until contact history and the resolved-contact baseline workflow are implemented.
+- Submission dates are stored when applicable. Calendar/working-day delay totals remain deferred until the open weekend, holiday and timezone policy is resolved; TASK 14 does not persist an ambiguous derived delay count.
+
 Student summaries include homework assigned, submitted, not submitted, submission percentage, total delay days, and a status represented by `UP_TO_DATE`, `TO_MONITOR`, or `VIGILANCE`. The numeric thresholds for these summary statuses are open and must remain separate from translated labels.
 
-## Alert rule
+## Later recurring contact-baseline rule
 
-An alert is created when a student accumulates three unsubmitted assignments relative to the last resolved-contact baseline:
+After contact history is implemented, the product additionally proposes recurring alert episodes relative to the last resolved-contact baseline:
 
 ```text
 newUnsubmittedSinceBaseline = totalUnsubmitted - unsubmittedCountAtLastResolvedContact
 create alert when newUnsubmittedSinceBaseline >= 3
 ```
 
-Before any resolved contact, the baseline is proposed to be zero; this should be confirmed with the alert lifecycle details.
+This later formula does not govern TASK 14's derived consecutive-streak projection. Before any resolved contact, the baseline is proposed to be zero and remains an open lifecycle decision.
 
 Only one active alert should represent a threshold episode (proposed; duplication/idempotency must be finalized). Recording a parent or administration contact resolves the active alert and appends a contact record containing contact date, contact type, optional note, recorder, and total unsubmitted count at that moment. Prior contacts are never overwritten.
 

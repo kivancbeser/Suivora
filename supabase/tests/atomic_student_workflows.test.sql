@@ -131,7 +131,7 @@ set local role authenticated;
 select extensions.throws_ok($$select public.admin_create_student_with_enrollment('Profileless','Denied',null,'b1200000-0000-0000-0000-000000000001','2040-09-01')$$,'42501',null,'profileless user rejected');
 reset role;
 
-select extensions.is((select count(*)::integer from pg_policies where schemaname='public'),34,'expanded RLS policy matrix remains intact');
+select extensions.is((select count(*)::integer from pg_policies where schemaname='public'),36,'expanded RLS policy matrix remains intact');
 select extensions.is((select count(*)::integer from pg_policies where schemaname='public' and cmd='DELETE'),0,'DELETE policies remain absent');
 select extensions.ok(not has_table_privilege('authenticated','public.students','delete') and not has_table_privilege('authenticated','public.enrollments','delete'),'hard deletion remains unavailable');
 select extensions.ok(not has_table_privilege('anon','public.students','select') and not has_table_privilege('anon','public.enrollments','select'),'anonymous access remains unavailable');

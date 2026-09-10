@@ -49,9 +49,9 @@
 26. Outcome analysis
 27. Lesson progression planning
 28. Excel progression import
-29. Homework assignments
-30. Homework student statuses
-31. Homework alert engine
+29. Homework assignments — database foundation and bilingual authorized UI completed in TASK 14
+30. Homework student statuses — database foundation and bilingual bulk tracking UI completed in TASK 14
+31. Homework alert engine — initial derived streak projection completed in TASK 14; recurring contact-baseline lifecycle remains deferred
 32. Parent/administration contact history
 33. Mandatory study domain rules
 34. Mandatory study scheduling and history

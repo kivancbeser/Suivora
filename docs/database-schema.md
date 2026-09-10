@@ -1,5 +1,11 @@
 # Database schema proposal
 
+## TASK 14A homework tracking foundation
+
+The local forward-only homework migration adds `homework_assignments` and `homework_student_statuses` plus the three-value `homework_state` enum. Assignments are bound by composite constraints and validation triggers to one school, school year, term and ClassCourse. Explicit student states are unique per assignment/student, require due-date enrollment eligibility, preserve audit actors/timestamps and cannot be hard-deleted through application roles. Absence of a status row means “not recorded.”
+
+`create_homework_assignment`, `update_homework_assignment` and `save_homework_statuses` are the only mutation boundaries. They derive tenant and actor identity from the authenticated session and authorize either a same-school active ADMIN or an actively assigned TEACHER. `list_homework_attention(date)` exposes an authorized, derived projection for current streaks of at least three; it stores no duplicate alert state. Submission dates are retained, while ambiguous working-day delay totals remain deferred.
+
 The reviewed local and Suivora development foundations currently end at `20260910140000_teacher_assignment_foundation.sql`, with eight synchronized migrations. Later sections remain logical proposals until their own migrations are implemented.
 
 ## Implemented local foundation
