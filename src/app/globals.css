@@ -67,7 +67,11 @@ body {
 }
 
 @media (max-width: 480px) {
-  .language-switcher { top: 0.5rem; right: 0.5rem; }
+  .language-switcher {
+    top: auto;
+    right: 0.5rem;
+    bottom: 0.5rem;
+  }
 }
 
 .teacher-page {

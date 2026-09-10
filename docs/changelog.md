@@ -7,6 +7,7 @@ Significant product, domain, architecture, security, and delivery-document chang
 - Replaced the uncontrolled mobile `details` disclosure with one small pathname-keyed client drawer inside the shared authenticated shell; desktop navigation and role-specific navigation data remain unchanged.
 - The drawer now closes immediately on destination selection and remounts closed after every pathname change, including locale switches and browser history navigation.
 - Added localized open/close labels, Escape and backdrop dismissal, focus return for non-navigation dismissal, body scroll restoration, an inert obscured application surface, and explicit dialog/expanded/control semantics.
+- Moved the fixed language selector to the lower mobile corner so it no longer obscures the authenticated menu trigger at 390 px while remaining available above the drawer backdrop.
 - Added fixture-only interaction coverage for link, pathname, locale/history, rapid navigation, Escape, backdrop, scroll lock, cleanup, active links, one mobile drawer, and the existing ADMIN/TEACHER navigation contracts.
 - No database, Supabase configuration, remote record, pilot profile, teacher assignment, homework record, or unrelated project was accessed or changed.
 
