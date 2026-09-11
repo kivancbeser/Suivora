@@ -82,6 +82,8 @@ Task 07 tests the application-context boundary with typed gateways: active ADMIN
 
 Task 14D extends the shared-shell UI suite with mobile drawer opening, immediate link dismissal, pathname/locale/history remount closure, rapid route changes, Escape and backdrop dismissal, focus return, body scroll locking/restoration, inert background content, single-drawer rendering, and preservation of desktop and role-aware navigation semantics. Production checks use read-only ADMIN and pilot TEACHER sessions at 390 px and 1280 px; they never create or modify application data.
 
+Task 14E confirms the mobile acceptance path with one real assigned TEACHER session and creates three synthetic Semester 1 homework assignments plus three explicit `NOT_SUBMITTED` status rows through the deployed UI and protected RPC boundary. Refresh and FR/TR checks confirm identical persisted records. Because their valid term dates are 14–16 September 2026, the current-date threshold projection, correction, and reset runtime checks remain scheduled for 16 September 2026 or later; local fixture tests continue to cover streaks 1/2/3, reset, recalculation, authorization, and non-duplication without changing remote dates or the school calendar.
+
 ## Future observation scenarios
 
 - Multiple same-day observations for one student persist as distinct audited records; an empty row persists nothing.

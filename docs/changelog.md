@@ -2,6 +2,14 @@
 
 Significant product, domain, architecture, security, and delivery-document changes belong here. This is not a substitute for decision records or version control.
 
+## 2026-09-11 — Task 14E controlled homework runtime preparation
+
+- Confirmed the Task 14D mobile drawer fix with one real pilot TEACHER session at 390 px, including destination selection, FR/TR route preservation, browser history, Escape/backdrop dismissal, scroll restoration, and no page-level horizontal overflow.
+- Created three synthetic Semester 1 homework assignments through the deployed assigned-TEACHER UI and protected Server Action/RPC workflow, with chronologically increasing dates from 14 through 16 September 2026.
+- Recorded the one synthetic student's explicit `NOT_SUBMITTED` state for each assignment and verified all three records independently after refresh in French and Turkish.
+- The current-date attention projection correctly remains empty before the first due date. Threshold, correction, and reset runtime verification is deferred until 16 September 2026 or later; fixture coverage remains authoritative meanwhile.
+- No direct SQL, privileged Auth client, schema/configuration change, additional identity, student, enrollment, teacher assignment, quiz/score mutation, historical-profile change, or unrelated-project access was used.
+
 ## 2026-09-10 — Task 14D mobile navigation auto-close hotfix
 
 - Replaced the uncontrolled mobile `details` disclosure with one small pathname-keyed client drawer inside the shared authenticated shell; desktop navigation and role-specific navigation data remain unchanged.
