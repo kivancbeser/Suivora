@@ -17,6 +17,7 @@ describe("role-aware navigation contract", () => {
       "subjects",
       "quizzesAndGrades",
       "homework",
+      "progression",
       "settings",
     ]);
   });

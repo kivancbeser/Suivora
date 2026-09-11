@@ -9,6 +9,221 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      assessment_element_outcomes: {
+        Row: {
+          allocation_weight: number
+          assessment_element_id: string
+          class_course_outcome_id: string
+          created_at: string
+          created_by: string
+          id: string
+          is_active: boolean
+          school_id: string
+          updated_at: string
+          updated_by: string
+        }
+        Insert: {
+          allocation_weight: number
+          assessment_element_id: string
+          class_course_outcome_id: string
+          created_at?: string
+          created_by: string
+          id?: string
+          is_active?: boolean
+          school_id: string
+          updated_at?: string
+          updated_by: string
+        }
+        Update: {
+          allocation_weight?: number
+          assessment_element_id?: string
+          class_course_outcome_id?: string
+          created_at?: string
+          created_by?: string
+          id?: string
+          is_active?: boolean
+          school_id?: string
+          updated_at?: string
+          updated_by?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "assessment_element_outcomes_assessment_element_id_school_i_fkey"
+            columns: ["assessment_element_id", "school_id"]
+            isOneToOne: false
+            referencedRelation: "assessment_elements"
+            referencedColumns: ["id", "school_id"]
+          },
+          {
+            foreignKeyName: "assessment_element_outcomes_class_course_outcome_id_school_fkey"
+            columns: ["class_course_outcome_id", "school_id"]
+            isOneToOne: false
+            referencedRelation: "class_course_outcomes"
+            referencedColumns: ["id", "school_id"]
+          },
+          {
+            foreignKeyName: "assessment_element_outcomes_created_by_school_id_fkey"
+            columns: ["created_by", "school_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id", "school_id"]
+          },
+          {
+            foreignKeyName: "assessment_element_outcomes_school_id_fkey"
+            columns: ["school_id"]
+            isOneToOne: false
+            referencedRelation: "schools"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "assessment_element_outcomes_updated_by_school_id_fkey"
+            columns: ["updated_by", "school_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id", "school_id"]
+          },
+        ]
+      }
+      assessment_elements: {
+        Row: {
+          created_at: string
+          created_by: string
+          id: string
+          max_points: number
+          position: number
+          quiz_id: string
+          school_id: string
+          title: string
+          updated_at: string
+          updated_by: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          id?: string
+          max_points: number
+          position: number
+          quiz_id: string
+          school_id: string
+          title: string
+          updated_at?: string
+          updated_by: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          id?: string
+          max_points?: number
+          position?: number
+          quiz_id?: string
+          school_id?: string
+          title?: string
+          updated_at?: string
+          updated_by?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "assessment_elements_created_by_school_id_fkey"
+            columns: ["created_by", "school_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id", "school_id"]
+          },
+          {
+            foreignKeyName: "assessment_elements_quiz_id_school_id_fkey"
+            columns: ["quiz_id", "school_id"]
+            isOneToOne: false
+            referencedRelation: "quizzes"
+            referencedColumns: ["id", "school_id"]
+          },
+          {
+            foreignKeyName: "assessment_elements_school_id_fkey"
+            columns: ["school_id"]
+            isOneToOne: false
+            referencedRelation: "schools"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "assessment_elements_updated_by_school_id_fkey"
+            columns: ["updated_by", "school_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id", "school_id"]
+          },
+        ]
+      }
+      class_course_outcomes: {
+        Row: {
+          class_course_id: string
+          created_at: string
+          created_by: string
+          id: string
+          is_active: boolean
+          outcome_revision_id: string
+          school_id: string
+          updated_at: string
+          updated_by: string
+        }
+        Insert: {
+          class_course_id: string
+          created_at?: string
+          created_by: string
+          id?: string
+          is_active?: boolean
+          outcome_revision_id: string
+          school_id: string
+          updated_at?: string
+          updated_by: string
+        }
+        Update: {
+          class_course_id?: string
+          created_at?: string
+          created_by?: string
+          id?: string
+          is_active?: boolean
+          outcome_revision_id?: string
+          school_id?: string
+          updated_at?: string
+          updated_by?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "class_course_outcomes_class_course_id_school_id_fkey"
+            columns: ["class_course_id", "school_id"]
+            isOneToOne: false
+            referencedRelation: "class_courses"
+            referencedColumns: ["id", "school_id"]
+          },
+          {
+            foreignKeyName: "class_course_outcomes_created_by_school_id_fkey"
+            columns: ["created_by", "school_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id", "school_id"]
+          },
+          {
+            foreignKeyName: "class_course_outcomes_outcome_revision_id_school_id_fkey"
+            columns: ["outcome_revision_id", "school_id"]
+            isOneToOne: false
+            referencedRelation: "learning_outcome_revisions"
+            referencedColumns: ["id", "school_id"]
+          },
+          {
+            foreignKeyName: "class_course_outcomes_school_id_fkey"
+            columns: ["school_id"]
+            isOneToOne: false
+            referencedRelation: "schools"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "class_course_outcomes_updated_by_school_id_fkey"
+            columns: ["updated_by", "school_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id", "school_id"]
+          },
+        ]
+      }
       class_courses: {
         Row: {
           class_id: string
@@ -377,6 +592,126 @@ export type Database = {
           },
         ]
       }
+      learning_outcome_revisions: {
+        Row: {
+          created_at: string
+          created_by: string
+          description: string
+          id: string
+          learning_outcome_id: string
+          revision_number: number
+          school_id: string
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          description?: string
+          id?: string
+          learning_outcome_id: string
+          revision_number: number
+          school_id: string
+          title: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          description?: string
+          id?: string
+          learning_outcome_id?: string
+          revision_number?: number
+          school_id?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "learning_outcome_revisions_school_id_fkey"
+            columns: ["school_id"]
+            isOneToOne: false
+            referencedRelation: "schools"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "outcome_revisions_created_by_school_fk"
+            columns: ["created_by", "school_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id", "school_id"]
+          },
+          {
+            foreignKeyName: "outcome_revisions_outcome_school_fk"
+            columns: ["learning_outcome_id", "school_id"]
+            isOneToOne: false
+            referencedRelation: "learning_outcomes"
+            referencedColumns: ["id", "school_id"]
+          },
+        ]
+      }
+      learning_outcomes: {
+        Row: {
+          code: string
+          course_id: string
+          created_at: string
+          created_by: string
+          id: string
+          is_active: boolean
+          school_id: string
+          updated_at: string
+          updated_by: string
+        }
+        Insert: {
+          code: string
+          course_id: string
+          created_at?: string
+          created_by: string
+          id?: string
+          is_active?: boolean
+          school_id: string
+          updated_at?: string
+          updated_by: string
+        }
+        Update: {
+          code?: string
+          course_id?: string
+          created_at?: string
+          created_by?: string
+          id?: string
+          is_active?: boolean
+          school_id?: string
+          updated_at?: string
+          updated_by?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "learning_outcomes_course_school_fk"
+            columns: ["course_id", "school_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id", "school_id"]
+          },
+          {
+            foreignKeyName: "learning_outcomes_created_by_school_fk"
+            columns: ["created_by", "school_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id", "school_id"]
+          },
+          {
+            foreignKeyName: "learning_outcomes_school_id_fkey"
+            columns: ["school_id"]
+            isOneToOne: false
+            referencedRelation: "schools"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "learning_outcomes_updated_by_school_fk"
+            columns: ["updated_by", "school_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id", "school_id"]
+          },
+        ]
+      }
       quiz_scores: {
         Row: {
           created_at: string
@@ -451,11 +786,13 @@ export type Database = {
       }
       quizzes: {
         Row: {
+          assessment_mode: Database["public"]["Enums"]["quiz_assessment_mode"]
           class_course_id: string
           created_at: string
           created_by: string
           id: string
           is_active: boolean
+          is_finalized: boolean
           max_score: number
           quiz_date: string
           school_id: string
@@ -467,11 +804,13 @@ export type Database = {
           updated_by: string
         }
         Insert: {
+          assessment_mode?: Database["public"]["Enums"]["quiz_assessment_mode"]
           class_course_id: string
           created_at?: string
           created_by: string
           id?: string
           is_active?: boolean
+          is_finalized?: boolean
           max_score?: number
           quiz_date: string
           school_id: string
@@ -483,11 +822,13 @@ export type Database = {
           updated_by: string
         }
         Update: {
+          assessment_mode?: Database["public"]["Enums"]["quiz_assessment_mode"]
           class_course_id?: string
           created_at?: string
           created_by?: string
           id?: string
           is_active?: boolean
+          is_finalized?: boolean
           max_score?: number
           quiz_date?: string
           school_id?: string
@@ -597,6 +938,78 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      student_element_scores: {
+        Row: {
+          assessment_element_id: string
+          created_at: string
+          created_by: string
+          id: string
+          school_id: string
+          score: number
+          student_id: string
+          updated_at: string
+          updated_by: string
+        }
+        Insert: {
+          assessment_element_id: string
+          created_at?: string
+          created_by: string
+          id?: string
+          school_id: string
+          score: number
+          student_id: string
+          updated_at?: string
+          updated_by: string
+        }
+        Update: {
+          assessment_element_id?: string
+          created_at?: string
+          created_by?: string
+          id?: string
+          school_id?: string
+          score?: number
+          student_id?: string
+          updated_at?: string
+          updated_by?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "student_element_scores_assessment_element_id_school_id_fkey"
+            columns: ["assessment_element_id", "school_id"]
+            isOneToOne: false
+            referencedRelation: "assessment_elements"
+            referencedColumns: ["id", "school_id"]
+          },
+          {
+            foreignKeyName: "student_element_scores_created_by_school_id_fkey"
+            columns: ["created_by", "school_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id", "school_id"]
+          },
+          {
+            foreignKeyName: "student_element_scores_school_id_fkey"
+            columns: ["school_id"]
+            isOneToOne: false
+            referencedRelation: "schools"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "student_element_scores_student_id_school_id_fkey"
+            columns: ["student_id", "school_id"]
+            isOneToOne: false
+            referencedRelation: "students"
+            referencedColumns: ["id", "school_id"]
+          },
+          {
+            foreignKeyName: "student_element_scores_updated_by_school_id_fkey"
+            columns: ["updated_by", "school_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles"
+            referencedColumns: ["id", "school_id"]
+          },
+        ]
       }
       students: {
         Row: {
@@ -845,8 +1258,16 @@ export type Database = {
         }
         Returns: undefined
       }
+      assign_outcome_revision: {
+        Args: { target_class_course_id: string; target_revision_id: string }
+        Returns: string
+      }
       claim_test_teacher_profile: {
         Args: { teacher_display_name: string }
+        Returns: undefined
+      }
+      configure_detailed_quiz: {
+        Args: { target_finalized?: boolean; target_quiz_id: string }
         Returns: undefined
       }
       create_homework_assignment: {
@@ -857,6 +1278,15 @@ export type Database = {
           target_class_course_id: string
           target_due_on: string
           target_term_id: string
+        }
+        Returns: string
+      }
+      create_learning_outcome: {
+        Args: {
+          outcome_code: string
+          outcome_description?: string
+          outcome_title: string
+          target_course_id: string
         }
         Returns: string
       }
@@ -888,6 +1318,20 @@ export type Database = {
         Args: { target_class_course_id: string }
         Returns: boolean
       }
+      learning_outcome_progression: {
+        Args: { target_class_course_id: string; target_student_id?: string }
+        Returns: {
+          contributing_element_count: number
+          contributing_quiz_count: number
+          evidence_state: Database["public"]["Enums"]["progression_evidence_state"]
+          outcome_code: string
+          outcome_id: string
+          outcome_title: string
+          percentage: number
+          performance_band: string
+          student_id: string
+        }[]
+      }
       list_homework_attention: {
         Args: { as_of_date?: string }
         Returns: {
@@ -897,6 +1341,14 @@ export type Database = {
           student_id: string
           student_last_name: string
         }[]
+      }
+      publish_learning_outcome_revision: {
+        Args: {
+          outcome_description?: string
+          outcome_title: string
+          target_outcome_id: string
+        }
+        Returns: string
       }
       save_homework_statuses: {
         Args: {
@@ -914,6 +1366,28 @@ export type Database = {
           target_student_ids: string[]
         }
         Returns: number
+      }
+      save_student_element_scores: {
+        Args: {
+          entered_scores: number[]
+          target_element_ids: string[]
+          target_quiz_id: string
+          target_student_id: string
+        }
+        Returns: number
+      }
+      set_element_outcome_link: {
+        Args: {
+          target_active?: boolean
+          target_class_course_outcome_id: string
+          target_element_id: string
+          target_weight: number
+        }
+        Returns: string
+      }
+      set_learning_outcome_active: {
+        Args: { target_active: boolean; target_outcome_id: string }
+        Returns: undefined
       }
       update_homework_assignment: {
         Args: {
@@ -935,10 +1409,26 @@ export type Database = {
         }
         Returns: undefined
       }
+      upsert_assessment_element: {
+        Args: {
+          element_max_points: number
+          element_position: number
+          element_title: string
+          target_element_id: string
+          target_quiz_id: string
+        }
+        Returns: string
+      }
     }
     Enums: {
       app_role: "ADMIN" | "TEACHER"
       homework_state: "SUBMITTED_ON_TIME" | "SUBMITTED_LATE" | "NOT_SUBMITTED"
+      progression_evidence_state:
+        | "NO_DATA"
+        | "INSUFFICIENT_DATA"
+        | "SUFFICIENT_DATA"
+        | "INCONSISTENT_DATA"
+      quiz_assessment_mode: "QUICK_TOTAL" | "OUTCOME_DETAILED"
       quiz_slot: "C1" | "C2" | "C3" | "C4" | "C5" | "C6" | "C7" | "C8"
     }
     CompositeTypes: {
@@ -1069,6 +1559,13 @@ export const Constants = {
     Enums: {
       app_role: ["ADMIN", "TEACHER"],
       homework_state: ["SUBMITTED_ON_TIME", "SUBMITTED_LATE", "NOT_SUBMITTED"],
+      progression_evidence_state: [
+        "NO_DATA",
+        "INSUFFICIENT_DATA",
+        "SUFFICIENT_DATA",
+        "INCONSISTENT_DATA",
+      ],
+      quiz_assessment_mode: ["QUICK_TOTAL", "OUTCOME_DETAILED"],
       quiz_slot: ["C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8"],
     },
   },

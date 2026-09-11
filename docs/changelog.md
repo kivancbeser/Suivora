@@ -2,6 +2,15 @@
 
 Significant product, domain, architecture, security, and delivery-document changes belong here. This is not a substitute for decision records or version control.
 
+## 2026-09-11 — Task 15 learning-outcome foundation
+
+- Confirmed the Course-owned outcome identity, immutable revision, explicit element-weight, detailed-score reconciliation, dynamic aggregation, minimum-evidence and historical-access contracts.
+- Added a forward-only local migration for outcome catalog revisions, ClassCourse usage, detailed assessment elements, weighted links, student element evidence, protected workflows, assignment-scoped RLS and a dynamic progression projection.
+- Existing quizzes default to `QUICK_TOTAL`; no existing grade is converted into outcome evidence.
+- Added bilingual ADMIN/TEACHER progression routes with localized catalog, class, student, no-data, insufficient-data and inconsistent-data states.
+- Applied the reviewed migration exactly once to the linked Suivora development project after the explicit authorization gate. Local and remote histories are synchronized and both schema lints pass.
+- The migration contains no seed or business-record insert. No remote learning outcome, quiz link, detailed score, existing quiz/homework record, identity, enrollment, profile, or assignment was created or changed.
+
 ## 2026-09-11 — Task 14E controlled homework runtime preparation
 
 - Confirmed the Task 14D mobile drawer fix with one real pilot TEACHER session at 390 px, including destination selection, FR/TR route preservation, browser history, Escape/backdrop dismissal, scroll restoration, and no page-level horizontal overflow.

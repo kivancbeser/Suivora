@@ -10,10 +10,7 @@ TASK 13's missing-score, precision, raw-comparison, and dynamic oral-suggestion 
 
 ## Learning outcomes
 
-5. When one element links to multiple outcomes, are points duplicated, split equally, or explicitly weighted?
-6. Is a detailed quiz total derived from elements or independently entered, and how are discrepancies handled?
-7. What aggregation, minimum-evidence, weighting, strength, reinforcement, and class-rollup rules apply?
-8. How are outcome revisions/versioning handled for historical assessments?
+TASK 15 resolves the foundation contract: multi-outcome links use explicit weights totaling 100% per element; a detailed quiz is eligible only when element maxima total 100, every student element is scored, and their sum equals the separately recorded final quiz score. Outcome percentages are dynamically weighted, one eligible quiz is labelled insufficient and two are required for the existing performance band. Course-owned identities use immutable revisions and historical links retain the exact revision. Class roll-up presentation and broader curriculum import remain deferred.
 
 ## Homework and contacts
 

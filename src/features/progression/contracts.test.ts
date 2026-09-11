@@ -1,0 +1,4 @@
+import{describe,expect,it}from"vitest";import{parseOutcomeForm}from"./contracts";
+const courseId="00000000-0000-4000-8000-000000000001";
+function form(extra:Record<string,string>={}){const value=new FormData();for(const[k,v]of Object.entries({courseId,code:"FRA.A1",title:"Comprendre un texte",description:"",...extra}))value.set(k,v);return value;}
+describe("learning outcome contracts",()=>{it("accepts a trimmed curriculum outcome",()=>expect(parseOutcomeForm(form())).toMatchObject({ok:true,data:{courseId,code:"FRA.A1"}}));it("rejects hidden authority fields",()=>expect(parseOutcomeForm(form({schoolId:courseId}))).toEqual({ok:false}));it("rejects blank titles and unsafe codes",()=>{expect(parseOutcomeForm(form({title:" "}))).toEqual({ok:false});expect(parseOutcomeForm(form({code:"FRA A1"}))).toEqual({ok:false});});});
