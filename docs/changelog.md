@@ -2,6 +2,14 @@
 
 Significant product, domain, architecture, security, and delivery-document changes belong here. This is not a substitute for decision records or version control.
 
+## 2026-09-12 — TASK 15C2 detailed-assessment application integration
+
+- Integrated the existing protected learning-outcome, revision, ClassCourse-link, assessment-element, outcome-weight, detailed-score, and finalization RPCs through validated request-scoped Server Actions; no database migration was required.
+- Added bilingual detailed-quiz creation and editing beneath the existing quiz route family, including semester-correct available slots, draft/finalized state, structural validation, outcome allocations, score-zero semantics, explicit confirmation, and read-only finalized evidence.
+- Extended the progression catalog with immutable revision history, active-state management, course-compatible ClassCourse assignment, and database-derived progression evidence counts and states.
+- Documented unsupported score clearing, element deletion, unfinalization, and post-finalization correction as explicit contract limitations. TASK 15D remains separate and is revised to use C5 and C6.
+- Production smoke testing for this delivery is non-mutating; existing remote academic, Auth, profile, enrollment, assignment, quiz, grade, and homework records remain outside the mutation scope.
+
 ## 2026-09-11 — Task 15 learning-outcome foundation
 
 - Confirmed the Course-owned outcome identity, immutable revision, explicit element-weight, detailed-score reconciliation, dynamic aggregation, minimum-evidence and historical-access contracts.

@@ -10,7 +10,7 @@ function failure(error:{code?:string}|null,fallback:GradingActionState["message"
 
 export async function createQuizAction(classCourseId:string,_:GradingActionState,formData:FormData):Promise<GradingActionState>{
   const parsed=parseQuizForm(formData);if(!parsed.ok)return{status:"error",message:parsed.message};const ctx=await context();if(!ctx)return{status:"error",message:"accessDenied"};
-  try{const result=await ctx.supabase.rpc("create_quiz",{target_class_course_id:classCourseId,target_term_id:parsed.data.termId,target_slot:parsed.data.slot,quiz_title:parsed.data.title,target_quiz_date:parsed.data.quizDate});if(result.error)return failure(result.error);refresh(classCourseId);return{status:"success",message:"quizCreated"};}catch{return{status:"error",message:"unexpected"};}
+  try{const result=await ctx.supabase.rpc("create_quiz",{target_class_course_id:classCourseId,target_term_id:parsed.data.termId,target_slot:parsed.data.slot,quiz_title:parsed.data.title,target_quiz_date:parsed.data.quizDate});if(result.error)return failure(result.error);if(parsed.data.assessmentMode==="OUTCOME_DETAILED"){const configured=await ctx.supabase.rpc("configure_detailed_quiz",{target_quiz_id:result.data,target_finalized:false});if(configured.error)return failure(configured.error);}refresh(classCourseId);return{status:"success",message:"quizCreated"};}catch{return{status:"error",message:"unexpected"};}
 }
 export async function updateQuizAction(classCourseId:string,quizId:string,_:GradingActionState,formData:FormData):Promise<GradingActionState>{
   const parsed=parseQuizForm(formData);if(!parsed.ok)return{status:"error",message:parsed.message};const ctx=await context();if(!ctx)return{status:"error",message:"accessDenied"};

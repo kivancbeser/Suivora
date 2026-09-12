@@ -2,10 +2,11 @@ import { z } from "zod";
 
 export const quizSlots = ["C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8"] as const;
 export type QuizSlot = (typeof quizSlots)[number];
+export const assessmentModes=["QUICK_TOTAL","OUTCOME_DETAILED"]as const;
 export type GradingMessage =
   | "accessDenied" | "invalidFields" | "invalidTitle" | "invalidDate"
   | "invalidScore" | "duplicateQuiz" | "unavailable" | "unexpected"
-  | "quizCreated" | "quizUpdated" | "scoresSaved";
+  | "quizCreated" | "quizUpdated" | "scoresSaved" | "detailedConfigured";
 export type GradingActionState = Readonly<{
   status: "idle" | "success" | "error";
   message?: GradingMessage;
@@ -21,11 +22,11 @@ function exact(formData: FormData, allowed: readonly string[]): boolean {
 }
 
 export function parseQuizForm(formData: FormData) {
-  const allowed = ["termId", "slot", "title", "quizDate", "isActive"];
+  const allowed = ["termId", "slot", "title", "quizDate", "isActive", "assessmentMode"];
   if (!exact(formData, allowed)) return { ok: false as const, message: "invalidFields" as const };
-  const result = z.object({ termId: id, slot: z.enum(quizSlots), title, quizDate: date }).safeParse({
+  const result = z.object({ termId: id, slot: z.enum(quizSlots), title, quizDate: date,assessmentMode:z.enum(assessmentModes) }).safeParse({
     termId: formData.get("termId"), slot: formData.get("slot"),
-    title: formData.get("title"), quizDate: formData.get("quizDate"),
+    title: formData.get("title"), quizDate: formData.get("quizDate"),assessmentMode:formData.get("assessmentMode")??"QUICK_TOTAL",
   });
   if (!result.success) {
     const field = result.error.issues[0]?.path[0];

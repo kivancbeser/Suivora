@@ -6,7 +6,7 @@ import type { QuizSlot } from "./contracts";
 
 export type GradingClass = Readonly<{id:string;className:string;courseName:string;courseCode:string|null;schoolYear:string}>;
 export type GradingTerm = Readonly<{id:string;semesterNumber:1|2;startDate:string;endDate:string}>;
-export type GradingQuiz = Readonly<{id:string;termId:string;slot:QuizSlot;title:string;quizDate:string;isActive:boolean}>;
+export type GradingQuiz = Readonly<{id:string;termId:string;slot:QuizSlot;title:string;quizDate:string;isActive:boolean;assessmentMode:"QUICK_TOTAL"|"OUTCOME_DETAILED";isFinalized:boolean}>;
 export type GradingStudent = Readonly<{id:string;name:string;scores:Readonly<Record<string,number>>;semesterAverages:readonly (number|null)[];bands:readonly (ReturnType<typeof getPerformanceBand>|null)[]}>;
 export type GradingDetail = GradingClass & Readonly<{terms:readonly GradingTerm[];quizzes:readonly GradingQuiz[];students:readonly GradingStudent[]}>;
 type Failure=Readonly<{status:"unauthenticated"|"access-unavailable"|"error"|"not-found"}>;
@@ -26,11 +26,11 @@ export async function getGradingDetail(classCourseId:string):Promise<Readonly<{s
     if(classResult.error)return{status:"error"};if(!classResult.data)return{status:"not-found"};
     const [termResult,quizResult,enrollmentResult]=await Promise.all([
       ctx.supabase.from("terms").select("id, semester_number, start_date, end_date").eq("school_year_id",classResult.data.school_year_id).order("semester_number"),
-      ctx.supabase.from("quizzes").select("id, term_id, slot, title, quiz_date, is_active").eq("class_course_id",classCourseId).order("slot"),
+      ctx.supabase.from("quizzes").select("id, term_id, slot, title, quiz_date, is_active, assessment_mode, is_finalized").eq("class_course_id",classCourseId).order("slot"),
       ctx.supabase.from("enrollments").select("students!enrollments_student_school_fk(id, first_name, last_name)").eq("class_id",classResult.data.class_id).is("ends_on",null).order("created_at"),
     ]);
     if(termResult.error||quizResult.error||enrollmentResult.error||!termResult.data||!quizResult.data||!enrollmentResult.data)return{status:"error"};
-    const quizzes:GradingQuiz[]=quizResult.data.map(q=>({id:q.id,termId:q.term_id,slot:q.slot,title:q.title,quizDate:q.quiz_date,isActive:q.is_active}));
+    const quizzes:GradingQuiz[]=quizResult.data.map(q=>({id:q.id,termId:q.term_id,slot:q.slot,title:q.title,quizDate:q.quiz_date,isActive:q.is_active,assessmentMode:q.assessment_mode,isFinalized:q.is_finalized}));
     const studentIds=enrollmentResult.data.map(e=>e.students.id);const scoreResult=studentIds.length===0||quizzes.length===0?{data:[],error:null}:await ctx.supabase.from("quiz_scores").select("quiz_id, student_id, score").in("student_id",studentIds).in("quiz_id",quizzes.map(q=>q.id));
     if(scoreResult.error||!scoreResult.data)return{status:"error"};
     const terms:GradingTerm[]=termResult.data.filter(t=>t.semester_number===1||t.semester_number===2).map(t=>({id:t.id,semesterNumber:t.semester_number as 1|2,startDate:t.start_date,endDate:t.end_date}));

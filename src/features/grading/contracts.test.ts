@@ -16,4 +16,10 @@ describe("grading form contracts", () => {
     const invalid = new FormData(); invalid.set("score-0","84.999");
     expect(parseScoreForm(invalid,1)).toEqual({ok:false,message:"invalidScore"});
   });
+  it("accepts the detailed assessment mode and rejects an unknown mode", () => {
+    const form = new FormData(); form.set("termId","00000000-0000-4000-8000-000000000001"); form.set("slot","C5"); form.set("title","Quiz détaillé"); form.set("quizDate","2041-03-01"); form.set("assessmentMode","OUTCOME_DETAILED");
+    expect(parseQuizForm(form)).toMatchObject({ok:true,data:{slot:"C5",assessmentMode:"OUTCOME_DETAILED"}});
+    form.set("assessmentMode","UNSAFE_MODE");
+    expect(parseQuizForm(form)).toEqual({ok:false,message:"invalidFields"});
+  });
 });
