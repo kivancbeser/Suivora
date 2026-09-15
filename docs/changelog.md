@@ -2,6 +2,14 @@
 
 Significant product, domain, architecture, security, and delivery-document changes belong here. This is not a substitute for decision records or version control.
 
+## 2026-09-15 — TASK 15C3 progression catalog production recovery
+
+- Confirmed through strictly read-only production inspection that the earlier protected creation request completed atomically as one active outcome with one initial immutable revision, no ClassCourse link, no assessment evidence, and no structural inconsistency; baseline academic and identity counts were unchanged.
+- Replaced the catalog's all-or-nothing embedded relationship read with separate required outcome/revision queries and optional link/evidence queries, making the valid post-creation intermediate state explicit while retaining the safe localized failure state for genuine query errors.
+- Made successful creation unambiguous through locale-aware revalidation and a canonical catalog redirect, and added same-course duplicate preflight plus safe localized database-race handling without exposing provider details.
+- Added regression coverage for empty and historical catalogs, unlinked and evidence-free revisions, linked/evidence-backed revisions, catalog reload, genuine query failure, ADMIN authorization, assignment-scoped TEACHER rendering, duplicate retries, localized route preservation, and non-sensitive errors.
+- No migration, remote mutation, C5/C6 record, element, weight, score, Auth/profile/assignment change, or unrelated-project access was performed. TASK 15D remains paused before the existing revision is linked.
+
 ## 2026-09-12 — TASK 15C2 detailed-assessment application integration
 
 - Integrated the existing protected learning-outcome, revision, ClassCourse-link, assessment-element, outcome-weight, detailed-score, and finalization RPCs through validated request-scoped Server Actions; no database migration was required.

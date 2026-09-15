@@ -1,5 +1,5 @@
 import {z} from "zod";
-export type ProgressionMessage="accessDenied"|"invalidFields"|"created"|"updated"|"unexpected";
+export type ProgressionMessage="accessDenied"|"invalidFields"|"duplicateOutcome"|"created"|"updated"|"unexpected";
 export type ProgressionActionState=Readonly<{status:"idle"|"success"|"error";message?:ProgressionMessage}>;
 export const initialProgressionState:ProgressionActionState={status:"idle"};
 const clean=(max:number)=>z.string().trim().min(1).max(max).refine(v=>!/[\u0000-\u001f\u007f]/u.test(v));

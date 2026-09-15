@@ -58,3 +58,11 @@ Authorization is independently revalidated for every page and action. The browse
 Current contract limitations are explicit: there is no score-clear RPC, element-delete RPC, unfinalize operation, or post-finalization correction/versioning workflow. Blank score fields therefore do not delete existing evidence, and the UI offers no unsupported destructive controls. These remain future contract decisions.
 
 The controlled TASK 15D runtime plan must use Semester 2 slots C5 and C6 because C1–C4 are occupied. One eligible finalized detailed quiz yields a percentage with `INSUFFICIENT_DATA` and no band; two eligible finalized detailed quizzes can yield a performance band with contributing quiz and element counts.
+
+## Catalog recovery behavior (TASK 15C3)
+
+An outcome and its first immutable revision may validly exist before any ClassCourse link or detailed-assessment evidence exists. The ADMIN catalog loads these required records independently from optional links and evidence, and labels the missing optional relationships instead of treating them as an infrastructure failure. A genuine catalog query failure still returns only the localized safe unavailable state.
+
+Outcome creation checks the same-course stable code before invoking the protected RPC, while the database uniqueness contract remains authoritative for races. Successful creation revalidates both locale routes and redirects to a canonical localized catalog GET with an explicit confirmation state. A duplicate or uncertain retry is reported with a localized non-sensitive message and cannot create a second logical outcome.
+
+The controlled production diagnosis confirmed anonymously that the earlier request completed atomically: one active outcome, one initial revision, no ClassCourse link, and no structurally incomplete row. No C5/C6 record, element, weight, link, or detailed score was created. TASK 15D therefore remains paused immediately before the existing revision is linked to the approved ClassCourse.
